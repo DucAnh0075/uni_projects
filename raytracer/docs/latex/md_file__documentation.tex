@@ -1,0 +1,30 @@
+\chapter{File Documentation}
+\hypertarget{md_file__documentation}{}\label{md_file__documentation}\index{File Documentation@{File Documentation}}
+\label{md_file__documentation_autotoc_md67}%
+\Hypertarget{md_file__documentation_autotoc_md67}%
+ \hypertarget{md_file__documentation_autotoc_md68}{}\doxysection{\texorpdfstring{Core Headers}{Core Headers}}\label{md_file__documentation_autotoc_md68}
+\hypertarget{md_file__documentation_autotoc_md69}{}\doxysubsection{\texorpdfstring{performance\+\_\+utils.\+h}{performance\_utils.h}}\label{md_file__documentation_autotoc_md69}
+{\bfseries{Purpose\+:}} Performance optimization utilities for ray tracing
+
+{\bfseries{Description\+:}} This header contains optimizations like ray pre-\/computation, object pools, and caching mechanisms.
+
+{\bfseries{Key Components\+:}}
+\begin{DoxyItemize}
+\item Ray\+Grid\+: Pre-\/computed ray directions and origins
+\item Pixel\+Info\+Pool\+: \doxylink{classObject}{Object} pool for memory efficiency
+\item Material\+Cache\+: Caches material computations
+\item Pixel\+Batch\+Processor\+: Batch processing for cache locality
+\item Intersection\+Cache\+: Caches intersection results
+\end{DoxyItemize}\hypertarget{md_file__documentation_autotoc_md70}{}\doxysubsection{\texorpdfstring{render.\+h}{render.h}}\label{md_file__documentation_autotoc_md70}
+{\bfseries{Purpose\+:}} Main rendering engine and ray tracing algorithms
+
+{\bfseries{Description\+:}} Contains the core ray tracing logic, lighting calculations, and scene rendering functionality.\hypertarget{md_file__documentation_autotoc_md71}{}\doxysubsection{\texorpdfstring{math\+\_\+utils.\+h}{math\_utils.h}}\label{md_file__documentation_autotoc_md71}
+{\bfseries{Purpose\+:}} Mathematical utilities and vector operations
+
+{\bfseries{Description\+:}} Helper functions for vector math, transformations, and geometric calculations.\hypertarget{md_file__documentation_autotoc_md72}{}\doxysubsection{\texorpdfstring{object.\+h}{object.h}}\label{md_file__documentation_autotoc_md72}
+{\bfseries{Purpose\+:}} \doxylink{classScene}{Scene} object definitions and intersection algorithms
+
+{\bfseries{Description\+:}} Defines geometric primitives (spheres, cubes, planes) and CSG operations.\hypertarget{md_file__documentation_autotoc_md73}{}\doxysubsection{\texorpdfstring{scene.\+h}{scene.h}}\label{md_file__documentation_autotoc_md73}
+{\bfseries{Purpose\+:}} \doxylink{classScene}{Scene} structure and screen configuration
+
+{\bfseries{Description\+:}} Defines the scene structure, camera setup, and screen parameters. 

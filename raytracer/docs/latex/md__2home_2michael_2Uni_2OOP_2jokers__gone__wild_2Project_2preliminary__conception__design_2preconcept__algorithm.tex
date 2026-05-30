@@ -1,0 +1,35 @@
+\chapter{Primary Rays}
+\hypertarget{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm}{}\label{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm}\index{Primary Rays@{Primary Rays}}
+\label{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md74}%
+\Hypertarget{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md74}%
+ Pixel center\+: dx=1/dpiX, dy=1/dpiY, Pij = P + ((i+0.5)dx, (j+0.5)dy, 0)
+
+ray = (eye, normalize(Pij -\/ eye))
+
+hit = scene.\+trace\+Nearest(ray) → smallest t\texorpdfstring{$>$}{>}0
+
+\doxylink{structColor}{Color}\+: hit ? shade(hit, ray, 0) \+: background\hypertarget{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md75}{}\doxysection{\texorpdfstring{Shading (\+Phong + Reflection/\+Transmission)}{Shading (Phong + Reflection/Transmission)}}\label{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md75}
+Ea = Ka ⊙ Ia
+
+For each visible light L\+:
+
+Ldir = normalize(L -\/ p), Shadow ray with epsilon offset
+
+Diffuse\+: Ed = Kd ⊙ IL \texorpdfstring{$\ast$}{*} max(0, Ldir·N)
+
+Specular\+: Es = Ks ⊙ IL \texorpdfstring{$\ast$}{*} (max(0, reflect(-\/Ldir,N)·V))\texorpdfstring{$^\wedge$}{\string^}α
+
+Elights ⟵ Elights ⊕ (Ed ⊕ Es) (⊕\+: 1 -\/ (1-\/a)(1-\/b) channel-\/wise)
+
+Recursion (if depth \texorpdfstring{$<$}{<} max\+Depth)\+:
+
+Reflection\+: R = reflect(\+I,\+N) → Er = Kr ⊙ trace(p+εN, R)
+
+Transmission (Snell, TIR-\/\+Check)\+: T = refract(I,N,n,n\textquotesingle{}) → Et = Kt ⊙ trace(p-\/εN, T)
+
+Final color\+: E = clamp( Ea ⊕ Elights ⊕ Er ⊕ Et )\hypertarget{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md76}{}\doxysection{\texorpdfstring{Intersection Tests (core only)}{Intersection Tests (core only)}}\label{md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm_autotoc_md76}
+\doxylink{classSphere}{Sphere}\+: SC=C-\/S, Δ = r² + (d·\+SC)² -\/ \texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\+SC\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}²; t = (d·\+SC) ± √Δ, take smallest t\texorpdfstring{$>$}{>}0, N=(p-\/C)/r
+
+Plane\+: if N·d=0 → parallel; else t=(r -\/ N·S)/ (N·d), t\texorpdfstring{$>$}{>}0, N constant
+
+Transformation\+: before intersection r\textquotesingle{} = M⁻¹ r, afterwards point via M, normal via (M⁻¹)ᵀ (normalize) 

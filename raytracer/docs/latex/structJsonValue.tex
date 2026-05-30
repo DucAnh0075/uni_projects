@@ -1,0 +1,83 @@
+\doxysection{Json\+Value Struct Reference}
+\hypertarget{structJsonValue}{}\label{structJsonValue}\index{JsonValue@{JsonValue}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structJsonValue_a95729d2465a615e84550af4d4d223b2c}\label{structJsonValue_a95729d2465a615e84550af4d4d223b2c} 
+enum {\bfseries Type} \{ \newline
+{\bfseries OBJECT}
+, {\bfseries ARRAY}
+, {\bfseries STRING}
+, {\bfseries NUMBER}
+, \newline
+{\bfseries NULL\+\_\+\+VAL}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structJsonValue_ac8216a5f29a7eabed31aae7cf20a4d8a}\label{structJsonValue_ac8216a5f29a7eabed31aae7cf20a4d8a} 
+{\bfseries Json\+Value} (Type t=NULL\+\_\+\+VAL)
+\item 
+\Hypertarget{structJsonValue_a376037bc725a9c07e1634baaac379348}\label{structJsonValue_a376037bc725a9c07e1634baaac379348} 
+bool {\bfseries is\+Object} () const
+\item 
+\Hypertarget{structJsonValue_ab14ea251557e42051a60c47946f69e76}\label{structJsonValue_ab14ea251557e42051a60c47946f69e76} 
+bool {\bfseries is\+Array} () const
+\item 
+\Hypertarget{structJsonValue_a1a8a767164b557500b5c0566be6a87d9}\label{structJsonValue_a1a8a767164b557500b5c0566be6a87d9} 
+bool {\bfseries is\+String} () const
+\item 
+\Hypertarget{structJsonValue_a35ecd3a1d5565ab1243b66870835e411}\label{structJsonValue_a35ecd3a1d5565ab1243b66870835e411} 
+bool {\bfseries is\+Number} () const
+\item 
+\Hypertarget{structJsonValue_ac58b94d2bd79655d438a8a95303962b0}\label{structJsonValue_ac58b94d2bd79655d438a8a95303962b0} 
+bool {\bfseries is\+Null} () const
+\item 
+\Hypertarget{structJsonValue_a5f509f332c410dd55ebd0e78a79eeee0}\label{structJsonValue_a5f509f332c410dd55ebd0e78a79eeee0} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structJsonValue}{Json\+Value}} $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (const std\+::string \&key)
+\item 
+\Hypertarget{structJsonValue_a4f2d4a918d756b32900b217c40d7408c}\label{structJsonValue_a4f2d4a918d756b32900b217c40d7408c} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structJsonValue}{Json\+Value}} $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index)
+\item 
+\Hypertarget{structJsonValue_aa34ea3ca6eb6ccbef476a9ef2d192fc1}\label{structJsonValue_aa34ea3ca6eb6ccbef476a9ef2d192fc1} 
+size\+\_\+t {\bfseries size} () const
+\item 
+\Hypertarget{structJsonValue_a0bae94e120f22c52cb1fc4449aff6043}\label{structJsonValue_a0bae94e120f22c52cb1fc4449aff6043} 
+Vec3 {\bfseries as\+Vec3} () const
+\item 
+\Hypertarget{structJsonValue_a29c731742e22e1c124b5c45992ad3449}\label{structJsonValue_a29c731742e22e1c124b5c45992ad3449} 
+Vec3 {\bfseries as\+Position} () const
+\item 
+\Hypertarget{structJsonValue_aa244b2685fdb719266270ea38c5710c3}\label{structJsonValue_aa244b2685fdb719266270ea38c5710c3} 
+Vec3 {\bfseries as\+Color} () const
+\item 
+\Hypertarget{structJsonValue_a2587ca809601ccc5466095ad88b9f9be}\label{structJsonValue_a2587ca809601ccc5466095ad88b9f9be} 
+float {\bfseries as\+Float} () const
+\item 
+\Hypertarget{structJsonValue_aa74552dccde32d892732aa211e08458f}\label{structJsonValue_aa74552dccde32d892732aa211e08458f} 
+int {\bfseries as\+Int} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structJsonValue_a9c2dd02a98776425829031190358f161}\label{structJsonValue_a9c2dd02a98776425829031190358f161} 
+Type {\bfseries type}
+\item 
+\Hypertarget{structJsonValue_aa5fde5f0c7621a002476d59adb49b95d}\label{structJsonValue_aa5fde5f0c7621a002476d59adb49b95d} 
+std\+::string {\bfseries str\+\_\+val}
+\item 
+\Hypertarget{structJsonValue_a4fddc675a2461c36d68670179038f53a}\label{structJsonValue_a4fddc675a2461c36d68670179038f53a} 
+double {\bfseries num\+\_\+val}
+\item 
+\Hypertarget{structJsonValue_a07bf8c81cc7ddd0c29ae48cfc77e7091}\label{structJsonValue_a07bf8c81cc7ddd0c29ae48cfc77e7091} 
+std\+::map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structJsonValue}{Json\+Value}} $>$ $>$ {\bfseries obj\+\_\+val}
+\item 
+\Hypertarget{structJsonValue_a55053ea2c26012333f3f4ffff4f9a5dc}\label{structJsonValue_a55053ea2c26012333f3f4ffff4f9a5dc} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structJsonValue}{Json\+Value}} $>$ $>$ {\bfseries arr\+\_\+val}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/scene\+\_\+loader.\+h\end{DoxyCompactItemize}

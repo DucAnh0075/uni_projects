@@ -1,0 +1,39 @@
+\doxysection{Ray\+Tracer\+::Pixel\+Batch\+Processor Class Reference}
+\hypertarget{classRayTracer_1_1PixelBatchProcessor}{}\label{classRayTracer_1_1PixelBatchProcessor}\index{RayTracer::PixelBatchProcessor@{RayTracer::PixelBatchProcessor}}
+
+
+Batch processor for pixel rendering.  
+
+
+
+
+{\ttfamily \#include $<$performance\+\_\+utils.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRayTracer_1_1PixelBatchProcessor_a8f4ddb5c83abfa09d1452903a1690c05}\label{classRayTracer_1_1PixelBatchProcessor_a8f4ddb5c83abfa09d1452903a1690c05} 
+void {\bfseries initialize\+Batches} (int image\+Width, int image\+Height, int batch\+Size=PIXEL\+\_\+\+BATCH\+\_\+\+SIZE)
+\begin{DoxyCompactList}\small\item\em Initialize batches for given image dimensions. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1PixelBatchProcessor_a5ac6a66366b2f89848e8b769e73399ed}\label{classRayTracer_1_1PixelBatchProcessor_a5ac6a66366b2f89848e8b769e73399ed} 
+size\+\_\+t {\bfseries get\+Batch\+Count} () const
+\begin{DoxyCompactList}\small\item\em Get the number of batches. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1PixelBatchProcessor_ab1c233946b9cf959e4ed66f54fbc0472}\label{classRayTracer_1_1PixelBatchProcessor_ab1c233946b9cf959e4ed66f54fbc0472} 
+const Pixel\+Batch \& {\bfseries get\+Batch} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Get batch at index. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1PixelBatchProcessor_ac57c26e3d33c7df49c5cb98a2c2f9336}\label{classRayTracer_1_1PixelBatchProcessor_ac57c26e3d33c7df49c5cb98a2c2f9336} 
+{\footnotesize template$<$typename Process\+Func $>$ }\\void {\bfseries process\+All\+Batches} (Process\+Func func)
+\begin{DoxyCompactList}\small\item\em Process all batches with a given function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Batch processor for pixel rendering. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md for detailed documentation 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{performance__utils_8h}{performance\+\_\+utils.\+h}}\end{DoxyCompactItemize}

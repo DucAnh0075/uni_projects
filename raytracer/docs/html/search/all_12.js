@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['safedivide_0',['safeDivide',['../math__utils_8h.html#af0a9cfd55a9bccc5033f2c05bfbf390f',1,'RayTracer']]],
+  ['safedivideoptional_1',['safeDivideOptional',['../math__utils_8h.html#a65b854bc2e78c8434dbfec58c1cabe66',1,'RayTracer']]],
+  ['safenormalize_2',['safeNormalize',['../math__utils_8h.html#a48ee11aec8ea218108296424cf1714f2',1,'RayTracer']]],
+  ['safenormalized_3',['safeNormalized',['../math__utils_8h.html#a681a17e2470a0a55f1f820f7aeda2f26',1,'RayTracer']]],
+  ['safesqrt_4',['safeSqrt',['../math__utils_8h.html#a6c2b7c5f60f1691e241277ef180ce822',1,'RayTracer']]],
+  ['scene_5',['Scene',['../classScene.html',1,'']]],
+  ['scene_20and_20screen_20classes_20documentation_6',['Scene and Screen Classes Documentation',['../md_api__documentation.html#autotoc_md23',1,'']]],
+  ['scene_20format_20tt_20scene_5floader_20h_20tt_7',['JSON Scene Format (&lt;tt&gt;scene_loader.h&lt;/tt&gt;)',['../md_api__documentation.html#autotoc_md55',1,'']]],
+  ['scene_20h_8',['scene.h',['../md_file__documentation.html#autotoc_md73',1,'']]],
+  ['scene_20loading_20system_9',['Scene Loading System',['../md_api__documentation.html#autotoc_md54',1,'']]],
+  ['scene_5floader_20h_20tt_10',['JSON Scene Format (&lt;tt&gt;scene_loader.h&lt;/tt&gt;)',['../md_api__documentation.html#autotoc_md55',1,'']]],
+  ['sceneconfig_11',['SceneConfig',['../structSceneLoader_1_1SceneConfig.html',1,'SceneLoader']]],
+  ['sceneloader_12',['SceneLoader',['../classSceneLoader.html',1,'']]],
+  ['screen_13',['screen',['../classScreen.html',1,'Screen'],['../md_api__documentation.html#autotoc_md24',1,'Screen']]],
+  ['screen_20classes_20documentation_14',['Scene and Screen Classes Documentation',['../md_api__documentation.html#autotoc_md23',1,'']]],
+  ['shading_20phong_20reflection_20transmission_15',['Shading (Phong + Reflection/Transmission)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm.html#autotoc_md75',1,'']]],
+  ['shadows_16',['I4 — Phong (without shadows)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md81',1,'']]],
+  ['shadows_20hard_17',['I5 — Shadows (hard)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md82',1,'']]],
+  ['solvequadratic_18',['solveQuadratic',['../math__utils_8h.html#aa8a36c8fb6694830a34a7c0955e307a9',1,'RayTracer']]],
+  ['sphere_19',['sphere',['../md_api__documentation.html#autotoc_md15',1,'Sphere'],['../classSphere.html#a9ad4594db6b2cd98f33048fee2a92cd9',1,'Sphere::Sphere()'],['../classSphere.html',1,'Sphere']]],
+  ['standards_20',['Centralized Docstring Standards',['../md_docstring__standards.html',1,'']]],
+  ['startnewframe_21',['startNewFrame',['../classRayTracer_1_1IntersectionCache.html#a6572296ae4d55c9f71b8abc99fb84154',1,'RayTracer::IntersectionCache']]],
+  ['system_22',['system',['../md_api__documentation.html#autotoc_md51',1,'Object Tree System'],['../md_api__documentation.html#autotoc_md54',1,'Scene Loading System']]]
+];

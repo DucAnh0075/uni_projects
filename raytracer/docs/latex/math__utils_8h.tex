@@ -1,0 +1,96 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/math\+\_\+utils.h File Reference}
+\hypertarget{math__utils_8h}{}\label{math__utils_8h}\index{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/math\_utils.h@{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/math\_utils.h}}
+
+
+Mathematical utilities and vector operations.  
+
+
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include "{}constants.\+h"{}}\newline
+Include dependency graph for math\+\_\+utils.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{math__utils_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{math__utils_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{math__utils_8h_a2120d19c30c459cd97f49ff80421f7a6}\label{math__utils_8h_a2120d19c30c459cd97f49ff80421f7a6} 
+using {\bfseries Vec3} = Eigen\+::\+Vector3f
+\item 
+\Hypertarget{math__utils_8h_aa5662890956a7195f739ab6c0c34d8c5}\label{math__utils_8h_aa5662890956a7195f739ab6c0c34d8c5} 
+using {\bfseries Vec4} = Eigen\+::\+Vector4f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{math__utils_8h_af0a9cfd55a9bccc5033f2c05bfbf390f}\label{math__utils_8h_af0a9cfd55a9bccc5033f2c05bfbf390f} 
+float {\bfseries Ray\+Tracer\+::safe\+Divide} (float numerator, float denominator, float fallback=0.\+0f)
+\begin{DoxyCompactList}\small\item\em Safe division with fallback value. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a65b854bc2e78c8434dbfec58c1cabe66}\label{math__utils_8h_a65b854bc2e78c8434dbfec58c1cabe66} 
+std\+::optional$<$ float $>$ {\bfseries Ray\+Tracer\+::safe\+Divide\+Optional} (float numerator, float denominator)
+\begin{DoxyCompactList}\small\item\em Safe division returning optional. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a6c2b7c5f60f1691e241277ef180ce822}\label{math__utils_8h_a6c2b7c5f60f1691e241277ef180ce822} 
+float {\bfseries Ray\+Tracer\+::safe\+Sqrt} (float value)
+\begin{DoxyCompactList}\small\item\em Safe square root that handles negative inputs. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a48ee11aec8ea218108296424cf1714f2}\label{math__utils_8h_a48ee11aec8ea218108296424cf1714f2} 
+{\footnotesize template$<$typename Vector\+Type $>$ }\\bool {\bfseries Ray\+Tracer\+::safe\+Normalize} (Vector\+Type \&vector)
+\begin{DoxyCompactList}\small\item\em Safe normalization of a vector. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a681a17e2470a0a55f1f820f7aeda2f26}\label{math__utils_8h_a681a17e2470a0a55f1f820f7aeda2f26} 
+{\footnotesize template$<$typename Vector\+Type $>$ }\\Vector\+Type {\bfseries Ray\+Tracer\+::safe\+Normalized} (const Vector\+Type \&vector)
+\begin{DoxyCompactList}\small\item\em Safe normalization returning normalized copy. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a81c0792db969c4133c5f5d4eeedf940f}\label{math__utils_8h_a81c0792db969c4133c5f5d4eeedf940f} 
+bool {\bfseries Ray\+Tracer\+::is\+Finite} (float value)
+\begin{DoxyCompactList}\small\item\em Check if a floating point number is finite (not NaN or infinity) \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_aada2c47acfbac516340abeb9c08effd2}\label{math__utils_8h_aada2c47acfbac516340abeb9c08effd2} 
+{\footnotesize template$<$typename Vector\+Type $>$ }\\bool {\bfseries Ray\+Tracer\+::is\+Finite} (const Vector\+Type \&vector)
+\begin{DoxyCompactList}\small\item\em Check if a vector contains only finite values. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a6b416a6a923594621b400268e3591122}\label{math__utils_8h_a6b416a6a923594621b400268e3591122} 
+{\footnotesize template$<$typename Vector\+Type $>$ }\\auto {\bfseries Ray\+Tracer\+::clamp\+Vector} (const Vector\+Type \&vector, float min\+Val, float max\+Val) -\/$>$ typename Vector\+Type\+::\+Plain\+Object
+\begin{DoxyCompactList}\small\item\em Clamp a vector\textquotesingle{}s components between min and max. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a49b2424b867360cbdc90d5bc0c8c12e1}\label{math__utils_8h_a49b2424b867360cbdc90d5bc0c8c12e1} 
+Eigen\+::\+Vector3f {\bfseries Ray\+Tracer\+::normalize\+Color} (const Eigen\+::\+Vector3f \&color)
+\begin{DoxyCompactList}\small\item\em Safe color normalization (0-\/255) -\/\texorpdfstring{$>$}{>} (0-\/1) \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a0af4266065843f0ba6345c38378db892}\label{math__utils_8h_a0af4266065843f0ba6345c38378db892} 
+Eigen\+::\+Vector3f {\bfseries Ray\+Tracer\+::denormalize\+Color} (const Eigen\+::\+Vector3f \&color)
+\begin{DoxyCompactList}\small\item\em Safe color denormalization (0-\/1) -\/\texorpdfstring{$>$}{>} (0-\/255) \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_aa8a36c8fb6694830a34a7c0955e307a9}\label{math__utils_8h_aa8a36c8fb6694830a34a7c0955e307a9} 
+std\+::optional$<$ std\+::pair$<$ float, float $>$ $>$ {\bfseries Ray\+Tracer\+::solve\+Quadratic} (float a, float b, float c)
+\begin{DoxyCompactList}\small\item\em Solve quadratic equation ax² + bx + c = 0. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_af668759ab4fa8fe1d5b1c42e4bddd13a}\label{math__utils_8h_af668759ab4fa8fe1d5b1c42e4bddd13a} 
+std\+::optional$<$ std\+::pair$<$ float, float $>$ $>$ {\bfseries Ray\+Tracer\+::ray\+AABBIntersection} (const Eigen\+::\+Vector3f \&ray\+Origin, const Eigen\+::\+Vector3f \&ray\+Dir, const Eigen\+::\+Vector3f \&box\+Min, const Eigen\+::\+Vector3f \&box\+Max)
+\begin{DoxyCompactList}\small\item\em Safe ray-\/\+AABB intersection with proper handling of edge cases. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a0d26529f671910248d0638df163b3271}\label{math__utils_8h_a0d26529f671910248d0638df163b3271} 
+Eigen\+::\+Vector3f {\bfseries Ray\+Tracer\+::color\+To\+Vec3} (const \mbox{\hyperlink{structColor}{Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Convert \doxylink{structColor}{Color} struct to normalized Vec3. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_a3be985e2e54f750c1ce31a62025a0b1f}\label{math__utils_8h_a3be985e2e54f750c1ce31a62025a0b1f} 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries Ray\+Tracer\+::vec3\+To\+Color} (const Eigen\+::\+Vector3f \&vec)
+\begin{DoxyCompactList}\small\item\em Convert normalized Vec3 to \doxylink{structColor}{Color} struct. \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_ab35300cebf8c15f38fd7b4fe85a674ce}\label{math__utils_8h_ab35300cebf8c15f38fd7b4fe85a674ce} 
+Eigen\+::\+Vector3f {\bfseries Ray\+Tracer\+::vec3\+To\+Vector3f} (const Vec3 \&vec)
+\begin{DoxyCompactList}\small\item\em Convert Vec3 to Eigen\+::\+Vector3f directly (identity function since Vec3 is already Eigen\+::\+Vector3f) \end{DoxyCompactList}\item 
+\Hypertarget{math__utils_8h_ae8eaeede2d19ab7347ebc74531a6cf17}\label{math__utils_8h_ae8eaeede2d19ab7347ebc74531a6cf17} 
+Vec3 {\bfseries Ray\+Tracer\+::vec4\+To\+Vec3} (const Vec4 \&vec)
+\begin{DoxyCompactList}\small\item\em Convert Vec4 to Vec3 by extracting x, y, z components. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Mathematical utilities and vector operations. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md\#mathematical-\/utilities 
+\end{DoxySeeAlso}

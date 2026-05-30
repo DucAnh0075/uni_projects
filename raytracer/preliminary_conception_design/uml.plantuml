@@ -1,0 +1,107 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Vec4 { 
+  +x 
+  +y 
+  +z 
+  +w 
+}
+
+class Ray { 
+  +origin: Vec4 
+  +direction: Vec4 
+}
+
+class Mat4 { 
+  +inverse(): Mat4 
+}
+
+interface Intersectable {
+  +intersect(r: Ray): Hit
+  +normalAt(p: Vec4): Vec4
+  +material: Material
+}
+
+class Sphere {
+  +center: Vec4
+  +radius: double
+}
+
+class Plane {
+  +normal: Vec4
+  +offset: double
+}
+
+class Material {
+  +Ka: Color
+  +Kd: Color
+  +Ks: Color
+  +Kr: Color
+  +Kt: Color
+  +shininess: double
+  +ior: double
+}
+
+class Color { 
+  +r: double
+  +g: double
+  +b: double
+  +oplus(other: Color): Color
+}
+
+class PointLight { 
+  +position: Vec4 
+  +intensity: Color 
+}
+
+class Scene {
+  +objects: List<Intersectable>
+  +lights: List<PointLight>
+  +ambient: Color
+  +traceNearest(r: Ray): Hit
+}
+
+class Camera {
+  +eye: Vec4
+  +bottomLeft: Vec4
+  +widthX: double
+  +heightY: double
+  +dpiX: int
+  +dpiY: int
+  +generateRay(i: int, j: int): Ray
+}
+
+class Hit { 
+  +t: double 
+  +point: Vec4 
+  +normal: Vec4 
+  +object: Intersectable 
+}
+
+class RayTracer {
+  +scene: Scene
+  +camera: Camera
+  +maxDepth: int
+  +render(): Image
+  +shade(hit: Hit, ray: Ray, depth: int): Color
+}
+
+class Image { 
+  +width: int
+  +height: int
+  +setPixel(x: int, y: int, c: Color): void
+}
+
+Scene "1" o-- "*" Intersectable
+Scene "1" o-- "*" PointLight
+Sphere ..|> Intersectable
+Plane ..|> Intersectable
+Intersectable --> Material
+RayTracer --> Scene
+RayTracer --> Camera
+Camera --> Ray
+Hit --> Intersectable
+RayTracer --> Image
+
+@enduml

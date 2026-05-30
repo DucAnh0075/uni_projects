@@ -1,0 +1,161 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/math\+\_\+utils.h}
+\hypertarget{math__utils_8h_source}{}\label{math__utils_8h_source}\mbox{\hyperlink{math__utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{constants_8h}{constants.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ }Vec3\ =\ Eigen::Vector3f;}
+\DoxyCodeLine{00016\ \textcolor{keyword}{using\ }Vec4\ =\ Eigen::Vector4f;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structColor}{Color}};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }RayTracer\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{math__utils_8h_af0a9cfd55a9bccc5033f2c05bfbf390f}{safeDivide}}(\textcolor{keywordtype}{float}\ numerator,\ \textcolor{keywordtype}{float}\ denominator,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fallback\ =\ 0.0f)\ \{}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordflow}{return}\ (std::abs(denominator)\ >\ EPSILON)\ ?\ numerator\ /\ denominator\ :\ fallback;}
+\DoxyCodeLine{00027\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{inline}\ std::optional<float>\ \mbox{\hyperlink{math__utils_8h_a65b854bc2e78c8434dbfec58c1cabe66}{safeDivideOptional}}(\textcolor{keywordtype}{float}\ numerator,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denominator)\ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordflow}{if}\ (std::abs(denominator)\ >\ EPSILON)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ numerator\ /\ denominator;}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{math__utils_8h_a6c2b7c5f60f1691e241277ef180ce822}{safeSqrt}}(\textcolor{keywordtype}{float}\ value)\ \{}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{return}\ (value\ >=\ 0.0f)\ ?\ std::sqrt(value)\ :\ 0.0f;}
+\DoxyCodeLine{00041\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ VectorType>}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{math__utils_8h_a48ee11aec8ea218108296424cf1714f2}{safeNormalize}}(VectorType\&\ vector)\ \{}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{float}\ length\ =\ vector.norm();}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordflow}{if}\ (length\ >\ EPSILON)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ vector\ /=\ length;}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \ \ vector.setZero();}
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ VectorType>}
+\DoxyCodeLine{00057\ VectorType\ \mbox{\hyperlink{math__utils_8h_a681a17e2470a0a55f1f820f7aeda2f26}{safeNormalized}}(\textcolor{keyword}{const}\ VectorType\&\ vector)\ \{}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{float}\ length\ =\ vector.norm();}
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordflow}{if}\ (length\ >\ EPSILON)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{return}\ vector\ /\ length;}
+\DoxyCodeLine{00061\ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordflow}{return}\ VectorType::Zero();}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{math__utils_8h_a81c0792db969c4133c5f5d4eeedf940f}{isFinite}}(\textcolor{keywordtype}{float}\ value)\ \{\ \textcolor{keywordflow}{return}\ std::isfinite(value);\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ VectorType>}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{math__utils_8h_a81c0792db969c4133c5f5d4eeedf940f}{isFinite}}(\textcolor{keyword}{const}\ VectorType\&\ vector)\ \{}
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ vector.size();\ ++i)\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(vector[i]))\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ VectorType>}
+\DoxyCodeLine{00081\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{math__utils_8h_a6b416a6a923594621b400268e3591122}{clampVector}}(\textcolor{keyword}{const}\ VectorType\&\ vector,\ \textcolor{keywordtype}{float}\ minVal,\ \textcolor{keywordtype}{float}\ maxVal)\ -\/>}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{typename}\ VectorType::PlainObject\ \{}
+\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{using\ }PlainType\ =\ \textcolor{keyword}{typename}\ VectorType::PlainObject;}
+\DoxyCodeLine{00084\ \ \ PlainType\ result\ =\ vector;}
+\DoxyCodeLine{00085\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ vector.size();\ ++i)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ result[i]\ =\ \mbox{\hyperlink{constants_8h_a4eb388c1df91bf0c54d90fa6920b032a}{clamp}}(result[i],\ minVal,\ maxVal);}
+\DoxyCodeLine{00087\ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{inline}\ Eigen::Vector3f\ \mbox{\hyperlink{math__utils_8h_a49b2424b867360cbdc90d5bc0c8c12e1}{normalizeColor}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ color)\ \{}
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordflow}{return}\ color\ /\ 255.0f;}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{inline}\ Eigen::Vector3f\ \mbox{\hyperlink{math__utils_8h_a0af4266065843f0ba6345c38378db892}{denormalizeColor}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ color)\ \{}
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{math__utils_8h_a6b416a6a923594621b400268e3591122}{clampVector}}(color\ *\ 255.0f,\ 0.0f,\ 255.0f);}
+\DoxyCodeLine{00099\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ std::optional<std::pair<float,\ float>>\ \mbox{\hyperlink{math__utils_8h_aa8a36c8fb6694830a34a7c0955e307a9}{solveQuadratic}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ c)\ \{}
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordflow}{if}\ (std::abs(a)\ <\ EPSILON)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Linear\ equation:\ bx\ +\ c\ =\ 0}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(b)\ <\ EPSILON)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \ \textcolor{comment}{//\ No\ solution\ or\ infinite\ solutions}}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ -\/c\ /\ b;}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_pair(x,\ x);}
+\DoxyCodeLine{00111\ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{float}\ discriminant\ =\ b\ *\ b\ -\/\ 4\ *\ a\ *\ c;}
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordflow}{if}\ (discriminant\ <\ 0)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \ \textcolor{comment}{//\ No\ real\ solutions}}
+\DoxyCodeLine{00116\ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \textcolor{keywordtype}{float}\ sqrtDisc\ =\ std::sqrt(discriminant);}
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordtype}{float}\ x1\ =\ (-\/b\ -\/\ sqrtDisc)\ /\ (2\ *\ a);}
+\DoxyCodeLine{00120\ \ \ \textcolor{keywordtype}{float}\ x2\ =\ (-\/b\ +\ sqrtDisc)\ /\ (2\ *\ a);}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \textcolor{keywordflow}{return}\ std::make\_pair(std::min(x1,\ x2),\ std::max(x1,\ x2));}
+\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ std::optional<std::pair<float,\ float>>\ \mbox{\hyperlink{math__utils_8h_af668759ab4fa8fe1d5b1c42e4bddd13a}{rayAABBIntersection}}(}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrigin,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDir,}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ boxMin,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ boxMax)\ \{}
+\DoxyCodeLine{00129\ \ \ \textcolor{keywordtype}{float}\ tNear\ =\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{00130\ \ \ \textcolor{keywordtype}{float}\ tFar\ =\ std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 3;\ ++i)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(rayDir[i])\ <\ EPSILON)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \textcolor{comment}{//\ Ray\ is\ parallel\ to\ slab}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rayOrigin[i]\ <\ boxMin[i]\ ||\ rayOrigin[i]\ >\ boxMax[i])\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \ \textcolor{comment}{//\ Ray\ misses\ slab\ entirely}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t1\ =\ (boxMin[i]\ -\/\ rayOrigin[i])\ /\ rayDir[i];}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t2\ =\ (boxMax[i]\ -\/\ rayOrigin[i])\ /\ rayDir[i];}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t1\ >\ t2)\ std::swap(t1,\ t2);}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ tNear\ =\ std::max(tNear,\ t1);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ tFar\ =\ std::min(tFar,\ t2);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tNear\ >\ tFar)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \ \textcolor{comment}{//\ No\ intersection}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \textcolor{keywordflow}{return}\ std::make\_pair(tNear,\ tFar);}
+\DoxyCodeLine{00154\ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{inline}\ Eigen::Vector3f\ \mbox{\hyperlink{math__utils_8h_a0d26529f671910248d0638df163b3271}{colorToVec3}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ color)\ \{}
+\DoxyCodeLine{00158\ \ \ \textcolor{keywordflow}{return}\ Eigen::Vector3f(color.r\ /\ 255.0f,\ color.g\ /\ 255.0f,\ color.b\ /\ 255.0f);}
+\DoxyCodeLine{00159\ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00162\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structColor}{Color}}\ \mbox{\hyperlink{math__utils_8h_a3be985e2e54f750c1ce31a62025a0b1f}{vec3ToColor}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ vec)\ \{}
+\DoxyCodeLine{00163\ \ \ Eigen::Vector3f\ clamped\ =\ \mbox{\hyperlink{math__utils_8h_a6b416a6a923594621b400268e3591122}{clampVector}}(vec\ *\ 255.0f,\ 0.0f,\ 255.0f);}
+\DoxyCodeLine{00164\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(clamped.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(clamped.y()),}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(clamped.z())\};}
+\DoxyCodeLine{00166\ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00170\ \textcolor{keyword}{inline}\ Eigen::Vector3f\ \mbox{\hyperlink{math__utils_8h_ab35300cebf8c15f38fd7b4fe85a674ce}{vec3ToVector3f}}(\textcolor{keyword}{const}\ Vec3\&\ vec)\ \{}
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordflow}{return}\ vec;\ \ \textcolor{comment}{//\ Vec3\ is\ already\ Eigen::Vector3f,\ so\ just\ return\ it}}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{inline}\ Vec3\ \mbox{\hyperlink{math__utils_8h_ae8eaeede2d19ab7347ebc74531a6cf17}{vec4ToVec3}}(\textcolor{keyword}{const}\ Vec4\&\ vec)\ \{}
+\DoxyCodeLine{00176\ \ \ \textcolor{keywordflow}{return}\ Vec3(vec.x(),\ vec.y(),\ vec.z());}
+\DoxyCodeLine{00177\ \}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \}\ \ \textcolor{comment}{//\ namespace\ RayTracer}}
+
+\end{DoxyCode}

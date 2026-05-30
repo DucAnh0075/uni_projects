@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['degtorad_0',['degToRad',['../constants_8h.html#a1cab110f6e28661109a9951e58ba5ea4',1,'RayTracer']]],
+  ['deliverables_20per_20iteration_1',['Deliverables per Iteration',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md87',1,'']]],
+  ['denormalizecolor_2',['denormalizeColor',['../math__utils_8h.html#a0af4266065843f0ba6345c38378db892',1,'RayTracer']]],
+  ['deprecated_20list_3',['Deprecated List',['../deprecated.html',1,'']]],
+  ['detailed_20function_20documentation_20in_20api_5fdocumentation_20md_4',['Template for Detailed Function Documentation (in api_documentation.md)',['../md_docstring__standards.html#autotoc_md60',1,'']]],
+  ['development_20plan_20iterative_20with_20tests_5',['Development Plan (Iterative with Tests)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html',1,'']]],
+  ['docstring_20standards_6',['Centralized Docstring Standards',['../md_docstring__standards.html',1,'']]],
+  ['documentation_7',['documentation',['../md_api__documentation.html',1,'Centralized API Documentation'],['../md_docstring__standards.html#autotoc_md58',1,'Class Documentation'],['../md_api__documentation.html#autotoc_md1',1,'Core Classes Documentation'],['..//home/michael/Uni/OOP/jokers_gone_wild/Project/README.md#autotoc_md91',1,'Documentation'],['../md_file__documentation.html',1,'File Documentation'],['../md_docstring__standards.html#autotoc_md59',1,'Function Documentation'],['../md_api__documentation.html#autotoc_md12',1,'Geometric Classes Documentation'],['../md_docstring__standards.html#autotoc_md65',1,'In Centralized Documentation'],['../md_api__documentation.html#autotoc_md36',1,'Lighting and Transformation Classes Documentation'],['../md_api__documentation.html#autotoc_md26',1,'Rendering Functions Documentation'],['../md_api__documentation.html#autotoc_md23',1,'Scene and Screen Classes Documentation'],['../md_api__documentation.html#autotoc_md31',1,'Utility Functions Documentation']]],
+  ['documentation_20in_20api_5fdocumentation_20md_8',['documentation in api_documentation md',['../md_docstring__standards.html#autotoc_md61',1,'Template for Class Documentation (in api_documentation.md)'],['../md_docstring__standards.html#autotoc_md60',1,'Template for Detailed Function Documentation (in api_documentation.md)']]]
+];

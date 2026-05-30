@@ -1,0 +1,40 @@
+\doxysection{Scene Class Reference}
+\hypertarget{classScene}{}\label{classScene}\index{Scene@{Scene}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classScene_ad14474725b2cb1d02ad713da1e24bfbd}\label{classScene_ad14474725b2cb1d02ad713da1e24bfbd} 
+{\bfseries Scene} (const Eigen\+::\+Vector3f \&bg\+Color)
+\item 
+\Hypertarget{classScene_af92d9846051c10c4bcc511712e57ba61}\label{classScene_af92d9846051c10c4bcc511712e57ba61} 
+void {\bfseries add\+Object} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&obj)
+\item 
+\Hypertarget{classScene_a2215fcbee5239ea18d63246fdb41ded5}\label{classScene_a2215fcbee5239ea18d63246fdb41ded5} 
+void {\bfseries add\+Light} (const \mbox{\hyperlink{classLight}{Light}} \&L)
+\item 
+\Hypertarget{classScene_af16531ae75cb2908d43b47a80713adbf}\label{classScene_af16531ae75cb2908d43b47a80713adbf} 
+bool {\bfseries trace} (const Eigen\+::\+Vector3f \&ray\+Orig, const Eigen\+::\+Vector3f \&ray\+Dir, \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \&hit\+Info, float \&t\+Min) const
+\item 
+\Hypertarget{classScene_af91b9290d080635c210aeaf64ccbaadf}\label{classScene_af91b9290d080635c210aeaf64ccbaadf} 
+bool {\bfseries trace} (const Eigen\+::\+Vector3f \&ray\+Orig, const Eigen\+::\+Vector3f \&ray\+Dir, \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \&hit\+Info, float \&t\+Min, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&hit\+Object) const
+\item 
+\Hypertarget{classScene_a3383e17daba5259f59230e6615c9dfc9}\label{classScene_a3383e17daba5259f59230e6615c9dfc9} 
+bool {\bfseries is\+Occluded} (const Eigen\+::\+Vector3f \&origin, const Eigen\+::\+Vector3f \&dir, float max\+Dist, float eps=1e-\/3f) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classScene_aa81f39e783f1d0f8b0f960ba80f4b7db}\label{classScene_aa81f39e783f1d0f8b0f960ba80f4b7db} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ $>$ {\bfseries objects}
+\item 
+\Hypertarget{classScene_ab3625e4ac3c6e47156edd23e2421e828}\label{classScene_ab3625e4ac3c6e47156edd23e2421e828} 
+std\+::vector$<$ \mbox{\hyperlink{classLight}{Light}} $>$ {\bfseries lights}
+\item 
+\Hypertarget{classScene_af7de4c5f08de1a1696effc1edf7d77b3}\label{classScene_af7de4c5f08de1a1696effc1edf7d77b3} 
+Eigen\+::\+Vector3f {\bfseries background\+Color}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/scene.\+h\end{DoxyCompactItemize}

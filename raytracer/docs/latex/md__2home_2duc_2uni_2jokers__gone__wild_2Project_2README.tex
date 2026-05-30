@@ -1,0 +1,186 @@
+\chapter{Ray Tracer – Overview}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README}{}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README}\index{Ray Tracer – Overview@{Ray Tracer – Overview}}
+\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md14}%
+\Hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md14}%
+ This project is a simple C++ ray tracer using Eigen for math and Open\+CV for image display and drawing. It supports spheres, axis-\/aligned cubes, and an infinite plane (half-\/space), with ambient + diffuse + specular lighting, hard shadows, and a few visualization overlays.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md15}{}\doxysubsection{\texorpdfstring{📚 Quick Documentation Access}{📚 Quick Documentation Access}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ docs-\/serve\ \ \ \ \#\ Generate\ docs\ and\ serve\ on\ localhost:8080}
+\DoxyCodeLine{./generate\_docs.sh\ serve\ \ \#\ Alternative\ method}
+
+\end{DoxyCode}
+ See the Documentation section for full details.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md16}{}\doxysubsection{\texorpdfstring{Geometry \& Lighting}{Geometry \& Lighting}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md16}
+
+\begin{DoxyItemize}
+\item Objects\+: \doxylink{classSphere}{Sphere}, \doxylink{classCube}{Cube} (AABB via slabs), \doxylink{classHalfSpace}{Half\+Space} (infinite plane)
+\item Lights\+: Point and Directional
+\item Shading\+: Ambient + Lambertian diffuse + Phong specular
+\item Shadows\+: Hard shadows using shadow rays with occlusion checks
+\end{DoxyItemize}\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md17}{}\doxysubsection{\texorpdfstring{Screen}{Screen}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md17}
+The screen is a world-\/space rectangle (in {\ttfamily \doxylink{scene_8h_source}{scene.\+h}}) that controls resolution and pixel mapping. The camera/observer is at the origin looking down −Z.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md18}{}\doxysection{\texorpdfstring{Build}{Build}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md18}
+Requirements\+:
+\begin{DoxyItemize}
+\item C++17 compiler
+\item Open\+CV 4
+\item Eigen 3
+\end{DoxyItemize}
+
+Typical build (Linux)\+: use the provided Makefile or compile manually via pkg-\/config.
+
+Using Makefile\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ \ \ \ \ \ \ \ \ \ \#\ builds\ ./raytrace\ (release)}
+\DoxyCodeLine{make\ run\ \ \ \ \ \ \#\ builds\ then\ runs\ ./raytrace}
+\DoxyCodeLine{make\ run-\/headless\ \ \#\ run\ with\ prompts\ disabled\ (RT\_HEADLESS=1)}
+\DoxyCodeLine{make\ debug\ \ \ \ \#\ debug\ build\ (-\/g\ -\/O0)}
+\DoxyCodeLine{make\ clean\ \ \ \ \#\ remove\ artifacts}
+
+\end{DoxyCode}
+
+
+Manual compile (if preferred)\+: The binary will be named {\ttfamily raytrace} in the project folder.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md19}{}\doxysection{\texorpdfstring{Run \& Toggles}{Run \& Toggles}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md19}
+At startup, the program prompts for visualization toggles via the {\ttfamily \doxylink{structToggleSettings}{Toggle\+Settings}} helper in {\ttfamily \doxylink{toggles_8h_source}{toggles.\+h}}\+:
+
+
+\begin{DoxyItemize}
+\item show\+\_\+rays\+: Draw sample camera rays in red
+\item show\+\_\+light\+\_\+rays\+: Draw sample light-\/to-\/pixel rays in white (from first point light)
+\item show\+\_\+plane\+\_\+flow\+: Draw flow arrows on the plane showing the light’s tangent direction
+\item plane\+\_\+flow\+\_\+stride\+: Arrow grid spacing (only asked if plane flow is enabled)
+\end{DoxyItemize}
+
+Leave inputs blank or answer {\ttfamily n} to disable; answer {\ttfamily y} to enable. The plane arrows are capped internally for performance.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md20}{}\doxysubsection{\texorpdfstring{Headless and CLI configuration}{Headless and CLI configuration}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md20}
+You can skip interactive prompts and configure toggles via environment variables or CLI flags.
+
+Environment variables\+:
+\begin{DoxyItemize}
+\item {\ttfamily RT\+\_\+\+HEADLESS=1} – disable prompts
+\item {\ttfamily RT\+\_\+\+SHOW\+\_\+\+RAYS=0\texorpdfstring{$\vert$}{|}1}
+\item {\ttfamily RT\+\_\+\+SHOW\+\_\+\+LIGHT\+\_\+\+RAYS=0\texorpdfstring{$\vert$}{|}1}
+\item {\ttfamily RT\+\_\+\+SHOW\+\_\+\+PLANE\+\_\+\+FLOW=0\texorpdfstring{$\vert$}{|}1}
+\item {\ttfamily RT\+\_\+\+PLANE\+\_\+\+FLOW\+\_\+\+STRIDE=\texorpdfstring{$<$}{<}16..512\texorpdfstring{$>$}{>}}
+\end{DoxyItemize}
+
+CLI flags (override defaults; prompts are still shown unless {\ttfamily -\/-\/headless} is set)\+:
+\begin{DoxyItemize}
+\item {\ttfamily -\/-\/headless} or {\ttfamily -\/-\/no-\/prompt}
+\item {\ttfamily -\/-\/show-\/rays\mbox{[}=0\texorpdfstring{$\vert$}{|}1\mbox{]}}
+\item {\ttfamily -\/-\/show-\/light-\/rays\mbox{[}=0\texorpdfstring{$\vert$}{|}1\mbox{]}}
+\item {\ttfamily -\/-\/show-\/plane-\/flow\mbox{[}=0\texorpdfstring{$\vert$}{|}1\mbox{]}}
+\item {\ttfamily -\/-\/plane-\/flow-\/stride \texorpdfstring{$<$}{<}N\texorpdfstring{$>$}{>}} or {\ttfamily -\/-\/plane-\/flow-\/stride=N}
+\end{DoxyItemize}\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md21}{}\doxysection{\texorpdfstring{Helpers}{Helpers}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md21}
+
+\begin{DoxyItemize}
+\item Config lesen (\href{https://stackoverflow.com/questions/32205981/reading-json-files-in-c}{\texttt{ https\+://stackoverflow.\+com/questions/32205981/reading-\/json-\/files-\/in-\/c}})
+\item Pixel Calculator, basierend auf DPI und Auflösung
+\end{DoxyItemize}\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md22}{}\doxysection{\texorpdfstring{Documentation}{Documentation}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md22}
+This project includes comprehensive API documentation generated with Doxygen. The documentation covers all classes, methods, and data structures with detailed descriptions and usage examples.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md23}{}\doxysubsection{\texorpdfstring{📚 Viewing Documentation}{📚 Viewing Documentation}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md23}
+The easiest way to generate and view the documentation\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Generate\ documentation}
+\DoxyCodeLine{make\ docs}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Generate\ and\ serve\ on\ localhost:8080}
+\DoxyCodeLine{make\ docs-\/serve}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Alternative:\ use\ the\ documentation\ script}
+\DoxyCodeLine{./generate\_docs.sh\ serve}
+
+\end{DoxyCode}
+
+
+Then open \href{http://localhost:8080}{\texttt{ http\+://localhost\+:8080}} in your browser.\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md24}{}\doxysubsection{\texorpdfstring{🔧 Documentation Generation Options}{🔧 Documentation Generation Options}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md24}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md25}{}\doxysubsubsection{\texorpdfstring{Method 1\+: Using Makefile (\+Recommended)}{Method 1: Using Makefile (Recommended)}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md25}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ docs\ \ \ \ \ \ \ \ \ \ \#\ Generate\ documentation}
+\DoxyCodeLine{make\ docs-\/clean\ \ \ \ \#\ Clean\ documentation\ files\ \ }
+\DoxyCodeLine{make\ docs-\/serve\ \ \ \ \#\ Generate\ and\ serve\ on\ localhost:8080}
+\DoxyCodeLine{make\ docs-\/install\ \ \#\ Install\ Doxygen\ if\ needed}
+
+\end{DoxyCode}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md26}{}\doxysubsubsection{\texorpdfstring{Method 2\+: Using Documentation Script}{Method 2: Using Documentation Script}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md26}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./generate\_docs.sh\ \ \ \ \ \ \ \ \ \ \ \#\ Generate\ documentation}
+\DoxyCodeLine{./generate\_docs.sh\ serve\ \ \ \ \ \#\ Generate\ and\ serve\ documentation}
+\DoxyCodeLine{./generate\_docs.sh\ open\ \ \ \ \ \ \#\ Generate\ and\ open\ in\ browser}
+\DoxyCodeLine{./generate\_docs.sh\ clean\ \ \ \ \ \#\ Clean\ documentation\ files}
+\DoxyCodeLine{./generate\_docs.sh\ install\ \ \ \#\ Install\ Doxygen\ dependencies}
+
+\end{DoxyCode}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md27}{}\doxysubsubsection{\texorpdfstring{Method 3\+: Manual Doxygen}{Method 3: Manual Doxygen}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md27}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Install\ Doxygen\ first}
+\DoxyCodeLine{sudo\ apt\ install\ doxygen\ graphviz\ \ \#\ Ubuntu/Debian}
+\DoxyCodeLine{\#\ or:\ sudo\ yum\ install\ doxygen\ graphviz\ \ \#\ CentOS/RHEL}
+\DoxyCodeLine{\#\ or:\ brew\ install\ doxygen\ graphviz\ \ \ \ \ \ \#\ macOS}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Generate\ documentation}
+\DoxyCodeLine{doxygen\ Doxyfile}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ View\ documentation}
+\DoxyCodeLine{open\ docs/html/index.html}
+
+\end{DoxyCode}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md28}{}\doxysubsection{\texorpdfstring{📋 Documentation Requirements}{📋 Documentation Requirements}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md28}
+{\bfseries{Required Software\+:}}
+\begin{DoxyItemize}
+\item Doxygen (document generator)
+\item Graphviz (for class diagrams)
+\end{DoxyItemize}
+
+{\bfseries{Auto-\/\+Installation\+:}} The Makefile and scripts will automatically install Doxygen on most systems\+:
+\begin{DoxyItemize}
+\item Ubuntu/\+Debian\+: {\ttfamily apt install doxygen graphviz}
+\item Cent\+OS/\+RHEL\+: {\ttfamily yum install doxygen graphviz} ~\newline
+
+\item mac\+OS\+: {\ttfamily brew install doxygen graphviz}
+\end{DoxyItemize}\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md29}{}\doxysubsection{\texorpdfstring{📖 Documentation Features}{📖 Documentation Features}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md29}
+The generated documentation includes\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Class Hierarchy}}\+: Visual inheritance diagrams
+\item {\bfseries{API Reference}}\+: All public methods and parameters ~\newline
+
+\item {\bfseries{Code Examples}}\+: Usage patterns and best practices
+\item {\bfseries{Cross-\/\+References}}\+: Links between related classes
+\item {\bfseries{Source Code}}\+: Browse annotated source files
+\item {\bfseries{Search}}\+: Full-\/text search across all documentation
+\end{DoxyItemize}
+
+{\bfseries{Key Documented Components\+:}}
+\begin{DoxyItemize}
+\item Ray tracing algorithms and intersection calculations
+\item \doxylink{structMaterial}{Material} and lighting models (Phong, reflection, refraction)
+\item \doxylink{classScene}{Scene} management and object hierarchies
+\item Coordinate systems and transformations
+\item JSON scene file format specifications
+\end{DoxyItemize}\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md30}{}\doxysubsection{\texorpdfstring{🌐 Accessing Documentation}{🌐 Accessing Documentation}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md30}
+After generation, documentation is available at\+:
+\begin{DoxyItemize}
+\item {\bfseries{Local Files}}\+: {\ttfamily docs/html/index.\+html}
+\item {\bfseries{Web Server}}\+: \href{http://localhost:8080}{\texttt{ http\+://localhost\+:8080}} (using {\ttfamily make docs-\/serve})
+\item {\bfseries{Direct Browser}}\+: Use {\ttfamily ./generate\+\_\+docs.sh open}
+\end{DoxyItemize}
+
+The documentation is self-\/contained HTML that works offline and can be shared easily.
+
+\DoxyHorRuler{0}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md32}{}\doxysection{\texorpdfstring{Classes}{Classes}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2README_autotoc_md32}
+
+\begin{DoxyItemize}
+\item Observer
+\item \doxylink{classObject}{Object} (abstract)
+\begin{DoxyItemize}
+\item \doxylink{classCube}{Cube}
+\item \doxylink{classSphere}{Sphere}
+\item Plane (\doxylink{classHalfSpace}{Half\+Space}) 
+\end{DoxyItemize}
+\end{DoxyItemize}

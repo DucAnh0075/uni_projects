@@ -1,0 +1,84 @@
+\doxysection{Transform Class Reference}
+\hypertarget{classTransform}{}\label{classTransform}\index{Transform@{Transform}}
+
+
+\doxylink{classTransform}{Transform} class using Eigen matrices.  
+
+
+
+
+{\ttfamily \#include $<$transform.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classTransform_aa1049d864f19a0da82637cdb58fb6d7a}\label{classTransform_aa1049d864f19a0da82637cdb58fb6d7a} 
+{\bfseries Transform} (const Matrix4 \&m)
+\item 
+\Hypertarget{classTransform_a86fce42cbde4312d42eee49f1c8c5f12}\label{classTransform_a86fce42cbde4312d42eee49f1c8c5f12} 
+\mbox{\hyperlink{classTransform}{Transform}} {\bfseries operator\texorpdfstring{$\ast$}{*}} (const \mbox{\hyperlink{classTransform}{Transform}} \&other) const
+\item 
+\Hypertarget{classTransform_a26a9823beb7d340b3c552974eef21a6b}\label{classTransform_a26a9823beb7d340b3c552974eef21a6b} 
+Vec3 {\bfseries transform\+Point} (const Vec3 \&p) const
+\item 
+\Hypertarget{classTransform_a607ade9899ee9a5da7262dd0564f3c18}\label{classTransform_a607ade9899ee9a5da7262dd0564f3c18} 
+Vec3 {\bfseries transform\+Vector} (const Vec3 \&v) const
+\item 
+\Hypertarget{classTransform_a36b84032b31489154f8e15c02597036c}\label{classTransform_a36b84032b31489154f8e15c02597036c} 
+Vec3 {\bfseries transform\+Normal} (const Vec3 \&n) const
+\item 
+\Hypertarget{classTransform_afc081f46b7161c9fafa1140a8e8eaa5d}\label{classTransform_afc081f46b7161c9fafa1140a8e8eaa5d} 
+Vec3 {\bfseries transform\+Point\+Inverse} (const Vec3 \&p) const
+\item 
+\Hypertarget{classTransform_af2957f2a7f57f00fa0f04cc05762ab77}\label{classTransform_af2957f2a7f57f00fa0f04cc05762ab77} 
+Vec3 {\bfseries transform\+Vector\+Inverse} (const Vec3 \&v) const
+\item 
+\Hypertarget{classTransform_a36395a9e0b2b25087df71b058c691604}\label{classTransform_a36395a9e0b2b25087df71b058c691604} 
+\mbox{\hyperlink{structLine}{Line}} {\bfseries transform\+Line} (const \mbox{\hyperlink{structLine}{Line}} \&line) const
+\item 
+\Hypertarget{classTransform_ae7db471648964073dd5d8c2d078b2b14}\label{classTransform_ae7db471648964073dd5d8c2d078b2b14} 
+const Matrix4 \& {\bfseries get\+Matrix} () const
+\item 
+\Hypertarget{classTransform_ae69242967fe0136122e8ac8aef4be245}\label{classTransform_ae69242967fe0136122e8ac8aef4be245} 
+const Matrix4 \& {\bfseries get\+Inverse} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classTransform_a96ec51539a887bc574b609600ef3b7c3}\label{classTransform_a96ec51539a887bc574b609600ef3b7c3} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries translation} (float tx, float ty, float tz)
+\item 
+\Hypertarget{classTransform_a313c82e32d73b59559925a61e4c99191}\label{classTransform_a313c82e32d73b59559925a61e4c99191} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotationX} (float degrees)
+\item 
+\Hypertarget{classTransform_aa55eec9fd8a1a8e61efd28cdea85fa1a}\label{classTransform_aa55eec9fd8a1a8e61efd28cdea85fa1a} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotation\+XDegrees} (float degrees)
+\item 
+\Hypertarget{classTransform_adafdb3f09534041cbea5fe84f9f32d93}\label{classTransform_adafdb3f09534041cbea5fe84f9f32d93} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotationY} (float degrees)
+\item 
+\Hypertarget{classTransform_a39d04130c4368f02f1c7899aa79603da}\label{classTransform_a39d04130c4368f02f1c7899aa79603da} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotation\+YDegrees} (float degrees)
+\item 
+\Hypertarget{classTransform_a83aa2fdb20a64183a6528a142a88c4d3}\label{classTransform_a83aa2fdb20a64183a6528a142a88c4d3} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotationZ} (float degrees)
+\item 
+\Hypertarget{classTransform_a128a3fc07f295a08c18be3d3f276f2ad}\label{classTransform_a128a3fc07f295a08c18be3d3f276f2ad} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries rotation\+ZDegrees} (float degrees)
+\item 
+\Hypertarget{classTransform_a19db12edb438d9edcd280d0e3057909c}\label{classTransform_a19db12edb438d9edcd280d0e3057909c} 
+static \mbox{\hyperlink{classTransform}{Transform}} {\bfseries scaling} (float sx, float sy, float sz)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classTransform}{Transform} class using Eigen matrices. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md for detailed documentation 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{transform_8h}{transform.\+h}}\end{DoxyCompactItemize}

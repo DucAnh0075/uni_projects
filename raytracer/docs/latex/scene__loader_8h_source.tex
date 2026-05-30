@@ -1,0 +1,881 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/scene\+\_\+loader.h}
+\hypertarget{scene__loader_8h_source}{}\label{scene__loader_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}light.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{math__utils_8h}{math\_utils.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}object.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}object\_tree.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}scene.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{transform_8h}{transform.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structJsonValue}{JsonValue}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{enum}\ Type\ \{\ OBJECT,\ ARRAY,\ STRING,\ NUMBER,\ NULL\_VAL\ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ Type\ type;}
+\DoxyCodeLine{00020\ \ \ std::string\ str\_val;}
+\DoxyCodeLine{00021\ \ \ \textcolor{keywordtype}{double}\ num\_val;}
+\DoxyCodeLine{00022\ \ \ std::map<std::string,\ std::shared\_ptr<JsonValue>>\ obj\_val;}
+\DoxyCodeLine{00023\ \ \ std::vector<std::shared\_ptr<JsonValue>>\ arr\_val;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{structJsonValue}{JsonValue}}(Type\ t\ =\ NULL\_VAL)\ :\ type(t),\ num\_val(0)\ \{\}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordtype}{bool}\ isObject()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\ ==\ OBJECT;\ \}}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{bool}\ isArray()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\ ==\ ARRAY;\ \}}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{bool}\ isString()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\ ==\ STRING;\ \}}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{bool}\ isNumber()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\ ==\ NUMBER;\ \}}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{bool}\ isNull()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\ ==\ NULL\_VAL;\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ std::shared\_ptr<JsonValue>\ operator[](\textcolor{keyword}{const}\ std::string\&\ key)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ OBJECT\ \&\&\ obj\_val.find(key)\ !=\ obj\_val.end())\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ obj\_val[key];}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<JsonValue>(NULL\_VAL);}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ std::shared\_ptr<JsonValue>\ operator[](\textcolor{keywordtype}{size\_t}\ index)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ ARRAY\ \&\&\ index\ <\ arr\_val.size()\ \&\&\ arr\_val[index])\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ arr\_val[index];}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<JsonValue>(NULL\_VAL);}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{size\_t}\ size()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ ARRAY)\ \textcolor{keywordflow}{return}\ arr\_val.size();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ OBJECT)\ \textcolor{keywordflow}{return}\ obj\_val.size();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00051\ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ Vec3\ asVec3()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ ARRAY\ \&\&\ arr\_val.size()\ >=\ 2)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{comment}{//\ Safe\ bounds\ checking\ for\ array\ access}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ (arr\_val.size()\ >\ 0\ \&\&\ arr\_val[0]\ \&\&\ arr\_val[0]-\/>isNumber())}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[0]-\/>num\_val}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ y\ =\ (arr\_val.size()\ >\ 1\ \&\&\ arr\_val[1]\ \&\&\ arr\_val[1]-\/>isNumber())}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[1]-\/>num\_val}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ z\ =\ (arr\_val.size()\ >\ 2\ \&\&\ arr\_val[2]\ \&\&\ arr\_val[2]-\/>isNumber())}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[2]-\/>num\_val}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(x,\ y,\ z);}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(0,\ 0,\ 0);}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ Vec3\ asPosition()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ ARRAY\ \&\&\ arr\_val.size()\ >=\ 3)\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{comment}{//\ Safe\ bounds\ checking\ for\ array\ access}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ (arr\_val.size()\ >\ 0\ \&\&\ arr\_val[0]\ \&\&\ arr\_val[0]-\/>isNumber())}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[0]-\/>num\_val}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ y\ =\ (arr\_val.size()\ >\ 1\ \&\&\ arr\_val[1]\ \&\&\ arr\_val[1]-\/>isNumber())}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[1]-\/>num\_val}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ z\ =\ (arr\_val.size()\ >\ 2\ \&\&\ arr\_val[2]\ \&\&\ arr\_val[2]-\/>isNumber())}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (\textcolor{keywordtype}{float})arr\_val[2]-\/>num\_val}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(x,\ y,\ z);}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(0,\ 0,\ 0);}
+\DoxyCodeLine{00085\ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ Vec3\ asColor()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ ARRAY\ \&\&\ arr\_val.size()\ >=\ 3)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \textcolor{comment}{//\ Safe\ bounds\ checking\ for\ array\ access\ with\ color\ clamping}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ r\ =\ (arr\_val.size()\ >\ 0\ \&\&\ arr\_val[0]\ \&\&\ arr\_val[0]-\/>isNumber())}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ std::max(0.0f,\ std::min(1.0f,\ (\textcolor{keywordtype}{float})arr\_val[0]-\/>num\_val))}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ g\ =\ (arr\_val.size()\ >\ 1\ \&\&\ arr\_val[1]\ \&\&\ arr\_val[1]-\/>isNumber())}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ std::max(0.0f,\ std::min(1.0f,\ (\textcolor{keywordtype}{float})arr\_val[1]-\/>num\_val))}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ b\ =\ (arr\_val.size()\ >\ 2\ \&\&\ arr\_val[2]\ \&\&\ arr\_val[2]-\/>isNumber())}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ std::max(0.0f,\ std::min(1.0f,\ (\textcolor{keywordtype}{float})arr\_val[2]-\/>num\_val))}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0.0f;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(r,\ g,\ b);}
+\DoxyCodeLine{00100\ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(0,\ 0,\ 0);}
+\DoxyCodeLine{00102\ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordtype}{float}\ asFloat()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isNumber()\ ?\ (float)num\_val\ :\ 0.0f;\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \textcolor{keywordtype}{int}\ asInt()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isNumber()\ ?\ (int)num\_val\ :\ 0;\ \}}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSceneLoader}{SceneLoader}}\ \{}
+\DoxyCodeLine{00110\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{static}\ std::string\ trim(\textcolor{keyword}{const}\ std::string\&\ str)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ first\ =\ str.find\_first\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{if}\ (first\ ==\ std::string::npos)\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ last\ =\ str.find\_last\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return}\ str.substr(first,\ (last\ -\/\ first\ +\ 1));}
+\DoxyCodeLine{00116\ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJsonString(\textcolor{keyword}{const}\ std::string\&\ json,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ pos)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ std::make\_shared<JsonValue>(JsonValue::STRING);}
+\DoxyCodeLine{00121\ \ \ \ \ pos++;\ \ }
+\DoxyCodeLine{00122\ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ json[pos]\ !=\ \textcolor{charliteral}{'"{}'})\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (json[pos]\ ==\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}\ \&\&\ pos\ +\ 1\ <\ json.length())\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (json[pos])\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'n'}:}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'t'}:}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ \textcolor{charliteral}{'\(\backslash\)t'};}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'r'}:}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ \textcolor{charliteral}{'\(\backslash\)r'};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}:}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'"{}'}:}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ \textcolor{charliteral}{'"{}'};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ json[pos];}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ value\ +=\ json[pos];}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00151\ \ \ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ json.length())\ pos++;\ }
+\DoxyCodeLine{00154\ \ \ \ \ result-\/>str\_val\ =\ value;}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00156\ \ \ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJsonNumber(\textcolor{keyword}{const}\ std::string\&\ json,}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ pos)\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ std::make\_shared<JsonValue>(JsonValue::NUMBER);}
+\DoxyCodeLine{00161\ \ \ \ \ std::string\ numStr;}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ (std::isdigit(json[pos])\ ||\ json[pos]\ ==\ \textcolor{charliteral}{'.'}\ ||\ json[pos]\ ==\ \textcolor{charliteral}{'-\/'}\ ||}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ json[pos]\ ==\ \textcolor{charliteral}{'+'}\ ||\ json[pos]\ ==\ \textcolor{charliteral}{'e'}\ ||\ json[pos]\ ==\ \textcolor{charliteral}{'E'}))\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ numStr\ +=\ json[pos++];}
+\DoxyCodeLine{00167\ \ \ \ \ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ result-\/>num\_val\ =\ std::stod(numStr);}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00171\ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJsonArray(\textcolor{keyword}{const}\ std::string\&\ json,}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ pos)\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ std::make\_shared<JsonValue>(JsonValue::ARRAY);}
+\DoxyCodeLine{00176\ \ \ \ \ pos++;\ \ \textcolor{comment}{//\ skip\ opening\ damdam\ DAAHM..\ [}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length())\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ std::isspace(json[pos]))\ pos++;}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ >=\ json.length())\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (json[pos]\ ==\ \textcolor{charliteral}{']'})\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ value\ =\ parseJsonValue(json,\ pos);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value)\ result-\/>arr\_val.push\_back(value);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace}}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ std::isspace(json[pos]))\ pos++;}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ json.length()\ \&\&\ json[pos]\ ==\ \textcolor{charliteral}{','})\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (pos\ <\ json.length()\ \&\&\ json[pos]\ ==\ \textcolor{charliteral}{']'})\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00200\ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00203\ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJsonObject(\textcolor{keyword}{const}\ std::string\&\ json,}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ pos)\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ std::make\_shared<JsonValue>(JsonValue::OBJECT);}
+\DoxyCodeLine{00208\ \ \ \ \ pos++;\ \ \textcolor{comment}{//\ skip\ opening\ \{}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length())\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ std::isspace(json[pos]))\ pos++;}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ >=\ json.length())\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (json[pos]\ ==\ \textcolor{charliteral}{'\}'})\ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \textcolor{comment}{//\ Parse\ key}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (json[pos]\ !=\ \textcolor{charliteral}{'"{}'})\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ keyValue\ =\ parseJsonString(json,\ pos);}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ std::string\ key\ =\ keyValue-\/>str\_val;}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace\ And\ colon}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::isspace(json[pos])\ ||\ json[pos]\ ==\ \textcolor{charliteral}{':'}))}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \textcolor{comment}{//\ Parse\ value}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ value\ =\ parseJsonValue(json,\ pos);}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value)\ result-\/>obj\_val[key]\ =\ value;}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace\ again...}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ std::isspace(json[pos]))\ pos++;}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ json.length()\ \&\&\ json[pos]\ ==\ \textcolor{charliteral}{','})\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (pos\ <\ json.length()\ \&\&\ json[pos]\ ==\ \textcolor{charliteral}{'\}'})\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00243\ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00246\ \ \ \}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJsonValue(\textcolor{keyword}{const}\ std::string\&\ json,}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ pos)\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{comment}{//\ Skip\ whitespace}}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ <\ json.length()\ \&\&\ std::isspace(json[pos]))\ pos++;}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ >=\ json.length())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordtype}{char}\ c\ =\ json[pos];}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'"{}'})\ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonString(json,\ pos);}
+\DoxyCodeLine{00259\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'\{'})\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonObject(json,\ pos);}
+\DoxyCodeLine{00261\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'['})\ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonArray(json,\ pos);}
+\DoxyCodeLine{00263\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::isdigit(c)\ ||\ c\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonNumber(json,\ pos);}
+\DoxyCodeLine{00265\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (json.substr(pos,\ 4)\ ==\ \textcolor{stringliteral}{"{}null"{}})\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ pos\ +=\ 4;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<JsonValue>(JsonValue::NULL\_VAL);}
+\DoxyCodeLine{00268\ \ \ \ \ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00271\ \ \ \}}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<JsonValue>\ parseJson(\textcolor{keyword}{const}\ std::string\&\ json)\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ pos\ =\ 0;}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonValue(json,\ pos);}
+\DoxyCodeLine{00276\ \ \ \}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00281\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ createObjectTransform(\textcolor{keyword}{const}\ Vec3\&\ position,}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ rotationDegrees,}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ scale)\ \{}
+\DoxyCodeLine{00284\ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ rotationTransform\ =}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ Transform::rotationXDegrees(rotationDegrees.x())\ *}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ Transform::rotationYDegrees(rotationDegrees.y())\ *}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ Transform::rotationZDegrees(rotationDegrees.z());}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ scaleTransform\ =}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ Transform::scaling(scale.x(),\ scale.y(),\ scale.z());}
+\DoxyCodeLine{00291\ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ translateTransform\ =}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ Transform::translation(position.x(),\ position.y(),\ position.z());}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordflow}{return}\ translateTransform\ *\ rotationTransform\ *\ scaleTransform;}
+\DoxyCodeLine{00295\ \ \ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00298\ \ \ \textcolor{keyword}{static}\ T\ parseJsonProperty(}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ std::shared\_ptr<JsonValue>\ obj,\ \textcolor{keyword}{const}\ std::string\&\ key,}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ std::function<T(std::shared\_ptr<JsonValue>)>\ converter,}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\&\ defaultValue)\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\ \&\&\ obj-\/>isObject()\ \&\&}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ obj-\/>obj\_val.find(key)\ !=\ obj-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ converter(obj-\/>obj\_val[key]);}
+\DoxyCodeLine{00305\ \ \ \ \ \}}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00307\ \ \ \}}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \textcolor{keyword}{static}\ Eigen::Vector3f\ parseJsonColorProperty(}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ std::shared\_ptr<JsonValue>\ obj,\ \textcolor{keyword}{const}\ std::string\&\ key,}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ defaultValue\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f))\ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonProperty<Eigen::Vector3f>(}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ obj,\ key,}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ [](std::shared\_ptr<JsonValue>\ val)\ -\/>\ Eigen::Vector3f\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ RayTracer::vec3ToVector3f(val-\/>asColor());}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ defaultValue);}
+\DoxyCodeLine{00318\ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ parseJsonFloatProperty(std::shared\_ptr<JsonValue>\ obj,}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ key,}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ defaultValue\ =\ 0.0f)\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonProperty<float>(}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ obj,\ key,}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ [](std::shared\_ptr<JsonValue>\ val)\ -\/>\ \textcolor{keywordtype}{float}\ \{\ \textcolor{keywordflow}{return}\ val-\/>asFloat();\ \},}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ defaultValue);}
+\DoxyCodeLine{00327\ \ \ \}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \textcolor{keyword}{static}\ Vec3\ parseJsonVec3Property(std::shared\_ptr<JsonValue>\ obj,}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ key,}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ defaultValue\ =\ Vec3(0,\ 0,\ 0))\ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonProperty<Vec3>(}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ obj,\ key,}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ [](std::shared\_ptr<JsonValue>\ val)\ -\/>\ Vec3\ \{\ \textcolor{keywordflow}{return}\ val-\/>asVec3();\ \},}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ defaultValue);}
+\DoxyCodeLine{00336\ \ \ \}}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ parseJsonIntProperty(std::shared\_ptr<JsonValue>\ obj,}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ key,}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ defaultValue\ =\ 0)\ \{}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordflow}{return}\ parseJsonProperty<int>(}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ obj,\ key,}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ [](std::shared\_ptr<JsonValue>\ val)\ -\/>\ \textcolor{keywordtype}{int}\ \{\ \textcolor{keywordflow}{return}\ val-\/>asInt();\ \},}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ defaultValue);}
+\DoxyCodeLine{00345\ \ \ \}}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00347\ \ \ \textcolor{comment}{//\ Parse\ material/color\ from\ JSON\ object\ with\ default\ values}}
+\DoxyCodeLine{00348\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structMaterial}{Material}}\ parseJsonMaterial(std::shared\_ptr<JsonValue>\ colorJson)\ \{}
+\DoxyCodeLine{00349\ \ \ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material;}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordflow}{if}\ (!colorJson\ ||\ !colorJson-\/>isObject())\ \{}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ material;}
+\DoxyCodeLine{00353\ \ \ \ \ \}}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}ambient"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ Vec3\ ambient\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}ambient"{}}]-\/>asColor();}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ material.Ka\ =\ Eigen::Vector3f(ambient.x(),\ ambient.y(),\ ambient.z());}
+\DoxyCodeLine{00358\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ material.Ka\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00360\ \ \ \ \ \}}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}diffuse"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ Vec3\ diffuse\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}diffuse"{}}]-\/>asColor();}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ material.Kd\ =\ Eigen::Vector3f(diffuse.x(),\ diffuse.y(),\ diffuse.z());}
+\DoxyCodeLine{00365\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ material.Kd\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00367\ \ \ \ \ \}}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00369\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}specular"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ Vec3\ specular\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}specular"{}}]-\/>asColor();}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ material.Ks\ =\ Eigen::Vector3f(specular.x(),\ specular.y(),\ specular.z());}
+\DoxyCodeLine{00372\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ material.Ks\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00374\ \ \ \ \ \}}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{comment}{//\ Parse\ reflection\ coefficients\ [R,G,B]\ or\ use\ default\ [0,0,0]}}
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}reflected"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ Vec3\ reflected\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}reflected"{}}]-\/>asColor();}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ material.Kr\ =}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f(reflected.x(),\ reflected.y(),\ reflected.z());}
+\DoxyCodeLine{00381\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ material.Kr\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00383\ \ \ \ \ \}}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}refracted"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ Vec3\ refracted\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}refracted"{}}]-\/>asColor();}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ material.Kt\ =}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f(refracted.x(),\ refracted.y(),\ refracted.z());}
+\DoxyCodeLine{00389\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ material.Kt\ =\ Eigen::Vector3f(0.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00391\ \ \ \ \ \}}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keywordflow}{if}\ (colorJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}shininess"{}})\ !=\ colorJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ material.shininess\ =\ colorJson-\/>obj\_val[\textcolor{stringliteral}{"{}shininess"{}}]-\/>asFloat();}
+\DoxyCodeLine{00395\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ material.shininess\ =\ 1.0f;}
+\DoxyCodeLine{00397\ \ \ \ \ \}}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordflow}{return}\ material;}
+\DoxyCodeLine{00400\ \ \ \}}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ applyPositionOffset(std::shared\_ptr<Object>\ obj,}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ offset)\ \{}
+\DoxyCodeLine{00404\ \ \ \ \ \textcolor{keywordflow}{if}\ (!obj)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \ \ \ \ \mbox{\hyperlink{structPosition}{Position}}\ currentPos\ =\ obj-\/>getPos();}
+\DoxyCodeLine{00407\ \ \ \ \ \mbox{\hyperlink{structPosition}{Position}}\ newPos\{currentPos.x\ +\ offset.x(),\ currentPos.y\ +\ offset.y(),}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentPos.z\ +\ offset.z()\};}
+\DoxyCodeLine{00409\ \ \ \ \ obj-\/>setPosition(newPos);}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}[INFO]\ Applied\ offset\ ["{}}\ <<\ offset.x()\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ offset.y()}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ offset.z()\ <<\ \textcolor{stringliteral}{"{}]\ to\ object\ at\ ["{}}\ <<\ currentPos.x}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ currentPos.y\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ currentPos.z\ <<\ \textcolor{stringliteral}{"{}]\ -\/>\ ["{}}}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ newPos.x\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ newPos.y\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ newPos.z\ <<\ \textcolor{stringliteral}{"{}]"{}}}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00416\ \ \ \}}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ setMaterialIndex(\mbox{\hyperlink{structMaterial}{Material}}\&\ material,}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<JsonValue>\ objectData,}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ defaultIndex)\ \{}
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData\ \&\&\ objectData-\/>isObject()\ \&\&}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}index"{}})\ !=\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ material.refractive\_index\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}index"{}}]-\/>asFloat();}
+\DoxyCodeLine{00424\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ material.refractive\_index\ =\ defaultIndex;}
+\DoxyCodeLine{00426\ \ \ \ \ \}}
+\DoxyCodeLine{00427\ \ \ \}}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ \ \ \textcolor{comment}{//\ Parse\ a\ JSON\ object\ into\ a\ raytracing\ Object...}}
+\DoxyCodeLine{00430\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Object>\ parseJsonObject(}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ std::shared\_ptr<JsonValue>\ objJson,\ \textcolor{keywordtype}{float}\ defaultIndex)\ \{}
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{keywordflow}{if}\ (!objJson\ ||\ !objJson-\/>isObject()\ ||\ objJson-\/>size()\ ==\ 0)\ \{}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00434\ \ \ \ \ \}}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{keyword}{auto}\&\ obj\_map\ =\ objJson-\/>obj\_val;}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\_map.size()\ <\ 1\ ||\ obj\_map.size()\ >\ 2)\ \{}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00439\ \ \ \ \ \}}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasPosition\ =\ obj\_map.find(\textcolor{stringliteral}{"{}position"{}})\ !=\ obj\_map.end();}
+\DoxyCodeLine{00442\ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\_map.size()\ ==\ 2\ \&\&\ !hasPosition)\ \{}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00444\ \ \ \ \ \}}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \ \ \ \ std::string\ objectType;}
+\DoxyCodeLine{00447\ \ \ \ \ std::shared\_ptr<JsonValue>\ objectData;}
+\DoxyCodeLine{00448\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ pair\ :\ obj\_map)\ \{}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pair.first\ !=\ \textcolor{stringliteral}{"{}position"{}})\ \{}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ objectType\ =\ pair.first;}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ objectData\ =\ pair.second;}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00454\ \ \ \ \ \}}
+\DoxyCodeLine{00455\ }
+\DoxyCodeLine{00456\ \ \ \ \ \textcolor{keywordflow}{if}\ (objectType.empty()\ ||\ !objectData)\ \{}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00458\ \ \ \ \ \}}
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}sphere"{}})\ \{}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!objectData-\/>isObject())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \ \ \ \ \ \ Vec3\ position\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}radius"{}}]-\/>asFloat();}
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material\ =\ parseJsonMaterial(objectData-\/>obj\_val[\textcolor{stringliteral}{"{}color"{}}]);}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ setMaterialIndex(material,\ objectData,\ defaultIndex);}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ Vec3\ to\ Eigen::Vector3f\ for\ compatibility}}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ Eigen::Vector3f\ eigenPos(position.x(),\ position.y(),\ position.z());}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \textcolor{comment}{//\ Extract\ color\ from\ material's\ diffuse\ component\ (0-\/1\ range)\ and\ convert}}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \textcolor{comment}{//\ to\ 0-\/255\ range}}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ Eigen::Vector3f\ eigenColor(material.Kd.x()\ *\ 255.0f,}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.y()\ *\ 255.0f,}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.z()\ *\ 255.0f);}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sphere\ =}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ std::make\_shared<Sphere>(eigenPos,\ radius,\ eigenColor,\ material);}
+\DoxyCodeLine{00478\ }
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ rotation\ property\ [x\_degrees,\ y\_degrees,\ z\_degrees]}}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}rotation"{}})\ !=\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ Vec3\ rotationDegrees\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}rotation"{}}]-\/>asVec3();}
+\DoxyCodeLine{00482\ }
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ combined\ rotation\ transform\ (X,\ then\ Y,\ then\ Z)\ using\ degree\ functions}}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ rotationTransform\ =}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationXDegrees(rotationDegrees.x())\ *}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationYDegrees(rotationDegrees.y())\ *}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationZDegrees(rotationDegrees.z());}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ scaling\ and\ translation\ transforms}}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ scaleTransform\ =\ Transform::scaling(radius,\ radius,\ radius);}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ translateTransform\ =}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::translation(eigenPos.x(),\ eigenPos.y(),\ eigenPos.z());}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ the\ final\ transformation:\ translate\ *\ rotate\ *\ scale}}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ finalTransform\ =}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \ \ \ \ translateTransform\ *\ rotationTransform\ *\ scaleTransform;}
+\DoxyCodeLine{00497\ }
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ transformedSphere\ =\ std::make\_shared<ObjectTree>(}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(finalTransform,\ ObjectTree::SphereUnit()),}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ eigenColor,\ material\ \ \textcolor{comment}{//\ Now\ pass\ material\ to\ ObjectTree!}}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ transformedSphere;}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sphere;}
+\DoxyCodeLine{00508\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}cube"{}})\ \{}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!objectData-\/>isObject())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ Vec3\ position\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ size\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}size"{}}]-\/>asFloat();}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material\ =\ parseJsonMaterial(objectData-\/>obj\_val[\textcolor{stringliteral}{"{}color"{}}]);}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ setMaterialIndex(material,\ objectData,\ defaultIndex);}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ Vec3\ to\ Eigen::Vector3f\ for\ compatibility}}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ Eigen::Vector3f\ eigenPos(position.x(),\ position.y(),\ position.z());}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ Eigen::Vector3f\ eigenColor(material.Kd.x()\ *\ 255.0f,}
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.y()\ *\ 255.0f,}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.z()\ *\ 255.0f);}
+\DoxyCodeLine{00521\ }
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cube\ =\ std::make\_shared<Cube>(eigenPos,\ size,\ eigenColor,\ material);}
+\DoxyCodeLine{00523\ }
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ rotation\ property\ [x\_degrees,\ y\_degrees,\ z\_degrees]}}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}rotation"{}})\ !=\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ Vec3\ rotationDegrees\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}rotation"{}}]-\/>asVec3();}
+\DoxyCodeLine{00527\ }
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ combined\ rotation\ transform\ (X,\ then\ Y,\ then\ Z)\ using\ degree\ functions}}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ rotationTransform\ =}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationXDegrees(rotationDegrees.x())\ *}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationYDegrees(rotationDegrees.y())\ *}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::rotationZDegrees(rotationDegrees.z());}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ scaling\ and\ translation\ transforms}}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ scaleTransform\ =\ Transform::scaling(size,\ size,\ size);}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ translateTransform\ =}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ Transform::translation(eigenPos.x(),\ eigenPos.y(),\ eigenPos.z());}
+\DoxyCodeLine{00538\ }
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ finalTransform\ =}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \ \ \ \ translateTransform\ *\ rotationTransform\ *\ scaleTransform;}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ transformedCube\ =\ std::make\_shared<ObjectTree>(}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(finalTransform,\ ObjectTree::CubeUnit()),}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \ \ \ eigenColor,\ material}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00545\ }
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ transformedCube;}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ cube;}
+\DoxyCodeLine{00550\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}halfSpace"{}})\ \{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!objectData-\/>isObject())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ Vec3\ position\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ Vec3\ normal\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}normal"{}}]-\/>asVec3();}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material\ =\ parseJsonMaterial(objectData-\/>obj\_val[\textcolor{stringliteral}{"{}color"{}}]);}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ setMaterialIndex(material,\ objectData,\ defaultIndex);}
+\DoxyCodeLine{00558\ }
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ offset\ from\ position\ and\ normal}}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ offset\ =\ normal.dot(position);}
+\DoxyCodeLine{00561\ }
+\DoxyCodeLine{00562\ }
+\DoxyCodeLine{00563\ \ \ \ \ \ \ Eigen::Vector3f\ eigenNormal(normal.x(),\ normal.y(),\ normal.z());}
+\DoxyCodeLine{00564\ }
+\DoxyCodeLine{00565\ \ \ \ \ \ \ Eigen::Vector3f\ eigenColor(material.Kd.x()\ *\ 255.0f,}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.y()\ *\ 255.0f,}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ material.Kd.z()\ *\ 255.0f);}
+\DoxyCodeLine{00568\ }
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ halfspace\ =\ std::make\_shared<HalfSpace>(eigenNormal,\ offset,}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eigenColor,\ material);}
+\DoxyCodeLine{00571\ }
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ halfspace;}
+\DoxyCodeLine{00573\ \ \ \ \ \}}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}union"{}}\ ||\ objectType\ ==\ \textcolor{stringliteral}{"{}intersection"{}}\ ||}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ objectType\ ==\ \textcolor{stringliteral}{"{}difference"{}})\ \{}
+\DoxyCodeLine{00577\ }
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!objectData-\/>isArray()\ ||\ objectData-\/>size()\ <\ 2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00579\ }
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ union\ has\ a\ position\ offset}}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ Vec3\ unionOffset(0,\ 0,\ 0);}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}position"{}})\ !=\ objJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ unionOffset\ =\ objJson-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}[INFO]\ Union\ has\ position\ offset:\ ["{}}\ <<\ unionOffset.x()}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ unionOffset.y()\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ unionOffset.z()\ <<\ \textcolor{stringliteral}{"{}]"{}}}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00588\ }
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>arr\_val.size()\ <\ 2)\ \{}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ CSG\ operation\ requires\ at\ least\ 2\ operands"{}}}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ objA\ =\ parseJsonObject(objectData-\/>arr\_val[0],\ defaultIndex);}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ objB\ =\ parseJsonObject(objectData-\/>arr\_val[1],\ defaultIndex);}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objA\ \&\&\ objB)\ \{}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (unionOffset.x()\ !=\ 0\ ||\ unionOffset.y()\ !=\ 0\ ||}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ unionOffset.z()\ !=\ 0)\ \{}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ translateTransform\ =\ Transform::translation(}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ unionOffset.x(),\ unionOffset.y(),\ unionOffset.z());}
+\DoxyCodeLine{00602\ }
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wrap\ objects\ in\ Transform\ nodes\ using\ the\ ObjectTree\ system}}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ colorA\ =\ Eigen::Vector3f(objA-\/>getColor().r,\ objA-\/>getColor().g,}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ objA-\/>getColor().b);}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ colorB\ =\ Eigen::Vector3f(objB-\/>getColor().r,\ objB-\/>getColor().g,}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ objB-\/>getColor().b);}
+\DoxyCodeLine{00608\ }
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ objA\ =\ std::make\_shared<ObjectTree>(}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(translateTransform,}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::ExistingObjectNode(objA)),}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colorA,\ objA-\/>getMaterial());}
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ objB\ =\ std::make\_shared<ObjectTree>(}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(translateTransform,}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::ExistingObjectNode(objB)),}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colorB,\ objB-\/>getMaterial());}
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}[INFO]\ Applied\ transform-\/based\ offset\ ["{}}}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ unionOffset.x()\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ unionOffset.y()\ <<\ \textcolor{stringliteral}{"{},\ "{}}}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ unionOffset.z()\ <<\ \textcolor{stringliteral}{"{}]\ to\ union\ components"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ CSG\ operation\ type}}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ CSGOp\ op;}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}union"{}})}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ op\ =\ CSGOp::Union;}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}intersection"{}})}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ op\ =\ CSGOp::Intersection;}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}difference"{}})}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ op\ =\ CSGOp::Difference;}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00634\ }
+\DoxyCodeLine{00635\ }
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ Eigen::Vector3f\ color(128,\ 128,\ 128);}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ csgObj\ =\ std::make\_shared<CSGObject>(objA,\ objB,\ op,\ color);}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objA)\ \{}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ csgObj-\/>setMaterial(objA-\/>getMaterial());}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}[INFO]\ Created\ CSG\ "{}}\ <<\ objectType}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ with\ specification\ format"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ csgObj;}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00645\ \ \ \ \ \}}
+\DoxyCodeLine{00646\ \ \ \ \ \textcolor{comment}{//\ Handle\ transformations\ -\/\ specification\ format}}
+\DoxyCodeLine{00647\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}scaling"{}}\ ||\ objectType\ ==\ \textcolor{stringliteral}{"{}translation"{}}\ ||}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ objectType\ ==\ \textcolor{stringliteral}{"{}rotation"{}})\ \{}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!objectData-\/>isObject())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}subject"{}})\ ==\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00653\ }
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ subjectObj\ =}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ parseJsonObject(objectData-\/>obj\_val[\textcolor{stringliteral}{"{}subject"{}}],\ defaultIndex);}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!subjectObj)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00657\ }
+\DoxyCodeLine{00658\ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ transform;}
+\DoxyCodeLine{00659\ }
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}scaling"{}})\ \{}
+\DoxyCodeLine{00661\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}factors"{}})\ !=\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \ \ Vec3\ factors\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}factors"{}}]-\/>asVec3();}
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \ \ \ \ transform\ =\ Transform::scaling(factors.x(),\ factors.y(),\ factors.z());}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}translation"{}})\ \{}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}factors"{}})\ !=\ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ Vec3\ factors\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}factors"{}}]-\/>asVec3();}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ transform\ =}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transform::translation(factors.x(),\ factors.y(),\ factors.z());}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}rotation"{}})\ \{}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}angle"{}})\ !=\ objectData-\/>obj\_val.end()\ \&\&}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ objectData-\/>obj\_val.find(\textcolor{stringliteral}{"{}direction"{}})\ !=}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ objectData-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ angleDeg\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}angle"{}}]-\/>asFloat();}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ direction\ =\ objectData-\/>obj\_val[\textcolor{stringliteral}{"{}direction"{}}]-\/>asInt();}
+\DoxyCodeLine{00677\ }
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ rotation\ based\ on\ direction\ (0=X,\ 1=Y,\ 2=Z)}}
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (direction\ ==\ 0)\ \{}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ transform\ =\ Transform::rotationX(angleDeg);}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (direction\ ==\ 1)\ \{}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ transform\ =\ Transform::rotationY(angleDeg);}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (direction\ ==\ 2)\ \{\ \ \textcolor{comment}{//\ Spec\ says\ 3,\ but\ likely\ means\ Z}}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \ \ \ \ transform\ =\ Transform::rotationZ(angleDeg);}
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00688\ }
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ ObjectTree\ with\ transformation}}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ Eigen::Vector3f\ color(subjectObj-\/>getColor().r,\ subjectObj-\/>getColor().g,}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subjectObj-\/>getColor().b);}
+\DoxyCodeLine{00692\ }
+\DoxyCodeLine{00693\ \ \ \ \ \ \ std::shared\_ptr<ObjectTree::Node>\ transformNode;}
+\DoxyCodeLine{00694\ }
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectType\ ==\ \textcolor{stringliteral}{"{}scaling"{}})\ \{}
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ transformNode\ =}
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(transform,\ ObjectTree::SphereUnit());}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ transformNode\ =}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectTree::TransformNode(transform,\ ObjectTree::SphereUnit());}
+\DoxyCodeLine{00701\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00702\ }
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ transformedObj\ =\ std::make\_shared<ObjectTree>(transformNode,\ color);}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}[INFO]\ Created\ "{}}\ <<\ objectType\ <<\ \textcolor{stringliteral}{"{}\ transformation"{}}}
+\DoxyCodeLine{00705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ transformedObj;}
+\DoxyCodeLine{00707\ \ \ \ \ \}}
+\DoxyCodeLine{00708\ }
+\DoxyCodeLine{00709\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00710\ \ \ \}}
+\DoxyCodeLine{00711\ }
+\DoxyCodeLine{00712\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00713\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSceneLoader_1_1SceneConfig}{SceneConfig}}\ \{}
+\DoxyCodeLine{00714\ \ \ \ \ \textcolor{keywordtype}{int}\ dpi\ =\ 128;}
+\DoxyCodeLine{00715\ \ \ \ \ Vec3\ screenDimensions\{2.0f,\ 4.0f,\ 0.0f\};}
+\DoxyCodeLine{00716\ \ \ \ \ Vec3\ screenPosition\{-\/1.0f,\ 5.0f,\ -\/30.0f\};}
+\DoxyCodeLine{00717\ \ \ \ \ Vec3\ observerPosition\{0.0f,\ 10.0f,\ 50.0f\};}
+\DoxyCodeLine{00718\ }
+\DoxyCodeLine{00719\ \ \ \ \ Vec3\ ambientLight\{0.1f,\ 0.1f,\ 0.1f\};}
+\DoxyCodeLine{00720\ \ \ \ \ \textcolor{keywordtype}{float}\ refractiveIndex\ =\ 1.0f;}
+\DoxyCodeLine{00721\ \ \ \ \ \textcolor{keywordtype}{int}\ recursionDepth\ =\ 1;}
+\DoxyCodeLine{00722\ }
+\DoxyCodeLine{00723\ \ \ \ \ \textcolor{keywordtype}{float}\ defaultLightIntensity\ =\ 1.0f;}
+\DoxyCodeLine{00724\ }
+\DoxyCodeLine{00725\ \ \ \ \ Vec4\ screenOrigin()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vec4(screenPosition.x(),\ screenPosition.y(),\ screenPosition.z(),}
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1.0f);}
+\DoxyCodeLine{00728\ \ \ \ \ \}}
+\DoxyCodeLine{00729\ \ \ \ \ \textcolor{keywordtype}{float}\ screenWidth()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ screenDimensions.x();\ \}}
+\DoxyCodeLine{00730\ \ \ \ \ \textcolor{keywordtype}{float}\ screenHeight()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ screenDimensions.y();\ \}}
+\DoxyCodeLine{00731\ \ \ \ \ \textcolor{keywordtype}{int}\ screenDpiX()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ dpi;\ \}}
+\DoxyCodeLine{00732\ \ \ \ \ \textcolor{keywordtype}{int}\ screenDpiY()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ dpi;\ \}}
+\DoxyCodeLine{00733\ \ \ \ \ Vec4\ observerPos()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vec4(observerPosition.x(),\ observerPosition.y(),}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ observerPosition.z(),\ 1.0f);}
+\DoxyCodeLine{00736\ \ \ \ \ \}}
+\DoxyCodeLine{00737\ \ \ \};}
+\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00739\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ loadScene(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{classScene}{Scene}}\&\ scene,}
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSceneLoader_1_1SceneConfig}{SceneConfig}}\&\ config)\ \{}
+\DoxyCodeLine{00741\ \ \ \ \ std::ifstream\ file(filename);}
+\DoxyCodeLine{00742\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{00743\ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Could\ not\ open\ scene\ file:\ "{}}\ <<\ filename}
+\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00746\ \ \ \ \ \}}
+\DoxyCodeLine{00747\ }
+\DoxyCodeLine{00748\ \ \ \ \ std::string\ content((std::istreambuf\_iterator<char>(file)),}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::istreambuf\_iterator<char>());}
+\DoxyCodeLine{00750\ \ \ \ \ file.close();}
+\DoxyCodeLine{00751\ }
+\DoxyCodeLine{00752\ \ \ \ \ \textcolor{keywordflow}{if}\ (content.empty())\ \{}
+\DoxyCodeLine{00753\ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Scene\ file\ is\ empty:\ "{}}\ <<\ filename\ <<\ std::endl;}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00755\ \ \ \ \ \}}
+\DoxyCodeLine{00756\ }
+\DoxyCodeLine{00757\ \ \ \ \ \textcolor{keywordflow}{return}\ loadSceneJson(content,\ scene,\ config);}
+\DoxyCodeLine{00758\ \ \ \}}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00760\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00761\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ loadSceneJson(\textcolor{keyword}{const}\ std::string\&\ jsonContent,\ \mbox{\hyperlink{classScene}{Scene}}\&\ scene,}
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SceneConfig\&\ config)\ \{}
+\DoxyCodeLine{00763\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ std::string\ trimmed\ =\ jsonContent;}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ trimmed.erase(0,\ trimmed.find\_first\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)n\(\backslash\)r"{}}));}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ trimmed.erase(trimmed.find\_last\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)n\(\backslash\)r"{}})\ +\ 1);}
+\DoxyCodeLine{00767\ }
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (trimmed.empty())\ \{}
+\DoxyCodeLine{00769\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ JSON\ content\ is\ empty\ or\ contains\ only\ whitespace"{}}}
+\DoxyCodeLine{00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00773\ }
+\DoxyCodeLine{00774\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ root\ =\ parseJson(jsonContent);}
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!root\ ||\ !root-\/>isObject())\ \{}
+\DoxyCodeLine{00776\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ Invalid\ JSON\ format"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00779\ }
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \textcolor{comment}{//\ Parse\ screen\ parameters}}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (root-\/>obj\_val.find(\textcolor{stringliteral}{"{}screen"{}})\ !=\ root-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ screenJson\ =\ root-\/>obj\_val[\textcolor{stringliteral}{"{}screen"{}}];}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (screenJson-\/>isObject())\ \{}
+\DoxyCodeLine{00784\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (screenJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}dpi"{}})\ !=\ screenJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \ \ \ \ config.dpi\ =\ screenJson-\/>obj\_val[\textcolor{stringliteral}{"{}dpi"{}}]-\/>asInt();}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (screenJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}dimensions"{}})\ !=}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ screenJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ config.screenDimensions\ =}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ screenJson-\/>obj\_val[\textcolor{stringliteral}{"{}dimensions"{}}]-\/>asVec3();}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (screenJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}position"{}})\ !=}
+\DoxyCodeLine{00793\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ screenJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00794\ \ \ \ \ \ \ \ \ \ \ \ \ config.screenPosition\ =\ screenJson-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00796\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (screenJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}observer"{}})\ !=}
+\DoxyCodeLine{00797\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ screenJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00798\ \ \ \ \ \ \ \ \ \ \ \ \ config.observerPosition\ =\ screenJson-\/>obj\_val[\textcolor{stringliteral}{"{}observer"{}}]-\/>asVec3();}
+\DoxyCodeLine{00799\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00802\ }
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (root-\/>obj\_val.find(\textcolor{stringliteral}{"{}medium"{}})\ !=\ root-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ mediumJson\ =\ root-\/>obj\_val[\textcolor{stringliteral}{"{}medium"{}}];}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mediumJson-\/>isObject())\ \{}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mediumJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}ambient"{}})\ !=}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mediumJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ \ \ \ \ config.ambientLight\ =\ mediumJson-\/>obj\_val[\textcolor{stringliteral}{"{}ambient"{}}]-\/>asColor();}
+\DoxyCodeLine{00809\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mediumJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}index"{}})\ !=\ mediumJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \ \ \ \ config.refractiveIndex\ =\ mediumJson-\/>obj\_val[\textcolor{stringliteral}{"{}index"{}}]-\/>asFloat();}
+\DoxyCodeLine{00812\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00813\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mediumJson-\/>obj\_val.find(\textcolor{stringliteral}{"{}recursion"{}})\ !=}
+\DoxyCodeLine{00814\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mediumJson-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ \ \ \ \ config.recursionDepth\ =\ mediumJson-\/>obj\_val[\textcolor{stringliteral}{"{}recursion"{}}]-\/>asInt();}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00817\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00819\ }
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \textcolor{comment}{//\ Parse\ background\ color}}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (root-\/>obj\_val.find(\textcolor{stringliteral}{"{}background"{}})\ !=\ root-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ backgroundJson\ =\ root-\/>obj\_val[\textcolor{stringliteral}{"{}background"{}}];}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (backgroundJson-\/>isArray()\ \&\&\ backgroundJson-\/>size()\ ==\ 3)\ \{}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \ \ \ \ Vec3\ bgColor\ =\ backgroundJson-\/>asColor();}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \ \ scene.backgroundColor\ =}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f(bgColor.x(),\ bgColor.y(),\ bgColor.z());}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00828\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00829\ }
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (root-\/>obj\_val.find(\textcolor{stringliteral}{"{}sources"{}})\ !=\ root-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sourcesJson\ =\ root-\/>obj\_val[\textcolor{stringliteral}{"{}sources"{}}];}
+\DoxyCodeLine{00832\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sourcesJson-\/>isArray())\ \{}
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ sourcesJson-\/>size();\ ++i)\ \{}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ sourcesJson-\/>arr\_val.size()\ ||\ !sourcesJson-\/>arr\_val[i])\ \{}
+\DoxyCodeLine{00835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lightJson\ =\ sourcesJson-\/>arr\_val[i];}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lightJson-\/>isObject())\ \{}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ position\ =\ lightJson-\/>obj\_val[\textcolor{stringliteral}{"{}position"{}}]-\/>asVec3();}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ intensity\ =\ lightJson-\/>obj\_val[\textcolor{stringliteral}{"{}intensity"{}}]-\/>asColor();}
+\DoxyCodeLine{00841\ }
+\DoxyCodeLine{00842\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structColor}{Color}}\ lightColor\{(int)(intensity.x()\ *\ 255),}
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{int})(intensity.y()\ *\ 255),}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{int})(intensity.z()\ *\ 255)\};}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ lightIntensity\ =}
+\DoxyCodeLine{00846\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (intensity.x()\ +\ intensity.y()\ +\ intensity.z())\ /\ 3.0f;}
+\DoxyCodeLine{00847\ }
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ scene.addLight(Light::createPointLight(position,\ lightColor,}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lightIntensity,\ \textcolor{keyword}{true},\ 1.0f,}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ 0.0f));}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00855\ }
+\DoxyCodeLine{00856\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (root-\/>obj\_val.find(\textcolor{stringliteral}{"{}objects"{}})\ !=\ root-\/>obj\_val.end())\ \{}
+\DoxyCodeLine{00857\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ objectsJson\ =\ root-\/>obj\_val[\textcolor{stringliteral}{"{}objects"{}}];}
+\DoxyCodeLine{00858\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objectsJson-\/>isArray())\ \{}
+\DoxyCodeLine{00859\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ objectsJson-\/>size();\ ++i)\ \{}
+\DoxyCodeLine{00860\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ objectsJson-\/>arr\_val.size()\ ||\ !objectsJson-\/>arr\_val[i])\ \{}
+\DoxyCodeLine{00861\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00862\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00863\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ obj\ =\ parseJsonObject(objectsJson-\/>arr\_val[i],}
+\DoxyCodeLine{00864\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ config.refractiveIndex);}
+\DoxyCodeLine{00865\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj)\ \{}
+\DoxyCodeLine{00866\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ scene.addObject(obj);}
+\DoxyCodeLine{00867\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00868\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00869\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00870\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00871\ }
+\DoxyCodeLine{00872\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00873\ }
+\DoxyCodeLine{00874\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::exception\&\ e)\ \{}
+\DoxyCodeLine{00875\ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error\ parsing\ JSON\ scene:\ "{}}\ <<\ e.what()\ <<\ std::endl;}
+\DoxyCodeLine{00876\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00877\ \ \ \ \ \}}
+\DoxyCodeLine{00878\ \ \ \}}
+\DoxyCodeLine{00879\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,36 @@
+\doxysection{Ray\+Tracer\+::Pixel\+Info\+Pool Class Reference}
+\hypertarget{classRayTracer_1_1PixelInfoPool}{}\label{classRayTracer_1_1PixelInfoPool}\index{RayTracer::PixelInfoPool@{RayTracer::PixelInfoPool}}
+
+
+Simple object pool for \doxylink{structPixelInfo}{Pixel\+Info} objects.  
+
+
+
+
+{\ttfamily \#include $<$performance\+\_\+utils.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRayTracer_1_1PixelInfoPool_a913385bc88fb0f8455693224a8be5502}\label{classRayTracer_1_1PixelInfoPool_a913385bc88fb0f8455693224a8be5502} 
+{\bfseries Pixel\+Info\+Pool} (size\+\_\+t size=OBJECT\+\_\+\+POOL\+\_\+\+SIZE)
+\begin{DoxyCompactList}\small\item\em Initialize the pool with a given size. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1PixelInfoPool_a90e3810cbdf0d0b6b7bc9e1e913f0a7c}\label{classRayTracer_1_1PixelInfoPool_a90e3810cbdf0d0b6b7bc9e1e913f0a7c} 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \& {\bfseries acquire} ()
+\begin{DoxyCompactList}\small\item\em Get a \doxylink{structPixelInfo}{Pixel\+Info} object from the pool. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1PixelInfoPool_ac1f5c43fe702a193f6bfc918fbee7d23}\label{classRayTracer_1_1PixelInfoPool_ac1f5c43fe702a193f6bfc918fbee7d23} 
+void {\bfseries release} (\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \&pixel)
+\begin{DoxyCompactList}\small\item\em Reset a \doxylink{structPixelInfo}{Pixel\+Info} object (called when returning to pool) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simple object pool for \doxylink{structPixelInfo}{Pixel\+Info} objects. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md for detailed documentation 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{performance__utils_8h}{performance\+\_\+utils.\+h}}\end{DoxyCompactItemize}

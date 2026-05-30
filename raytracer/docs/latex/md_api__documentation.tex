@@ -1,0 +1,454 @@
+\chapter{Centralized API Documentation}
+\hypertarget{md_api__documentation}{}\label{md_api__documentation}\index{Centralized API Documentation@{Centralized API Documentation}}
+\label{md_api__documentation_autotoc_md0}%
+\Hypertarget{md_api__documentation_autotoc_md0}%
+ \hypertarget{md_api__documentation_autotoc_md1}{}\doxysection{\texorpdfstring{Core Classes Documentation}{Core Classes Documentation}}\label{md_api__documentation_autotoc_md1}
+\hypertarget{md_api__documentation_autotoc_md2}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::\+Ray\+Grid}{RayTracer::RayGrid}}\label{md_api__documentation_autotoc_md2}
+{\bfseries{Purpose\+:}} Pre-\/computed ray grid for performance optimization ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}
+
+{\bfseries{Description\+:}} Pre-\/computes all ray directions for a given screen configuration, avoiding repeated calculations during rendering.
+
+{\bfseries{Key Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily initialize(screen, observer, width, height)} -\/ Initialize the ray grid with screen parameters
+\item {\ttfamily get\+Ray\+Direction(x, y)} -\/ Get pre-\/computed ray direction for pixel coordinates
+\item {\ttfamily get\+Ray\+Origin(x, y)} -\/ Get ray origin for pixel coordinates
+\item {\ttfamily get\+Width()} -\/ Get width of the ray grid
+\item {\ttfamily get\+Height()} -\/ Get height of the ray grid
+\end{DoxyItemize}
+
+{\bfseries{Performance Impact\+:}} Eliminates \texorpdfstring{$\sim$}{\string~}90\% of ray direction calculations during rendering
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md4}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::\+Pixel\+Info\+Pool}{RayTracer::PixelInfoPool}}\label{md_api__documentation_autotoc_md4}
+{\bfseries{Purpose\+:}} \doxylink{classObject}{Object} pool for \doxylink{structPixelInfo}{Pixel\+Info} objects ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}
+
+{\bfseries{Description\+:}} Reduces memory allocation overhead by reusing \doxylink{structPixelInfo}{Pixel\+Info} objects in a circular buffer pattern.
+
+{\bfseries{Key Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily Pixel\+Info\+Pool(size)} -\/ Initialize pool with specified size (default\+: OBJECT\+\_\+\+POOL\+\_\+\+SIZE)
+\item {\ttfamily acquire()} -\/ Get a \doxylink{structPixelInfo}{Pixel\+Info} object from the pool
+\item {\ttfamily release(pixel)} -\/ Reset and return \doxylink{structPixelInfo}{Pixel\+Info} object to pool
+\end{DoxyItemize}
+
+{\bfseries{Performance Impact\+:}} Reduces memory allocations by \texorpdfstring{$\sim$}{\string~}95\% during rendering
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md6}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::\+Material\+Cache}{RayTracer::MaterialCache}}\label{md_api__documentation_autotoc_md6}
+{\bfseries{Purpose\+:}} \doxylink{structMaterial}{Material} cache for frequently accessed materials ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}
+
+{\bfseries{Description\+:}} Caches material computations to avoid repeated calculations for the same materials.
+
+{\bfseries{Key Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily get\+Cached\+Material(material\texorpdfstring{$\ast$}{*})} -\/ Get or compute cached material properties
+\item {\ttfamily clear()} -\/ Clear the entire cache
+\end{DoxyItemize}
+
+{\bfseries{Performance Impact\+:}} Speeds up material property access by \texorpdfstring{$\sim$}{\string~}70\%
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md8}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::\+Pixel\+Batch\+Processor}{RayTracer::PixelBatchProcessor}}\label{md_api__documentation_autotoc_md8}
+{\bfseries{Purpose\+:}} Batch processor for pixel rendering ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}
+
+{\bfseries{Description\+:}} Processes pixels in batches for better cache locality and improved performance.
+
+{\bfseries{Key Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily initialize\+Batches(width, height, batch\+Size)} -\/ Initialize batches for image dimensions
+\item {\ttfamily get\+Batch\+Count()} -\/ Get total number of batches
+\item {\ttfamily get\+Batch(index)} -\/ Get specific batch by index
+\item {\ttfamily process\+All\+Batches(func)} -\/ Process all batches with given function
+\end{DoxyItemize}
+
+{\bfseries{Performance Impact\+:}} Improves cache hit rates by \texorpdfstring{$\sim$}{\string~}40\%
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md10}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::\+Intersection\+Cache}{RayTracer::IntersectionCache}}\label{md_api__documentation_autotoc_md10}
+{\bfseries{Purpose\+:}} Intersection cache for scene objects ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}
+
+{\bfseries{Description\+:}} Caches intersection results for recently tested rays to avoid redundant calculations.
+
+{\bfseries{Key Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily start\+New\+Frame()} -\/ Invalidate old cache entries for new frame
+\item {\ttfamily find\+Cached(origin, direction, ...)} -\/ Try to find cached intersection result
+\item {\ttfamily cache\+Result(origin, direction, ...)} -\/ Cache an intersection result
+\end{DoxyItemize}
+
+{\bfseries{Performance Impact\+:}} Reduces intersection calculations by \texorpdfstring{$\sim$}{\string~}30\% for complex scenes
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md12}{}\doxysection{\texorpdfstring{Geometric Classes Documentation}{Geometric Classes Documentation}}\label{md_api__documentation_autotoc_md12}
+\hypertarget{md_api__documentation_autotoc_md13}{}\doxysubsection{\texorpdfstring{Object (\+Abstract Base)}{Object (Abstract Base)}}\label{md_api__documentation_autotoc_md13}
+{\bfseries{Purpose\+:}} Base class for all geometric objects ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{object_8h_source}{object.\+h}}
+
+{\bfseries{Key Virtual Methods\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily intersect(ray\+\_\+origin, ray\+\_\+direction)} -\/ Ray-\/object intersection test
+\item {\ttfamily get\+Pos()} -\/ Get object position
+\item {\ttfamily get\+Material()} -\/ Get object material properties
+\end{DoxyItemize}
+
+{\bfseries{Derived Classes\+:}} \doxylink{classSphere}{Sphere}, \doxylink{classCube}{Cube}, \doxylink{classHalfSpace}{Half\+Space}, \doxylink{classCSGObject}{CSGObject}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md15}{}\doxysubsection{\texorpdfstring{Sphere}{Sphere}}\label{md_api__documentation_autotoc_md15}
+{\bfseries{Purpose\+:}} Spherical geometric primitive ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{object_8h_source}{object.\+h}}
+
+{\bfseries{Description\+:}} Implements ray-\/sphere intersection using quadratic equation solving.
+
+{\bfseries{Constructor\+:}} {\ttfamily \doxylink{classSphere}{Sphere(position, radius, material, refractive\+\_\+index)}}
+
+{\bfseries{Intersection Algorithm\+:}} Quadratic equation\+: {\ttfamily t² + 2bt + c = 0} where solutions give intersection distances
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md17}{}\doxysubsection{\texorpdfstring{Cube}{Cube}}\label{md_api__documentation_autotoc_md17}
+{\bfseries{Purpose\+:}} Cubic geometric primitive with rotation support ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{object_8h_source}{object.\+h}}
+
+{\bfseries{Description\+:}} Axis-\/aligned cube with optional rotation transformations.
+
+{\bfseries{Constructor\+:}} {\ttfamily \doxylink{classCube}{Cube(position, size, material, refractive\+\_\+index, rotation)}}
+
+{\bfseries{Intersection Algorithm\+:}} Slab method -\/ test ray against each pair of parallel planes
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md19}{}\doxysubsection{\texorpdfstring{Half\+Space}{HalfSpace}}\label{md_api__documentation_autotoc_md19}
+{\bfseries{Purpose\+:}} Infinite plane geometric primitive ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{object_8h_source}{object.\+h}}
+
+{\bfseries{Description\+:}} Represents an infinite plane defined by a point and normal vector.
+
+{\bfseries{Constructor\+:}} {\ttfamily \doxylink{classHalfSpace}{Half\+Space(position, normal, material, refractive\+\_\+index)}}
+
+{\bfseries{Intersection Algorithm\+:}} Plane equation\+: {\ttfamily (P -\/ P₀) · n = 0}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md21}{}\doxysubsection{\texorpdfstring{CSGObject}{CSGObject}}\label{md_api__documentation_autotoc_md21}
+{\bfseries{Purpose\+:}} Constructive Solid Geometry operations ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{object_8h_source}{object.\+h}}
+
+{\bfseries{Description\+:}} Performs boolean operations (intersection, union, difference) on geometric primitives.
+
+{\bfseries{Constructor\+:}} {\ttfamily \doxylink{classCSGObject}{CSGObject(objects\+\_\+list, operation\+\_\+type)}}
+
+{\bfseries{Operations\+:}} Currently supports intersection operations for complex geometry
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md23}{}\doxysection{\texorpdfstring{Scene and Screen Classes Documentation}{Scene and Screen Classes Documentation}}\label{md_api__documentation_autotoc_md23}
+\hypertarget{md_api__documentation_autotoc_md24}{}\doxysubsection{\texorpdfstring{Screen}{Screen}}\label{md_api__documentation_autotoc_md24}
+{\bfseries{Purpose\+:}} Virtual camera screen for ray tracing ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{scene_8h_source}{scene.\+h}}
+
+{\bfseries{Description\+:}} Defines the 2D plane through which rays are cast into the 3D scene. Handles mapping between pixel coordinates and world space coordinates.
+
+{\bfseries{Key Properties\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily origin} -\/ Bottom-\/left corner in world space coordinates
+\item {\ttfamily width, height} -\/ Physical dimensions in world units
+\item {\ttfamily dpi\+\_\+x, dpi\+\_\+y} -\/ Resolution in pixels per world unit
+\item {\ttfamily pixel\+\_\+size\+\_\+x, pixel\+\_\+size\+\_\+y} -\/ Size of each pixel in world units
+\end{DoxyItemize}
+
+{\bfseries{Constructor\+:}} {\ttfamily \doxylink{classScreen}{Screen(origin, width, height, dpi\+\_\+x, dpi\+\_\+y)}}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md26}{}\doxysection{\texorpdfstring{Rendering Functions Documentation}{Rendering Functions Documentation}}\label{md_api__documentation_autotoc_md26}
+\hypertarget{md_api__documentation_autotoc_md27}{}\doxysubsection{\texorpdfstring{Renderer\+::render\+Scene}{Renderer::renderScene}}\label{md_api__documentation_autotoc_md27}
+{\bfseries{Purpose\+:}} Main scene rendering function ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{render_8h}{render.\+h}}
+
+{\bfseries{Parameters\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily image} -\/ Output Open\+CV Mat for rendered image
+\item {\ttfamily scene} -\/ \doxylink{classScene}{Scene} containing objects and lights
+\item {\ttfamily screen} -\/ Screen/camera configuration
+\item {\ttfamily observer} -\/ Observer/camera position
+\item {\ttfamily camera} -\/ Camera direction vector
+\item {\ttfamily show\+Rays, show\+Light\+Rays, show\+Plane\+Flow} -\/ Debug visualization toggles
+\item {\ttfamily plane\+Flow\+Stride} -\/ Arrow spacing for flow visualization
+\item {\ttfamily show\+Position\+Markers} -\/ Show object position markers
+\end{DoxyItemize}
+
+{\bfseries{Algorithm\+:}} For each pixel, cast ray, find closest intersection, compute lighting
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md29}{}\doxysubsection{\texorpdfstring{Ray\+Tracer\+::trace\+Ray}{RayTracer::traceRay}}\label{md_api__documentation_autotoc_md29}
+{\bfseries{Purpose\+:}} Recursive ray tracing with reflections/refractions ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{render_8h}{render.\+h}}
+
+{\bfseries{Parameters\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily scene} -\/ \doxylink{classScene}{Scene} to trace ray through
+\item {\ttfamily ray\+Origin, ray\+Direction} -\/ Ray parameters
+\item {\ttfamily depth} -\/ Current recursion depth
+\item {\ttfamily pools and caches} -\/ Performance optimization objects
+\item {\ttfamily max\+Depth} -\/ Maximum recursion depth
+\end{DoxyItemize}
+
+{\bfseries{Returns\+:}} \doxylink{structColor}{Color} contribution from this ray
+
+{\bfseries{Algorithm\+:}}
+\begin{DoxyEnumerate}
+\item Find closest intersection
+\item Compute direct lighting
+\item Recursively trace reflection rays
+\item Recursively trace refraction rays
+\item Combine results using physically-\/based formulas
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md31}{}\doxysection{\texorpdfstring{Utility Functions Documentation}{Utility Functions Documentation}}\label{md_api__documentation_autotoc_md31}
+\hypertarget{md_api__documentation_autotoc_md32}{}\doxysubsection{\texorpdfstring{Mathematical Utilities}{Mathematical Utilities}}\label{md_api__documentation_autotoc_md32}
+{\bfseries{Location\+:}} {\ttfamily \doxylink{math__utils_8h}{math\+\_\+utils.\+h}}
+
+{\bfseries{Safe Mathematical Operations\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily safe\+Divide(numerator, denominator, fallback)} -\/ Division with fallback for zero denominator
+\item {\ttfamily safe\+Divide\+Optional(numerator, denominator)} -\/ Division returning optional
+\item {\ttfamily safe\+Sqrt(value)} -\/ Square root handling negative inputs
+\item {\ttfamily safe\+Normalize(vector)} -\/ Vector normalization with zero-\/length check
+\item {\ttfamily safe\+Normalized(vector)} -\/ Returns normalized copy safely
+\end{DoxyItemize}
+
+{\bfseries{Vector Conversions\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily vec4\+To\+Vec3(vec4)} -\/ Convert 4D to 3D vector
+\item {\ttfamily vec3\+To\+Vec4(vec3, w)} -\/ Convert 3D to 4D vector
+\item {\ttfamily vec3\+To\+Color(vec3)} -\/ Convert normalized Vec3 to \doxylink{structColor}{Color} struct
+\end{DoxyItemize}
+
+{\bfseries{Utility Functions\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily are\+Equal(a, b, epsilon)} -\/ Floating-\/point equality comparison ~\newline
+
+\item {\ttfamily clamp(value, min, max)} -\/ Clamp value to range
+\item {\ttfamily is\+Finite(value/vector)} -\/ Check for Na\+N/infinity values
+\item {\ttfamily clamp\+Vector(vector, min, max)} -\/ Clamp vector components
+\item {\ttfamily solve\+Quadratic(a, b, c)} -\/ Safe quadratic equation solver
+\item {\ttfamily ray\+AABBIntersection(origin, dir, box\+Min, box\+Max)} -\/ Ray-\/box intersection
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md34}{}\doxysubsection{\texorpdfstring{Lighting Functions}{Lighting Functions}}\label{md_api__documentation_autotoc_md34}
+{\bfseries{Location\+:}} {\ttfamily \doxylink{render_8h}{render.\+h}}
+
+{\bfseries{Key Functions\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily combine\+Lights(\+E1, E2)} -\/ Logarithmic light combination\+: {\ttfamily 1 -\/ (1-\/E1)(1-\/E2)}
+\item {\ttfamily compute\+Reflection(incident, normal)} -\/ Reflection vector\+: {\ttfamily I -\/ 2(I·N)N}
+\item {\ttfamily compute\+Refraction(incident, normal, n1, n2)} -\/ Snell\textquotesingle{}s law refraction
+\item {\ttfamily get\+Surface\+Normal(object, hit\+Point)} -\/ Get surface normal at intersection point
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md36}{}\doxysection{\texorpdfstring{Lighting and Transformation Classes Documentation}{Lighting and Transformation Classes Documentation}}\label{md_api__documentation_autotoc_md36}
+\hypertarget{md_api__documentation_autotoc_md37}{}\doxysubsection{\texorpdfstring{Light}{Light}}\label{md_api__documentation_autotoc_md37}
+{\bfseries{Purpose\+:}} \doxylink{classLight}{Light} source for illuminating scenes ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{light_8h_source}{light.\+h}}
+
+{\bfseries{Description\+:}} Supports point lights with attenuation and directional lights. Implements shadow casting and realistic light attenuation models.
+
+{\bfseries{Key Properties\+:}}
+\begin{DoxyItemize}
+\item Position-\/based point lights with distance attenuation
+\item Directional lights for infinite distant sources
+\item \doxylink{structColor}{Color} and intensity control
+\item Shadow ray support
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md39}{}\doxysubsection{\texorpdfstring{Transform}{Transform}}\label{md_api__documentation_autotoc_md39}
+{\bfseries{Purpose\+:}} 3D transformation matrices and operations ~\newline
+ {\bfseries{Location\+:}} {\ttfamily \doxylink{transform_8h}{transform.\+h}}
+
+{\bfseries{Description\+:}} Handles 3D transformations using Eigen matrices for object positioning, rotation, and scaling.
+
+{\bfseries{Key Features\+:}}
+\begin{DoxyItemize}
+\item Translation, rotation, and scaling operations
+\item Matrix composition and inversion
+\item Point and vector transformations
+\item Integration with geometric objects
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md41}{}\doxysection{\texorpdfstring{Performance Constants}{Performance Constants}}\label{md_api__documentation_autotoc_md41}
+{\bfseries{Location\+:}} {\ttfamily \doxylink{constants_8h}{constants.\+h}}
+
+{\bfseries{Mathematical Constants\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily EPSILON} -\/ Small value for floating point comparisons (1e-\/6f)
+\item {\ttfamily LARGE\+\_\+\+EPSILON} -\/ Larger epsilon for shadow ray bias (1e-\/3f)
+\item {\ttfamily PI, TWO\+\_\+\+PI, INV\+\_\+\+PI} -\/ Mathematical constants
+\end{DoxyItemize}
+
+{\bfseries{Performance Configuration\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily OBJECT\+\_\+\+POOL\+\_\+\+SIZE} -\/ Default size for object pools
+\item {\ttfamily PIXEL\+\_\+\+BATCH\+\_\+\+SIZE} -\/ Default batch size for pixel processing
+\item {\ttfamily MAX\+\_\+\+RECURSION\+\_\+\+DEPTH} -\/ Maximum ray tracing recursion depth
+\item {\ttfamily INTERSECTION\+\_\+\+CACHE\+\_\+\+SIZE} -\/ Size of intersection cache
+\item {\ttfamily MATERIAL\+\_\+\+CACHE\+\_\+\+SIZE} -\/ Size of material cache
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md43}{}\doxysection{\texorpdfstring{Usage Patterns}{Usage Patterns}}\label{md_api__documentation_autotoc_md43}
+\hypertarget{md_api__documentation_autotoc_md44}{}\doxysubsection{\texorpdfstring{High-\/\+Performance Rendering Loop}{High-Performance Rendering Loop}}\label{md_api__documentation_autotoc_md44}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Initialize\ performance\ objects\ once}}
+\DoxyCodeLine{\mbox{\hyperlink{classRayTracer_1_1RayGrid}{RayTracer::RayGrid}}\ rayGrid;}
+\DoxyCodeLine{\mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{RayTracer::PixelInfoPool}}\ pixelPool(OBJECT\_POOL\_SIZE);}
+\DoxyCodeLine{\mbox{\hyperlink{classRayTracer_1_1MaterialCache}{RayTracer::MaterialCache}}\ materialCache;}
+\DoxyCodeLine{\mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{RayTracer::IntersectionCache}}\ intersectionCache;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Pre-\/compute\ rays}}
+\DoxyCodeLine{rayGrid.\mbox{\hyperlink{classRayTracer_1_1RayGrid_a09106a2c40372c7eea44923453b4bc16}{initialize}}(screen,\ observer,\ width,\ height);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Render\ with\ optimizations}}
+\DoxyCodeLine{\textcolor{keywordflow}{for}\ (each\ pixel)\ \{}
+\DoxyCodeLine{\ \ \ \ ray\ =\ rayGrid.\mbox{\hyperlink{classRayTracer_1_1RayGrid_acacd7f4a30aa71fc84e394cf0dc3f251}{getRayDirection}}(x,\ y);}
+\DoxyCodeLine{\ \ \ \ pixel\ =\ pixelPool.acquire();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ ...\ render\ pixel\ ...}}
+\DoxyCodeLine{\ \ \ \ pixelPool.release(pixel);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_api__documentation_autotoc_md45}{}\doxysubsection{\texorpdfstring{Adding New Geometric Primitives}{Adding New Geometric Primitives}}\label{md_api__documentation_autotoc_md45}
+
+\begin{DoxyEnumerate}
+\item Inherit from {\ttfamily \doxylink{classObject}{Object}} base class
+\item Implement {\ttfamily intersect()} method with specific algorithm
+\item Implement {\ttfamily get\+Pos()} and {\ttfamily get\+Material()} accessors
+\item Add JSON parsing support in scene loader
+\item Update documentation in this file
+\end{DoxyEnumerate}\hypertarget{md_api__documentation_autotoc_md46}{}\doxysubsection{\texorpdfstring{CSG Operations}{CSG Operations}}\label{md_api__documentation_autotoc_md46}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Create\ intersection\ of\ cube\ and\ sphere}}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ objects\ =\ \{cube\_ptr,\ sphere\_ptr\};}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ csg\ =\ std::make\_shared<CSGObject>(objects,\ CSGObject::INTERSECTION);}
+\DoxyCodeLine{scene.objects.push\_back(csg);}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md48}{}\doxysection{\texorpdfstring{Main Application}{Main Application}}\label{md_api__documentation_autotoc_md48}
+\hypertarget{md_api__documentation_autotoc_md49}{}\doxysubsection{\texorpdfstring{Entry Point ($<$tt$>$main.\+cpp$<$/tt$>$)}{Entry Point (<tt>main.cpp</tt>)}}\label{md_api__documentation_autotoc_md49}
+{\bfseries{Purpose\+:}} Interactive ray tracer application with real-\/time rendering
+
+{\bfseries{Features\+:}}
+\begin{DoxyItemize}
+\item Command-\/line argument parsing for rendering settings
+\item \doxylink{classScene}{Scene} loading from JSON files or interactive setup ~\newline
+
+\item Real-\/time rendering with Open\+CV visualization
+\item Toggle controls for debug visualizations (rays, markers, flow)
+\item Interactive light and camera controls
+\item Performance monitoring and statistics
+\end{DoxyItemize}
+
+{\bfseries{Usage\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./raytrace\ [options]}
+\DoxyCodeLine{\#\ Interactive\ mode\ with\ prompts\ for\ scene\ setup}
+\DoxyCodeLine{\#\ Supports\ environment\ variables\ and\ command-\/line\ toggles}
+
+\end{DoxyCode}
+
+
+{\bfseries{Key Sections\+:}}
+\begin{DoxyItemize}
+\item \doxylink{classScene}{Scene} setup (manual or JSON loading)
+\item \doxylink{classLight}{Light} configuration with intensity controls
+\item Camera positioning and orientation
+\item Rendering loop with performance metrics
+\item Interactive controls and debug overlays
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md51}{}\doxysection{\texorpdfstring{Object Tree System}{Object Tree System}}\label{md_api__documentation_autotoc_md51}
+\hypertarget{md_api__documentation_autotoc_md52}{}\doxysubsection{\texorpdfstring{Object\+Tree Class ($<$tt$>$object\+\_\+tree.\+h$<$/tt$>$)}{ObjectTree Class (<tt>object\_tree.h</tt>)}}\label{md_api__documentation_autotoc_md52}
+{\bfseries{Purpose\+:}} Hierarchical object composition with CSG operations
+
+{\bfseries{Description\+:}} Enables complex object creation through tree structures containing primitives, transformations, and boolean operations.
+
+{\bfseries{Tree Node Types\+:}}
+\begin{DoxyItemize}
+\item {\bfseries{Sphere\+Unit\+:}} Unit sphere primitive (center (0,0,0), radius 1)
+\item {\bfseries{Cube\+Unit\+:}} Unit cube primitive
+\item {\bfseries{Half\+SpaceZ\+:}} Half-\/space with normal vector +Z
+\item {\bfseries{\doxylink{classTransform}{Transform}\+:}} Transformation node (scale, rotate, translate)
+\item {\bfseries{Op\+:}} CSG operation node (union, intersection, difference)
+\item {\bfseries{Existing\+Object\+:}} Wrapper for existing \doxylink{classObject}{Object} instances
+\end{DoxyItemize}
+
+{\bfseries{Key Features\+:}}
+\begin{DoxyItemize}
+\item Recursive tree traversal for ray intersection
+\item Lazy compilation to renderable \doxylink{classObject}{Object} hierarchy
+\item Transform-\/aware coordinate space management
+\item Integration with existing Scene/render pipeline
+\end{DoxyItemize}
+
+{\bfseries{Usage Example\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Create\ transformed\ sphere}}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ tree\ =\ std::make\_shared<ObjectTree>();}
+\DoxyCodeLine{tree-\/>addTransform(Transform::scale(2.0f));}
+\DoxyCodeLine{tree-\/>addPrimitive(ObjectTree::Node::Kind::SphereUnit);}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_api__documentation_autotoc_md54}{}\doxysection{\texorpdfstring{Scene Loading System}{Scene Loading System}}\label{md_api__documentation_autotoc_md54}
+\hypertarget{md_api__documentation_autotoc_md55}{}\doxysubsection{\texorpdfstring{JSON Scene Format ($<$tt$>$scene\+\_\+loader.\+h$<$/tt$>$)}{JSON Scene Format (<tt>scene\_loader.h</tt>)}}\label{md_api__documentation_autotoc_md55}
+{\bfseries{Purpose\+:}} Comprehensive scene file loading and parsing
+
+{\bfseries{Supported Elements\+:}}
+\begin{DoxyItemize}
+\item \doxylink{classObject}{Object} definitions with materials and transforms
+\item \doxylink{classLight}{Light} configurations with position and intensity
+\item Camera setup with position and orientation
+\item Rendering parameters and quality settings
+\end{DoxyItemize}
+
+{\bfseries{JSON Structure\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ "{}objects"{}:\ [...],}
+\DoxyCodeLine{\ \ "{}lights"{}:\ [...],\ }
+\DoxyCodeLine{\ \ "{}camera"{}:\ \{...\},}
+\DoxyCodeLine{\ \ "{}settings"{}:\ \{...\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+{\bfseries{Parser Features\+:}}
+\begin{DoxyItemize}
+\item Robust JSON parsing with error handling
+\item Nested object hierarchies support
+\item \doxylink{structMaterial}{Material} property definitions
+\item \doxylink{classTransform}{Transform} matrix specifications
+\item Validation and default value handling
+\end{DoxyItemize}
+
+{\bfseries{Key Classes\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{structJsonValue}{Json\+Value}}\+: Generic JSON value container
+\item \doxylink{classScene}{Scene} loading functions for each object type
+\item Error reporting and validation utilities 
+\end{DoxyItemize}

@@ -1,0 +1,61 @@
+\doxysection{Object\+Tree\+::Node Struct Reference}
+\hypertarget{structObjectTree_1_1Node}{}\label{structObjectTree_1_1Node}\index{ObjectTree::Node@{ObjectTree::Node}}
+
+
+Collaboration diagram for Object\+Tree\+::Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{structObjectTree_1_1Node__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a4def35fa7540b5b778aaac8457d8c76d}\label{structObjectTree_1_1Node_a4def35fa7540b5b778aaac8457d8c76d} 
+enum class {\bfseries Kind} \{ \newline
+{\bfseries Sphere\+Unit}
+, {\bfseries Cube\+Unit}
+, {\bfseries Half\+SpaceZ}
+, {\bfseries Transform}
+, \newline
+{\bfseries Op}
+, {\bfseries Existing\+Object}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a4c0432b4db52d4036cccafda2982b757}\label{structObjectTree_1_1Node_a4c0432b4db52d4036cccafda2982b757} 
+{\bfseries Node} (Kind k)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a6f327d1f3d2ffab5be9cb6574a58211d}\label{structObjectTree_1_1Node_a6f327d1f3d2ffab5be9cb6574a58211d} 
+Kind {\bfseries kind}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a5e5208f25361df999261b0241a2cb879}\label{structObjectTree_1_1Node_a5e5208f25361df999261b0241a2cb879} 
+\mbox{\hyperlink{classTransform}{Transform}} {\bfseries transform}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a74fb84b5d30435975c5c58710f84cd14}\label{structObjectTree_1_1Node_a74fb84b5d30435975c5c58710f84cd14} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries child}
+\item 
+\Hypertarget{structObjectTree_1_1Node_ad7c5a66cb7a454457fd89adb3d19a13a}\label{structObjectTree_1_1Node_ad7c5a66cb7a454457fd89adb3d19a13a} 
+CSGOp {\bfseries op} \{CSGOp\+::\+Union\}
+\item 
+\Hypertarget{structObjectTree_1_1Node_ada9d6c92d36119c13dc9b53dbe87b8aa}\label{structObjectTree_1_1Node_ada9d6c92d36119c13dc9b53dbe87b8aa} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries left}
+\item 
+\Hypertarget{structObjectTree_1_1Node_a5dc74e1bb891ca161bdaa41d5e9cba4e}\label{structObjectTree_1_1Node_a5dc74e1bb891ca161bdaa41d5e9cba4e} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries right}
+\item 
+\Hypertarget{structObjectTree_1_1Node_aed0e665ed63fdc61b9b70362e09c94ee}\label{structObjectTree_1_1Node_aed0e665ed63fdc61b9b70362e09c94ee} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ {\bfseries existing\+Object}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object\+\_\+tree.\+h\end{DoxyCompactItemize}

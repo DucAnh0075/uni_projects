@@ -1,0 +1,102 @@
+\doxysection{Cube Class Reference}
+\hypertarget{classCube}{}\label{classCube}\index{Cube@{Cube}}
+
+
+Inheritance diagram for Cube\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=128pt]{classCube__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Cube\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classCube__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classCube_a893ec4131f2c7e286a8ed26453f4b0d7}\label{classCube_a893ec4131f2c7e286a8ed26453f4b0d7} 
+{\bfseries Cube} (const Eigen\+::\+Vector3f \&c, double s, const Eigen\+::\+Vector3f \&col)
+\item 
+\Hypertarget{classCube_a7c330f74349ba6348d41e75cc4f43663}\label{classCube_a7c330f74349ba6348d41e75cc4f43663} 
+{\bfseries Cube} (const Eigen\+::\+Vector3f \&c, double s, const Eigen\+::\+Vector3f \&col, const \mbox{\hyperlink{structMaterial}{Material}} \&mat)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classCube_a63a1440fbb1730bfc4a7deec73a3baa5}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+bool \mbox{\hyperlink{classCube_a9947f975e1b6ec3ffedbe4d24cae06db}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classCube_a2913005523c86354fd3560509809cd92}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classCube_af2080d06f541c0102281422200132d1d}\label{classCube_af2080d06f541c0102281422200132d1d} 
+double {\bfseries size}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCube_a9947f975e1b6ec3ffedbe4d24cae06db}\label{classCube_a9947f975e1b6ec3ffedbe4d24cae06db} 
+\index{Cube@{Cube}!contains@{contains}}
+\index{contains@{contains}!Cube@{Cube}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Cube\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classCube_a63a1440fbb1730bfc4a7deec73a3baa5}\label{classCube_a63a1440fbb1730bfc4a7deec73a3baa5} 
+\index{Cube@{Cube}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!Cube@{Cube}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Cube\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classCube_a2913005523c86354fd3560509809cd92}\label{classCube_a2913005523c86354fd3560509809cd92} 
+\index{Cube@{Cube}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!Cube@{Cube}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Cube\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.\+h\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object_8cpp}{object.\+cpp}}\end{DoxyCompactItemize}

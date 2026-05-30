@@ -1,0 +1,35 @@
+\chapter{Development Plan (Iterative with Tests)}
+\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development}{}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development}\index{Development Plan (Iterative with Tests)@{Development Plan (Iterative with Tests)}}
+\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md3}%
+\Hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md3}%
+ \hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md4}{}\doxysection{\texorpdfstring{I1 — Foundation}{I1 — Foundation}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md4}
+Vec4, Ray, Mat4 (Trans/\+Rot/\+Scale, inverse for basic transformations)
+
+Unit-\/\+Tests\+: Dot/\+Norm/\+Normalize, Transformation inverses\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md5}{}\doxysection{\texorpdfstring{I2 — Camera \& Image}{I2 — Camera \& Image}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md5}
+Camera.\+generate\+Ray (Screen/\+P/\+DPI), Image (+PPM/\+PNG)
+
+Test\+: Grid/\+Gradient\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md6}{}\doxysection{\texorpdfstring{I3 — Primitives \& Intersection}{I3 — Primitives \& Intersection}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md6}
+\doxylink{classSphere}{Sphere}, Plane, Scene.\+trace\+Nearest
+
+Tests\+: analytical cases, parallel cases\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md7}{}\doxysection{\texorpdfstring{I4 — Phong (without shadows)}{I4 — Phong (without shadows)}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md7}
+\doxylink{structMaterial}{Material}, Point\+Light, \doxylink{structColor}{Color} (+⊕, clamp)
+
+Test\+: Lambert hemisphere\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md8}{}\doxysection{\texorpdfstring{I5 — Shadows (hard)}{I5 — Shadows (hard)}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md8}
+Shadow ray with epsilon
+
+Test\+: Sphere+\+Plane, correct umbra\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md9}{}\doxysection{\texorpdfstring{I6 — Reflection}{I6 — Reflection}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md9}
+reflect, recursive shade, max\+Depth
+
+Test\+: Mirror sphere\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md10}{}\doxysection{\texorpdfstring{I7 — Transmission}{I7 — Transmission}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md10}
+refract (Snell, TIR), ior
+
+Test\+: Glass sphere (n\textquotesingle{}≈1.5)\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md11}{}\doxysection{\texorpdfstring{I8 — Transformations}{I8 — Transformations}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md11}
+Transformed(child,M,M⁻¹)
+
+Test\+: Scaled/rotated sphere/plane\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md12}{}\doxysection{\texorpdfstring{I9 — Quality/\+Optimization (optional)}{I9 — Quality/Optimization (optional)}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md12}
+Supersampling (2×2), parallel scanlines
+
+Simple BVH (AABB) if many objects\hypertarget{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md13}{}\doxysection{\texorpdfstring{Deliverables per Iteration}{Deliverables per Iteration}}\label{md__2home_2duc_2uni_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development_autotoc_md13}
+Brief note (½ page)\+: Features, Tests
+
+1 Example scene + Reference image 

@@ -1,0 +1,108 @@
+\doxysection{Half\+Space Class Reference}
+\hypertarget{classHalfSpace}{}\label{classHalfSpace}\index{HalfSpace@{HalfSpace}}
+
+
+Inheritance diagram for Half\+Space\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=146pt]{classHalfSpace__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Half\+Space\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classHalfSpace__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classHalfSpace_a877bf54faaea8bd910e4d1b1dc66ebbc}\label{classHalfSpace_a877bf54faaea8bd910e4d1b1dc66ebbc} 
+{\bfseries Half\+Space} (const Eigen\+::\+Vector3f \&n, float r, const Eigen\+::\+Vector3f \&col)
+\item 
+\Hypertarget{classHalfSpace_ac076b193277e753c024fad68a4408716}\label{classHalfSpace_ac076b193277e753c024fad68a4408716} 
+{\bfseries Half\+Space} (const Eigen\+::\+Vector3f \&n, float r, const Eigen\+::\+Vector3f \&col, const \mbox{\hyperlink{structMaterial}{Material}} \&mat)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classHalfSpace_af7b171ed9f8652eafb41f1fa5a56ff45}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+\Hypertarget{classHalfSpace_ab39518bce5c2575762d9984aee6af7bb}\label{classHalfSpace_ab39518bce5c2575762d9984aee6af7bb} 
+const Eigen\+::\+Vector3f \& {\bfseries get\+Normal} () const
+\item 
+bool \mbox{\hyperlink{classHalfSpace_aa480e431885767697c8f6d0517e5fe24}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classHalfSpace_af669fb7faa54b8875e73183a10273b90}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classHalfSpace_a274f51d3c1fb0cb2a853750d888842c9}\label{classHalfSpace_a274f51d3c1fb0cb2a853750d888842c9} 
+Eigen\+::\+Vector3f {\bfseries normal}
+\item 
+\Hypertarget{classHalfSpace_aae9767f121255db644b557497ff1fab3}\label{classHalfSpace_aae9767f121255db644b557497ff1fab3} 
+float {\bfseries offset}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classHalfSpace_aa480e431885767697c8f6d0517e5fe24}\label{classHalfSpace_aa480e431885767697c8f6d0517e5fe24} 
+\index{HalfSpace@{HalfSpace}!contains@{contains}}
+\index{contains@{contains}!HalfSpace@{HalfSpace}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Half\+Space\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classHalfSpace_af7b171ed9f8652eafb41f1fa5a56ff45}\label{classHalfSpace_af7b171ed9f8652eafb41f1fa5a56ff45} 
+\index{HalfSpace@{HalfSpace}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!HalfSpace@{HalfSpace}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Half\+Space\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classHalfSpace_af669fb7faa54b8875e73183a10273b90}\label{classHalfSpace_af669fb7faa54b8875e73183a10273b90} 
+\index{HalfSpace@{HalfSpace}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!HalfSpace@{HalfSpace}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Half\+Space\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.\+h\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object_8cpp}{object.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,19 @@
+## samples
+*.in
+*.out
+
+## binaries
+*.class
+*.exe
+*.bin
+
+## others
+*.pdf
+*.xls
+*.doc
+*solution
+*output
+*.o
+
+## mac files
+*.DS_Store

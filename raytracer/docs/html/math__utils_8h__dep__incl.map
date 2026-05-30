@@ -1,0 +1,30 @@
+<map id="/home/michael/Uni/OOP/jokers_gone_wild/Project/math_utils.h" name="/home/michael/Uni/OOP/jokers_gone_wild/Project/math_utils.h">
+<area shape="rect" id="Node000001" title="Mathematical utilities and vector operations." alt="" coords="201,5,388,60"/>
+<area shape="rect" id="Node000002" href="$object_8cpp.html" title="Implementation of geometric objects and ray intersection algorithms." alt="" coords="5,108,192,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,69,151,110,149,106,230,64"/>
+<area shape="rect" id="Node000003" href="$render_8h.html" title="Main rendering engine and ray tracing algorithms." alt="" coords="317,519,504,573"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="274,73,257,109,237,172,232,237,232,342,235,371,245,398,260,423,278,446,321,486,365,516,361,521,318,490,274,450,255,426,240,400,230,372,227,342,227,237,232,171,252,107,269,71"/>
+<area shape="rect" id="Node000005" href="$scene__loader_8h_source.html" title=" " alt="" coords="709,416,896,471"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="402,58,481,83,568,116,658,158,741,208,773,231,797,252,816,277,832,313,837,340,835,368,819,417,814,415,830,367,832,340,827,314,811,280,793,256,770,236,739,213,655,162,566,121,479,88,401,63"/>
+<area shape="rect" id="Node000006" href="$transform_8h.html" title="3D transformation matrices and operations" alt="" coords="267,108,453,163"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="321,70,345,106,341,109,317,73"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html" title="Main entry point for the ray tracer application." alt="" coords="433,621,620,676"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="453,581,498,619,495,623,450,585"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="770,482,721,529,663,576,582,624,579,619,660,571,717,525,766,478"/>
+<area shape="poly" id="edge17_Node000006_Node000003" title=" " alt="" coords="358,176,353,264,354,316,359,368,379,450,402,517,397,519,373,452,353,368,348,317,348,264,353,176"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="338,176,319,209,301,250,288,294,283,339,283,445,281,514,288,542,307,572,334,595,365,613,399,626,433,635,432,640,398,631,363,618,331,600,303,575,283,544,276,515,277,445,277,339,283,293,296,248,314,207,333,173"/>
+<area shape="poly" id="edge18_Node000006_Node000005" title=" " alt="" coords="467,148,569,171,622,187,673,208,718,228,754,247,783,272,809,312,818,339,820,367,813,416,808,415,814,366,812,340,804,314,779,275,751,251,716,233,671,213,620,192,568,176,466,153"/>
+<area shape="rect" id="Node000007" href="$object__tree_8h_source.html" title=" " alt="" coords="473,211,660,265"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="427,166,514,208,512,213,425,171"/>
+<area shape="poly" id="edge16_Node000007_Node000005" title=" " alt="" coords="675,252,731,274,757,291,779,312,795,336,803,364,807,415,802,416,798,365,790,338,775,315,754,295,729,279,673,257"/>
+<area shape="rect" id="Node000008" href="$object__tree_8cpp.html" title="Implementation of hierarchical object tree and CSG operations." alt="" coords="579,313,765,368"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="606,273,646,311,643,315,602,277"/>
+<area shape="rect" id="Node000009" href="$scene_8h_source.html" title=" " alt="" coords="368,313,555,368"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="531,277,491,315,487,311,527,273"/>
+<area shape="poly" id="edge14_Node000009_Node000003" title=" " alt="" coords="430,380,409,417,404,443,402,470,407,518,402,519,397,470,398,442,404,415,425,377"/>
+<area shape="poly" id="edge11_Node000009_Node000004" title=" " alt="" coords="569,370,597,389,620,415,631,442,634,471,629,500,618,529,587,581,554,623,550,620,583,578,613,526,624,499,628,471,626,443,615,417,594,393,566,375"/>
+<area shape="poly" id="edge15_Node000009_Node000005" title=" " alt="" coords="564,369,714,413,713,419,563,374"/>
+<area shape="rect" id="Node000010" href="$performance__utils_8h.html" title="Performance optimization utilities for ray tracing." alt="" coords="419,416,605,471"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="483,379,501,415,496,417,478,381"/>
+<area shape="poly" id="edge13_Node000010_Node000003" title=" " alt="" coords="477,483,439,520,435,517,474,479"/>
+</map>

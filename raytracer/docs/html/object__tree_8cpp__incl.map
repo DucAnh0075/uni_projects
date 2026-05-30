@@ -1,0 +1,31 @@
+<map id="/home/michael/Uni/OOP/jokers_gone_wild/Project/object_tree.cpp" name="/home/michael/Uni/OOP/jokers_gone_wild/Project/object_tree.cpp">
+<area shape="rect" id="Node000001" title="Implementation of hierarchical object tree and CSG operations." alt="" coords="27,5,213,60"/>
+<area shape="rect" id="Node000002" href="$object__tree_8h_source.html" title=" " alt="" coords="67,108,173,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,60,123,94,117,94,117,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,328,83,353"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,135,72,185,52,219,37,255,34,285,39,314,34,315,29,285,32,254,47,216,68,182,107,132"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="238,181,298,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="145,131,233,173,230,178,143,136"/>
+<area shape="rect" id="Node000005" href="$object_8h_source.html" title=" " alt="" coords="47,255,121,280"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="119,134,105,182,92,242,86,241,100,181,114,133"/>
+<area shape="rect" id="Node000007" href="$transform_8h.html" title="3D transformation matrices and operations" alt="" coords="115,181,213,207"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="130,132,152,168,147,171,125,135"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="80,282,60,317,55,315,75,279"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="107,328,210,353"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="98,278,138,317,135,320,94,282"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="165,208,156,242,147,263,135,282,111,306,83,324,80,319,107,302,131,278,142,260,151,241,160,206"/>
+<area shape="poly" id="edge17_Node000007_Node000005" title=" " alt="" coords="153,209,109,248,105,244,149,205"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="171,206,179,239,180,280,171,316,166,314,175,280,174,240,165,207"/>
+<area shape="rect" id="Node000008" href="$math__utils_8h.html" title="Mathematical utilities and vector operations." alt="" coords="275,255,378,280"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="191,204,289,247,286,251,189,209"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="301,282,200,325,198,320,299,278"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="441,401,503,427"/>
+<area shape="poly" id="edge12_Node000008_Node000009" title=" " alt="" coords="346,278,406,326,435,358,458,388,454,392,431,361,402,330,343,282"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="235,328,293,353"/>
+<area shape="poly" id="edge13_Node000008_Node000010" title=" " alt="" coords="318,282,285,319,281,316,314,279"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="317,328,392,353"/>
+<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="334,279,348,314,343,316,329,281"/>
+<area shape="rect" id="Node000012" href="$constants_8h.html" title="Centralized constants and configuration values." alt="" coords="467,328,565,353"/>
+<area shape="poly" id="edge15_Node000008_Node000012" title=" " alt="" coords="358,278,473,320,471,325,356,283"/>
+<area shape="poly" id="edge16_Node000012_Node000009" title=" " alt="" coords="511,355,489,391,484,388,506,352"/>
+</map>

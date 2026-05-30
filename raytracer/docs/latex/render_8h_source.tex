@@ -1,0 +1,384 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/render.h}
+\hypertarget{render_8h_source}{}\label{render_8h_source}\mbox{\hyperlink{render_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ RENDER\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ RENDER\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <opencv2/opencv.hpp>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{constants_8h}{constants.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}light.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{math__utils_8h}{math\_utils.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{performance__utils_8h}{performance\_utils.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}scene.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{transform_8h}{transform.h}}"{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{using\ }Vec3\ =\ Eigen::Vector3f;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{using\ }Vec4\ =\ Eigen::Vector4f;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{inline}\ Vec3\ \mbox{\hyperlink{render_8h_a5c1f623ecdbfb6e3ca95f5507971d644}{combineLights}}(\textcolor{keyword}{const}\ Vec3\&\ E1,\ \textcolor{keyword}{const}\ Vec3\&\ E2)\ \{}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordflow}{return}\ Vec3::Ones()\ -\/\ (Vec3::Ones()\ -\/\ E1).cwiseProduct(Vec3::Ones()\ -\/\ E2);}
+\DoxyCodeLine{00027\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{inline}\ Vec3\ \mbox{\hyperlink{render_8h_abbaed805301647e6b7a28a09736cf242}{computeReflection}}(\textcolor{keyword}{const}\ Vec3\&\ incident,\ \textcolor{keyword}{const}\ Vec3\&\ normal)\ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordflow}{return}\ incident\ -\/\ 2.0f\ *\ incident.dot(normal)\ *\ normal;}
+\DoxyCodeLine{00032\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{inline}\ Vec3\ \mbox{\hyperlink{render_8h_ad2b425abc407e300923bcc66f0a8f68e}{computeRefraction}}(\textcolor{keyword}{const}\ Vec3\&\ incident,\ \textcolor{keyword}{const}\ Vec3\&\ normal,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ n1,\ \textcolor{keywordtype}{float}\ n2)\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{float}\ ratio\ =\ n1\ /\ n2;}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{float}\ cosI\ =\ -\/normal.dot(incident);}
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{float}\ sinT2\ =\ ratio\ *\ ratio\ *\ (1.0f\ -\/\ cosI\ *\ cosI);}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{if}\ (sinT2\ >\ 1.0f)\ \textcolor{keywordflow}{return}\ Vec3::Zero();\ \ \textcolor{comment}{//\ Total\ internal\ reflection}}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{float}\ cosT\ =\ std::sqrt(1.0f\ -\/\ sinT2);}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordflow}{return}\ ratio\ *\ incident\ +\ (ratio\ *\ cosI\ -\/\ cosT)\ *\ normal;}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{inline}\ Vec3\ \mbox{\hyperlink{render_8h_a9eda16903518ebe4fd13e025865883dc}{getSurfaceNormal}}(\textcolor{keyword}{const}\ std::shared\_ptr<Object>\&\ obj,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ hitPoint)\ \{}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ sphere\ =\ \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{classSphere}{Sphere}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ Vec3\ center(sphere-\/>getPos().x,\ sphere-\/>getPos().y,\ sphere-\/>getPos().z);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ (hitPoint\ -\/\ center).normalized();}
+\DoxyCodeLine{00051\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ plane\ =\ \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{classHalfSpace}{HalfSpace}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ plane-\/>getNormal();}
+\DoxyCodeLine{00053\ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ cube\ =\ \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{classCube}{Cube}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ Vec3\ center(cube-\/>getPos().x,\ cube-\/>getPos().y,\ cube-\/>getPos().z);}
+\DoxyCodeLine{00055\ \ \ \ \ Vec3\ local\ =\ hitPoint\ -\/\ center;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{float}\ ax\ =\ std::abs(local.x()),\ ay\ =\ std::abs(local.y()),}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ az\ =\ std::abs(local.z());}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{float}\ maxAxis\ =\ std::max(\{ax,\ ay,\ az\});}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{if}\ (ax\ ==\ maxAxis)\ \textcolor{keywordflow}{return}\ Vec3((local.x()\ >\ 0)\ ?\ 1\ :\ -\/1,\ 0,\ 0);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{if}\ (ay\ ==\ maxAxis)\ \textcolor{keywordflow}{return}\ Vec3(0,\ (local.y()\ >\ 0)\ ?\ 1\ :\ -\/1,\ 0);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ Vec3(0,\ 0,\ (local.z()\ >\ 0)\ ?\ 1\ :\ -\/1);}
+\DoxyCodeLine{00062\ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordflow}{return}\ Vec3(0,\ 1,\ 0);\ \ \textcolor{comment}{//\ Default}}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRenderer}{Renderer}}\ \{}
+\DoxyCodeLine{00067\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{static}\ Vec3\ traceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{classScene}{Scene}}\&\ scene,\ \textcolor{keyword}{const}\ Vec3\&\ rayOrigin,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ rayDirection,\ \textcolor{keywordtype}{int}\ depth,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{RayTracer::PixelInfoPool}}\&\ pixelPool,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1MaterialCache}{RayTracer::MaterialCache}}\&\ materialCache,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{RayTracer::IntersectionCache}}\&\ intersectionCache,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxDepth\ =\ RayTracer::DEFAULT\_RAY\_DEPTH)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (depth\ >=\ maxDepth)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ scene.backgroundColor;}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ t;}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ hitInfo\ =\ pixelPool.\mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_a90e3810cbdf0d0b6b7bc9e1e913f0a7c}{acquire}}();\ }
+\DoxyCodeLine{00080\ \ \ \ \ std::shared\_ptr<Object>\ hitObject;}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{if}\ (!scene.trace(rayOrigin,\ rayDirection,\ hitInfo,\ t,\ hitObject)\ ||}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ !hitObject)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ pixelPool.\mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_ac1f5c43fe702a193f6bfc918fbee7d23}{release}}(hitInfo);}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ scene.backgroundColor;\ }
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ Vec3\ hitPoint(hitInfo.pos.x,\ hitInfo.pos.y,\ hitInfo.pos.z);}
+\DoxyCodeLine{00089\ \ \ \ \ Vec3\ normal\ =\ \mbox{\hyperlink{render_8h_a9eda16903518ebe4fd13e025865883dc}{getSurfaceNormal}}(hitObject,\ hitPoint);}
+\DoxyCodeLine{00090\ \ \ \ \ Vec3\ viewDir\ =\ (rayOrigin\ -\/\ hitPoint).normalized();}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat\ =\ hitObject-\/>getMaterial();}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Ensure\ normal\ points\ toward\ viewer}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{if}\ (normal.dot(viewDir)\ <\ 0)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ normal\ =\ -\/normal;}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Base\ color\ from\ object\ (normalized\ to\ [0,1])}}
+\DoxyCodeLine{00099\ \ \ \ \ Vec3\ objectColor\ =\ RayTracer::colorToVec3(hitInfo.color);}
+\DoxyCodeLine{00100\ \ \ \ \ Vec3\ ambient\ =\ objectColor\ *\ RayTracer::AMBIENT\_INTENSITY;}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Direct\ lighting\ (diffuse\ +\ specular)}}
+\DoxyCodeLine{00103\ \ \ \ \ Vec3\ diffuse\ =\ Vec3::Zero();}
+\DoxyCodeLine{00104\ \ \ \ \ Vec3\ specular\ =\ Vec3::Zero();}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ light\ :\ scene.lights)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ Vec3\ lightVec\ =\ light.getLightVector(hitPoint);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distToLight\ =\ (light.getType()\ ==\ Light::Type::Point)}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ lightVec.norm()}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distToLight\ <=\ RayTracer::MIN\_INTERSECTION\_DISTANCE)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ Vec3\ lightDir\ =\ lightVec.normalized();}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndotl\ =\ std::max(0.0f,\ normal.dot(lightDir));}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ndotl\ <=\ 0.0f)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \textcolor{comment}{//\ Shadow\ testing}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ Vec3\ shadowOrig\ =\ hitPoint\ +\ RayTracer::SHADOW\_BIAS\ *\ normal;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ blocked\ =\ scene.isOccluded(}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ shadowOrig,\ lightDir,}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ std::isfinite(distToLight)\ ?\ distToLight}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::numeric\_limits<float>::infinity(),}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ RayTracer::SHADOW\_BIAS);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (blocked)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ lightFactor\ =\ light.getAttenuatedIntensity(hitPoint);}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ Vec3\ diffuseContrib\ =\ objectColor\ *\ ndotl\ *\ lightFactor;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ diffuse\ =\ \mbox{\hyperlink{render_8h_a5c1f623ecdbfb6e3ca95f5507971d644}{combineLights}}(diffuse,\ diffuseContrib);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ Vec3\ reflectDir\ =\ \mbox{\hyperlink{render_8h_abbaed805301647e6b7a28a09736cf242}{computeReflection}}(-\/lightDir,\ normal);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ RdotV\ =\ std::max(0.0f,\ reflectDir.dot(viewDir));}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ Ks\ =\ 0.25f;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ alpha\ =\ 32.0f;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ Vec3\ specularContrib\ =}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ Vec3(1.0f,\ 1.0f,\ 1.0f)\ *\ Ks\ *\ std::pow(RdotV,\ alpha)\ *\ lightFactor;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ specular\ =\ \mbox{\hyperlink{render_8h_a5c1f623ecdbfb6e3ca95f5507971d644}{combineLights}}(specular,\ specularContrib);}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ Vec3\ reflection\ =\ Vec3::Zero();}
+\DoxyCodeLine{00142\ \ \ \ \ Vec3\ refraction\ =\ Vec3::Zero();}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{if}\ (depth\ <\ maxDepth)\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ reflection\ for\ reflective\ materials}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mat.Kr.maxCoeff()\ >\ 0.01f)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ Vec3\ reflectDir\ =\ \mbox{\hyperlink{render_8h_abbaed805301647e6b7a28a09736cf242}{computeReflection}}(-\/viewDir,\ normal);}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ Vec3\ reflectedColor\ =}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ traceRay(scene,\ hitPoint\ +\ normal\ *\ 0.001f,\ reflectDir,\ depth\ +\ 1,}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pixelPool,\ materialCache,\ intersectionCache,\ maxDepth);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ reflection\ =\ Vec3(mat.Kr.x()\ *\ reflectedColor.x(),}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat.Kr.y()\ *\ reflectedColor.y(),}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat.Kr.z()\ *\ reflectedColor.z());}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ refraction\ for\ transparent\ materials}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mat.Kt.maxCoeff()\ >\ 0.01f)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ Vec3\ refractDir\ =}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{render_8h_ad2b425abc407e300923bcc66f0a8f68e}{computeRefraction}}(-\/viewDir,\ normal,\ 1.0f,\ mat.refractive\_index);}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (refractDir\ !=\ Vec3::Zero())\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ Vec3\ refractedColor\ =}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ traceRay(scene,\ hitPoint\ -\/\ normal\ *\ 0.001f,\ refractDir,\ depth\ +\ 1,}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pixelPool,\ materialCache,\ intersectionCache,\ maxDepth);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ refraction\ =\ Vec3(mat.Kt.x()\ *\ refractedColor.x(),}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat.Kt.y()\ *\ refractedColor.y(),}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat.Kt.z()\ *\ refractedColor.z());}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Simple\ combination\ like\ original\ (no\ logarithmic\ for\ now)}}
+\DoxyCodeLine{00172\ \ \ \ \ Vec3\ finalColor\ =\ ambient\ +\ diffuse\ +\ specular\ +\ reflection\ +\ refraction;}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ pixelPool.\mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_ac1f5c43fe702a193f6bfc918fbee7d23}{release}}(hitInfo);}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{comment}{//\ Clamp\ to\ reasonable\ range}}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{return}\ finalColor.cwiseMin(1.0f).cwiseMax(0.0f);}
+\DoxyCodeLine{00179\ \ \ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \textcolor{keyword}{static}\ Vec3\ traceRay(\textcolor{keyword}{const}\ \mbox{\hyperlink{classScene}{Scene}}\&\ scene,\ \textcolor{keyword}{const}\ Vec3\&\ rayOrigin,}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ rayDirection,\ \textcolor{keywordtype}{int}\ depth,}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxDepth\ =\ RayTracer::DEFAULT\_RAY\_DEPTH)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{RayTracer::PixelInfoPool}}\ tempPool(10);\ }
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1MaterialCache}{RayTracer::MaterialCache}}\ tempCache;\ }
+\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{RayTracer::IntersectionCache}}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ tempIntersectionCache;\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{return}\ traceRay(scene,\ rayOrigin,\ rayDirection,\ depth,\ tempPool,\ tempCache,}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempIntersectionCache,\ maxDepth);}
+\DoxyCodeLine{00191\ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00194\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ renderScene(cv::Mat\&\ image,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classScene}{Scene}}\&\ scene,}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classScreen}{Screen}}\&\ screen,\ \textcolor{keyword}{const}\ Vec4\&\ observer,}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3\&\ camera,\ \textcolor{keywordtype}{bool}\ showRays,\ \textcolor{keywordtype}{bool}\ showLightRays,}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ showPlaneFlow,\ \textcolor{keywordtype}{int}\ planeFlowStride,}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ showPositionMarkers)\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{int}\ width\ =\ screen.width\ *\ screen.dpi\_x;}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{int}\ height\ =\ screen.height\ *\ screen.dpi\_y;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//\ Initialize\ performance\ optimizations}}
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1RayGrid}{RayTracer::RayGrid}}\ rayGrid;}
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{RayTracer::PixelInfoPool}}\ pixelPool(RayTracer::OBJECT\_POOL\_SIZE);}
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1MaterialCache}{RayTracer::MaterialCache}}\ materialCache;}
+\DoxyCodeLine{00206\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor}{RayTracer::PixelBatchProcessor}}\ batchProcessor;}
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{RayTracer::IntersectionCache}}\ intersectionCache;}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keyword}{auto}\ startTime\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ rayGrid.\mbox{\hyperlink{classRayTracer_1_1RayGrid_a09106a2c40372c7eea44923453b4bc16}{initialize}}(screen,\ observer,\ width,\ height);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ Find\ plane\ information\ for\ visualization}}
+\DoxyCodeLine{00214\ \ \ \ \ Vec3\ planeNormal(0,\ 1,\ 0);}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{float}\ planeOffset\ =\ 0.0f;}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obj\ :\ scene.objects)\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ plane\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classHalfSpace}{HalfSpace}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ planeNormal\ =\ plane-\/>getNormal();}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ testLine\{Vec3(0,\ 0,\ 0),\ planeNormal\};}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ plane-\/>intersectWithLine(testLine);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ planeOffset\ =\ info.distance;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ \}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//\ Overlay\ helpers}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasPointLight\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00228\ \ \ \ \ Vec3\ pointLightPos(0,\ 0,\ 0);}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasDirLight\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00230\ \ \ \ \ Vec3\ dirLightDir(0,\ -\/1,\ 0);}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ L\ :\ scene.lights)\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!hasPointLight\ \&\&\ L.getType()\ ==\ Light::Type::Point)\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ pointLightPos\ =\ L.getPosition();}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ hasPointLight\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!hasDirLight\ \&\&\ L.getType()\ ==\ Light::Type::Directional)\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ dirLightDir\ =\ L.getDirection();}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ hasDirLight\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordtype}{int}\ lx\ =\ 0,\ ly\ =\ 0;}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasPointLight)\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ lx\ =\ (int)((pointLightPos.x()\ -\/\ screen.origin.x())\ /\ (screen.width)\ *}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ width);}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ ly\ =\ (int)((pointLightPos.y()\ -\/\ screen.origin.y())\ /\ (screen.height)\ *}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height);}
+\DoxyCodeLine{00247\ \ \ \ \ \}}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keyword}{auto}\ projectToScreen\ =\ [\&](\textcolor{keyword}{const}\ Vec3\&\ P,\ \textcolor{keywordtype}{int}\&\ outX,\ \textcolor{keywordtype}{int}\&\ outY)\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ Vec3\ O\ =\ RayTracer::vec4ToVec3(observer);}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denom\ =\ (P.z()\ -\/\ O.z());}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(denom)\ <\ 1e-\/6f)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\_proj\ =\ (screen.origin.z()\ -\/\ O.z())\ /\ denom;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t\_proj\ <=\ 0.0f)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ Vec3\ S\ =\ O\ +\ t\_proj\ *\ (P\ -\/\ O);}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ sx\ =\ (int)((S.x()\ -\/\ screen.origin.x())\ /\ screen.pixel\_size\_x);}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ sy\ =\ (int)((S.y()\ -\/\ screen.origin.y())\ /\ screen.pixel\_size\_y);}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sx\ <\ 0\ ||\ sx\ >=\ width\ ||\ sy\ <\ 0\ ||\ sy\ >=\ height)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ outX\ =\ sx;}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ outY\ =\ height\ -\/\ 1\ -\/\ sy;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00262\ \ \ \ \ \};}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ height;\ ++y)\ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ width;\ ++x)\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ pre-\/computed\ ray\ from\ grid}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ Vec3\ rayOrigin\ =\ rayGrid.\mbox{\hyperlink{classRayTracer_1_1RayGrid_a6455c92787f045ab9cc21664efac4995}{getRayOrigin}}(x,\ y);}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ Vec3\ rayDirection\ =\ rayGrid.\mbox{\hyperlink{classRayTracer_1_1RayGrid_acacd7f4a30aa71fc84e394cf0dc3f251}{getRayDirection}}(x,\ y);}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ray\ tracing\ with\ optimizations}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ Vec3\ finalColor\ =\ traceRay(scene,\ rayOrigin,\ rayDirection,\ 0,\ pixelPool,}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ materialCache,\ intersectionCache,}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RayTracer::MAX\_RAY\_DEPTH);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ finalColor\ =\ RayTracer::denormalizeColor(}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ RayTracer::clampVector(finalColor,\ 0.0f,\ 1.0f));}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ row\ =\ height\ -\/\ 1\ -\/\ y;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ image.at<cv::Vec3b>(row,\ x)\ =}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ cv::Vec3b((uchar)finalColor.z(),\ (uchar)finalColor.y(),}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uchar)finalColor.x());}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (showRays\ \&\&\ x\ \%\ RayTracer::RAY\_VISUALIZATION\_STRIDE\ ==\ 0\ \&\&}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ y\ \%\ RayTracer::RAY\_VISUALIZATION\_STRIDE\ ==\ 0)\ \{}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ cv::Point\ startPt((\textcolor{keywordtype}{int})(camera.x()\ *\ screen.dpi\_x\ +\ width\ /\ 2),}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{int})(camera.y()\ *\ screen.dpi\_y\ +\ height\ /\ 2));}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ cv::Point\ endPt(x,\ height\ -\/\ 1\ -\/\ y);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ cv::line(image,\ startPt,\ endPt,\ cv::Scalar(0,\ 0,\ 255),\ 1);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (showLightRays\ \&\&\ hasPointLight\ \&\&}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ x\ \%\ RayTracer::RAY\_VISUALIZATION\_STRIDE\ ==\ 0\ \&\&}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ y\ \%\ RayTracer::RAY\_VISUALIZATION\_STRIDE\ ==\ 0)\ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ cv::line(image,\ cv::Point(lx,\ ly),\ cv::Point(x,\ height\ -\/\ 1\ -\/\ y),}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::Scalar(255,\ 255,\ 255),\ 1);}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00296\ \ \ \ \ \}}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{comment}{//\ Performance\ measurement\ and\ reporting}}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keyword}{auto}\ endTime\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keyword}{auto}\ renderTime\ =\ std::chrono::duration\_cast<std::chrono::milliseconds>(}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ endTime\ -\/\ startTime);}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{preprocessor}{\#ifdef\ DEBUG\_BUILD}}
+\DoxyCodeLine{00304\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[PERFORMANCE]\ Rendering\ completed\ in\ "{}}\ <<\ renderTime.count()}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}ms"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00306\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[PERFORMANCE]\ Pixels\ rendered:\ "{}}\ <<\ (width\ *\ height)}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::endl;}
+\DoxyCodeLine{00308\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[PERFORMANCE]\ Pixels\ per\ second:\ "{}}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ (width\ *\ height\ *\ 1000.0\ /\ renderTime.count())\ <<\ std::endl;}
+\DoxyCodeLine{00310\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasPointLight)\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fly\ =\ height\ -\/\ 1\ -\/\ ly;}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ cv::circle(image,\ cv::Point(lx,\ fly),\ 16,\ cv::Scalar(0,\ 255,\ 255),\ -\/1);}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ cv::circle(image,\ cv::Point(lx,\ fly),\ 18,\ cv::Scalar(0,\ 0,\ 0),\ 2);}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ cv::line(image,\ cv::Point(lx\ -\/\ 12,\ fly),\ cv::Point(lx\ +\ 12,\ fly),}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::Scalar(0,\ 0,\ 0),\ 2);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ cv::line(image,\ cv::Point(lx,\ fly\ -\/\ 12),\ cv::Point(lx,\ fly\ +\ 12),}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::Scalar(0,\ 0,\ 0),\ 2);}
+\DoxyCodeLine{00320\ \ \ \ \ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keywordflow}{if}\ (showPlaneFlow)\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ Vec3\ n\ =\ planeNormal;}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ offset\ =\ planeFlowStride\ /\ 2;}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ drawn\ =\ 0;}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ offset;\ y\ <\ height;\ y\ +=\ planeFlowStride)\ \{}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ offset;\ x\ <\ width;\ x\ +=\ planeFlowStride)\ \{}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ px\ =\ screen.origin.x()\ +\ (x\ +\ 0.5f)\ *\ screen.pixel\_size\_x;}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ py\ =\ screen.origin.y()\ +\ (y\ +\ 0.5f)\ *\ screen.pixel\_size\_y;}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pz\ =\ screen.origin.z();}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ Vec4\ pixel\_center(px,\ py,\ pz,\ 1);}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ Vec4\ ray\_dir\ =\ pixel\_center\ -\/\ observer;}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ ray\_dir.w()\ =\ 0;}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ Vec3\ ray\_dir3\ =\ RayTracer::vec4ToVec3(ray\_dir);}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ ray\_dir3.normalize();}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t;}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info;}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!scene.trace(camera,\ ray\_dir3,\ info,\ t))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planeNormal.dot(Vec3(info.pos.x,\ info.pos.y,\ info.pos.z))\ -\/}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planeOffset)\ >\ RayTracer::LARGE\_EPSILON)}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ Vec3\ P\ =\ camera\ +\ ray\_dir3\ *\ t;}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ Vec3\ L\ =\ hasPointLight}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (pointLightPos\ -\/\ P)}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (hasDirLight\ ?\ (-\/dirLightDir)\ :\ Vec3(0,\ 0,\ 0));}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ Vec3\ n\_used\ =\ (n.dot(L)\ <\ 0.0f)\ ?\ -\/n\ :\ n;}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ Vec3\ L\_tan\ =\ L\ -\/\ n\_used\ *\ n\_used.dot(L);}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ len\ =\ L\_tan.norm();}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ <\ RayTracer::MIN\_INTERSECTION\_DISTANCE)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ Vec3\ dir\ =\ L\_tan\ /\ len;}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ stepWorld\ =\ 0.8f;}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ Vec3\ Q\ =\ P\ +\ stepWorld\ *\ dir;}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ x1,\ y1;}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!projectToScreen(Q,\ x1,\ y1))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ cv::arrowedLine(image,\ cv::Point(x,\ height\ -\/\ 1\ -\/\ y),}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::Point(x1,\ y1),\ cv::Scalar(255,\ 0,\ 255),\ 1,}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::LINE\_AA,\ 0,\ 0.25);}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (++drawn\ >=\ RayTracer::MAX\_FLOW\_ARROWS)\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (drawn\ >=\ RayTracer::MAX\_FLOW\_ARROWS)\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00363\ \ \ \ \ \}}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordflow}{if}\ (showPositionMarkers)\ \{}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obj\ :\ scene.objects)\ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPosition}{Position}}\ pos\ =\ obj-\/>getPos();}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ Vec3\ posVec(pos.x,\ pos.y,\ pos.z);}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ px,\ py;}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (projectToScreen(posVec,\ px,\ py))\ \{}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ cv::circle(image,\ cv::Point(px,\ py),\ 6,\ cv::Scalar(255,\ 255,\ 0),\ 2);}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ cv::circle(image,\ cv::Point(px,\ py),\ 3,\ cv::Scalar(0,\ 255,\ 255),\ -\/1);}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Show\ position\ coordinates\ as\ text}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ std::string\ posText\ =\ \textcolor{stringliteral}{"{}("{}}\ +\ std::to\_string((\textcolor{keywordtype}{int})pos.x)\ +\ \textcolor{stringliteral}{"{},"{}}\ +}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string((\textcolor{keywordtype}{int})pos.y)\ +\ \textcolor{stringliteral}{"{},"{}}\ +}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string((\textcolor{keywordtype}{int})pos.z)\ +\ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ cv::putText(image,\ posText,\ cv::Point(px\ +\ 8,\ py\ -\/\ 8),}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cv::FONT\_HERSHEY\_SIMPLEX,\ 0.4,\ cv::Scalar(255,\ 255,\ 0),}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1);}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00383\ \ \ \ \ \}}
+\DoxyCodeLine{00384\ \ \ \}}
+\DoxyCodeLine{00385\ \};}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ RENDER\_H}}
+
+\end{DoxyCode}

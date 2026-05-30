@@ -1,0 +1,146 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/toggles.h}
+\hypertarget{toggles_8h_source}{}\label{toggles_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Clean,\ single\ definition}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cctype>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structToggleSettings}{ToggleSettings}}\ \{}
+\DoxyCodeLine{00010\ \ \ \textcolor{keywordtype}{bool}\ headless\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00011\ \ \ \textcolor{keywordtype}{bool}\ showPositionMarkers\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00012\ \ \ \textcolor{keywordtype}{bool}\ showRays\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00013\ \ \ \textcolor{keywordtype}{bool}\ showLightRays\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00014\ \ \ \textcolor{keywordtype}{bool}\ showPlaneFlow\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{int}\ planeFlowStride\ =\ 64;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ parseYesNo(\textcolor{keyword}{const}\ std::string\ \&in)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ ans\ =\ in;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{auto}\ l\ =\ ans.find\_first\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{auto}\ r\ =\ ans.find\_last\_not\_of(\textcolor{stringliteral}{"{}\ \(\backslash\)t\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{if}\ (l\ !=\ std::string::npos\ \&\&\ r\ !=\ std::string::npos)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ ans\ =\ ans.substr(l,\ r\ -\/\ l\ +\ 1);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ch\ :\ ans)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ ch\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(std::tolower(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(ch)));}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ (ans\ ==\ \textcolor{stringliteral}{"{}y"{}}\ ||\ ans\ ==\ \textcolor{stringliteral}{"{}yes"{}}\ ||\ ans\ ==\ \textcolor{stringliteral}{"{}true"{}}\ ||\ ans\ ==\ \textcolor{stringliteral}{"{}1"{}});}
+\DoxyCodeLine{00026\ \ \ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ startsWith(\textcolor{keyword}{const}\ std::string\ \&s,\ \textcolor{keyword}{const}\ std::string\ \&p)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ s.rfind(p,\ 0)\ ==\ 0;}
+\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ loadFromEnv()\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_HEADLESS"{}}))\ headless\ =\ parseYesNo(v);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_SHOW\_POSITION\_MARKERS"{}}))}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ showPositionMarkers\ =\ parseYesNo(v);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_SHOW\_RAYS"{}}))\ showRays\ =\ parseYesNo(v);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_SHOW\_LIGHT\_RAYS"{}}))}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ showLightRays\ =\ parseYesNo(v);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_SHOW\_PLANE\_FLOW"{}}))}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ showPlaneFlow\ =\ parseYesNo(v);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *v\ =\ std::getenv(\textcolor{stringliteral}{"{}RT\_PLANE\_FLOW\_STRIDE"{}}))\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ std::stoi(std::string(v));}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ >=\ 16\ \&\&\ n\ <=\ 512)\ planeFlowStride\ =\ n;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (...)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ignore\ invalid}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{void}\ parseArgs(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ argc;\ ++i)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ std::string\ a(argv[i]);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parseBoolArg\ =\ [\&](\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keywordtype}{bool}\ \&out)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ ==\ name)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ out\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (startsWith(a,\ name\ +\ \textcolor{stringliteral}{"{}="{}}))\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ out\ =\ parseYesNo(a.substr(name.size()\ +\ 1));}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ ==\ \textcolor{stringliteral}{"{}-\/-\/headless"{}}\ ||\ a\ ==\ \textcolor{stringliteral}{"{}-\/-\/no-\/prompt"{}})\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ headless\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parseBoolArg(\textcolor{stringliteral}{"{}-\/-\/show-\/position-\/markers"{}},\ showPositionMarkers))}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parseBoolArg(\textcolor{stringliteral}{"{}-\/-\/show-\/rays"{}},\ showRays))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parseBoolArg(\textcolor{stringliteral}{"{}-\/-\/show-\/light-\/rays"{}},\ showLightRays))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parseBoolArg(\textcolor{stringliteral}{"{}-\/-\/show-\/plane-\/flow"{}},\ showPlaneFlow))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ ==\ \textcolor{stringliteral}{"{}-\/-\/plane-\/flow-\/stride"{}})\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ +\ 1\ <\ argc)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ std::stoi(argv[++i]);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ >=\ 16\ \&\&\ n\ <=\ 512)\ planeFlowStride\ =\ n;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (...)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (startsWith(a,\ \textcolor{stringliteral}{"{}-\/-\/plane-\/flow-\/stride="{}}))\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::stoi(a.substr(std::string(\textcolor{stringliteral}{"{}-\/-\/plane-\/flow-\/stride="{}}).size()));}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ >=\ 16\ \&\&\ n\ <=\ 512)\ planeFlowStride\ =\ n;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (...)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordtype}{void}\ promptFromConsole()\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{using\ }std::cout;}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{using\ }std::getline;}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INPUT]\ show\_position\_markers?\ (y/n)\ [n]:\ "{}}\ <<\ std::flush;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{string}\ ans;}
+\DoxyCodeLine{00105\ \ \ \ \ ans.clear();}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (getline(std::cin,\ ans))\ showPositionMarkers\ =\ parseYesNo(ans);}
+\DoxyCodeLine{00107\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INFO]\ show\_position\_markers\ =\ "{}}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ <<\ (showPositionMarkers\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INPUT]\ show\_rays?\ (y/n)\ [n]:\ "{}}\ <<\ std::flush;}
+\DoxyCodeLine{00111\ \ \ \ \ ans.clear();}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{if}\ (getline(std::cin,\ ans))\ showRays\ =\ parseYesNo(ans);}
+\DoxyCodeLine{00113\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INFO]\ show\_rays\ =\ "{}}\ <<\ (showRays\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INPUT]\ show\_light\_rays?\ (y/n)\ [n]:\ "{}}\ <<\ std::flush;}
+\DoxyCodeLine{00116\ \ \ \ \ ans.clear();}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{if}\ (getline(std::cin,\ ans))\ showLightRays\ =\ parseYesNo(ans);}
+\DoxyCodeLine{00118\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INFO]\ show\_light\_rays\ =\ "{}}\ <<\ (showLightRays\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}})}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INPUT]\ show\_plane\_flow?\ (y/n)\ [n]:\ "{}}\ <<\ std::flush;}
+\DoxyCodeLine{00122\ \ \ \ \ ans.clear();}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{if}\ (getline(std::cin,\ ans))\ showPlaneFlow\ =\ parseYesNo(ans);}
+\DoxyCodeLine{00124\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INFO]\ show\_plane\_flow\ =\ "{}}\ <<\ (showPlaneFlow\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}})}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordflow}{if}\ (showPlaneFlow)\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INPUT]\ plane\_flow\_stride?\ [64]:\ "{}}\ <<\ std::flush;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ ans.clear();}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (getline(std::cin,\ ans))\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ v\ =\ std::stoi(ans);}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ >=\ 16\ \&\&\ v\ <=\ 512)\ planeFlowStride\ =\ v;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (...)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ keep\ default}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}[INFO]\ plane\_flow\_stride\ =\ "{}}\ <<\ planeFlowStride\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \}}
+\DoxyCodeLine{00141\ \};}
+
+\end{DoxyCode}

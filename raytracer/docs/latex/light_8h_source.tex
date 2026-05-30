@@ -1,0 +1,89 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/light.h}
+\hypertarget{light_8h_source}{}\label{light_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}object.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classLight}{Light}}\ \{}
+\DoxyCodeLine{00007\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{enum\ class}\ Type\ \{\ Point,\ Directional\ \};}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ Type\ type\_;}
+\DoxyCodeLine{00012\ \ \ Eigen::Vector3f\ position\_;}
+\DoxyCodeLine{00013\ \ \ Eigen::Vector3f\ direction\_;}
+\DoxyCodeLine{00014\ \ \ \mbox{\hyperlink{structColor}{Color}}\ color\_\{255,\ 255,\ 255\};}
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{float}\ intensity\_\ =\ 1.0f;}
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordtype}{bool}\ castsShadows\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00017\ \ \ }
+\DoxyCodeLine{00018\ \ \ \textcolor{keywordtype}{float}\ attenC\_\ =\ 1.0f;\ \ \textcolor{comment}{//\ Constant\ attenuation}}
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{float}\ attenL\_\ =\ 0.0f;\ \ \textcolor{comment}{//\ Linear\ attenuation}}
+\DoxyCodeLine{00020\ \ \ \textcolor{keywordtype}{float}\ attenQ\_\ =\ 0.0f;\ \ \textcolor{comment}{//\ Quadratic\ attenuation}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{comment}{//\ Private\ constructor}}
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{classLight}{Light}}(Type\ t,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ pos,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ dir,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ col,\ \textcolor{keywordtype}{float}\ intensity,\ \textcolor{keywordtype}{bool}\ castsShadows,\ \textcolor{keywordtype}{float}\ attenC,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ attenL,\ \textcolor{keywordtype}{float}\ attenQ)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ :\ type\_(t),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ position\_(pos),}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ direction\_(dir),}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ color\_(col),}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ intensity\_(intensity),}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ castsShadows\_(castsShadows),}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ attenC\_(attenC),}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ attenL\_(attenL),}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ attenQ\_(attenQ)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\_\ ==\ Type::Directional)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (direction\_.norm()\ >\ 0)\ direction\_.normalize();}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ Static\ factory\ methods\ DO\ NOT\ TOUCH!}}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classLight}{Light}}\ createPointLight(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ position,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ color\ =\ \{255,\ 255,\ 255\},}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ intensity\ =\ 1.0f,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ castsShadows\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ attenC\ =\ 1.0f,\ \textcolor{keywordtype}{float}\ attenL\ =\ 0.0f,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ attenQ\ =\ 0.0f)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classLight}{Light}}(Type::Point,\ position,\ Eigen::Vector3f::Zero(),\ color,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ intensity,\ castsShadows,\ attenC,\ attenL,\ attenQ);}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classLight}{Light}}\ createDirectionalLight(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ direction,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ color\ =\ \{255,\ 255,\ 255\},}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ intensity\ =\ 1.0f,}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ castsShadows\ =\ \textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classLight}{Light}}(Type::Directional,\ Eigen::Vector3f::Zero(),\ direction,\ color,}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ intensity,\ castsShadows,\ 1.0f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00061\ \ \ Type\ getType()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type\_;\ \}}
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ getPosition()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ position\_;\ \}}
+\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ getDirection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ direction\_;\ \}}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ getColor()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ color\_;\ \}}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{float}\ getIntensity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ intensity\_;\ \}}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{bool}\ getCastsShadows()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ castsShadows\_;\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ Eigen::Vector3f\ getLightVector(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ point)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\_\ ==\ Type::Point)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ position\_\ -\/\ point;}
+\DoxyCodeLine{00071\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/direction\_;\ \ \textcolor{comment}{//\ For\ directional,\ Using\ negative\ direction}}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{float}\ getAttenuatedIntensity(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ point)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\_\ ==\ Type::Point)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ (position\_\ -\/\ point).norm();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ intensity\_\ /\ (attenC\_\ +\ attenL\_\ *\ distance\ +\ attenQ\_\ *\ distance\ *\ distance);}
+\DoxyCodeLine{00080\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ intensity\_;\ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \}}
+\DoxyCodeLine{00084\ \};}
+
+\end{DoxyCode}

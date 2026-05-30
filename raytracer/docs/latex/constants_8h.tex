@@ -1,0 +1,163 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/constants.h File Reference}
+\hypertarget{constants_8h}{}\label{constants_8h}\index{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/constants.h@{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/constants.h}}
+
+
+Centralized constants and configuration values.  
+
+
+{\ttfamily \#include $<$cmath$>$}\newline
+Include dependency graph for constants.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{constants_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{constants_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{constants_8h_a74e4e64fdba734d27106a4bf81b64f73}\label{constants_8h_a74e4e64fdba734d27106a4bf81b64f73} 
+enum class {\bfseries Error\+Code} \{ \newline
+{\bfseries SUCCESS} = 0
+, {\bfseries FILE\+\_\+\+NOT\+\_\+\+FOUND} = 1
+, {\bfseries INVALID\+\_\+\+JSON} = 2
+, {\bfseries INVALID\+\_\+\+GEOMETRY} = 3
+, \newline
+{\bfseries MEMORY\+\_\+\+ALLOCATION\+\_\+\+FAILED} = 4
+, {\bfseries INVALID\+\_\+\+PARAMETERS} = 5
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{constants_8h_a6dd04dcd71b73607e1cff85a33c708da}\label{constants_8h_a6dd04dcd71b73607e1cff85a33c708da} 
+constexpr bool {\bfseries Ray\+Tracer\+::is\+Zero} (float value)
+\begin{DoxyCompactList}\small\item\em Check if a floating point value is effectively zero. \end{DoxyCompactList}\item 
+\Hypertarget{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}\label{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d} 
+constexpr bool {\bfseries Ray\+Tracer\+::are\+Equal} (float a, float b)
+\begin{DoxyCompactList}\small\item\em Check if two floating point values are equal within epsilon. \end{DoxyCompactList}\item 
+\Hypertarget{constants_8h_a4eb388c1df91bf0c54d90fa6920b032a}\label{constants_8h_a4eb388c1df91bf0c54d90fa6920b032a} 
+constexpr float {\bfseries Ray\+Tracer\+::clamp} (float value, float min, float max)
+\begin{DoxyCompactList}\small\item\em Clamp a value between min and max. \end{DoxyCompactList}\item 
+\Hypertarget{constants_8h_a1cab110f6e28661109a9951e58ba5ea4}\label{constants_8h_a1cab110f6e28661109a9951e58ba5ea4} 
+constexpr float {\bfseries Ray\+Tracer\+::deg\+To\+Rad} (float degrees)
+\begin{DoxyCompactList}\small\item\em Convert degrees to radians. \end{DoxyCompactList}\item 
+\Hypertarget{constants_8h_a391186e2e6068490cb187dbfcc83b587}\label{constants_8h_a391186e2e6068490cb187dbfcc83b587} 
+constexpr float {\bfseries Ray\+Tracer\+::rad\+To\+Deg} (float radians)
+\begin{DoxyCompactList}\small\item\em Convert radians to degrees. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{constants_8h_aa05e3ed2c4a6fbfc40ee2256657e9e62}\label{constants_8h_aa05e3ed2c4a6fbfc40ee2256657e9e62} 
+constexpr float {\bfseries Ray\+Tracer\+::\+EPSILON} = 1e-\/6f
+\item 
+\Hypertarget{constants_8h_a6fae39e16b6491b2b72c673247c91898}\label{constants_8h_a6fae39e16b6491b2b72c673247c91898} 
+constexpr float {\bfseries Ray\+Tracer\+::\+LARGE\+\_\+\+EPSILON} = 1e-\/3f
+\item 
+\Hypertarget{constants_8h_a5842c88041293a5e9e38a003e7360a13}\label{constants_8h_a5842c88041293a5e9e38a003e7360a13} 
+constexpr float {\bfseries Ray\+Tracer\+::\+PI} = 3.\+14159265359f
+\item 
+\Hypertarget{constants_8h_a9ba8d5f61e84cc317dd48da447d6b347}\label{constants_8h_a9ba8d5f61e84cc317dd48da447d6b347} 
+constexpr float {\bfseries Ray\+Tracer\+::\+TWO\+\_\+\+PI} = 6.\+28318530718f
+\item 
+\Hypertarget{constants_8h_aa25fc8dbbac80f0755e1f0816dcc18f5}\label{constants_8h_aa25fc8dbbac80f0755e1f0816dcc18f5} 
+constexpr float {\bfseries Ray\+Tracer\+::\+INV\+\_\+\+PI} = 0.\+31830988618f
+\item 
+\Hypertarget{constants_8h_ac1021790eeec7fab8a18fc68cd98c9d6}\label{constants_8h_ac1021790eeec7fab8a18fc68cd98c9d6} 
+constexpr float {\bfseries Ray\+Tracer\+::\+MAX\+\_\+\+COLOR\+\_\+\+VALUE} = 255.\+0f
+\item 
+\Hypertarget{constants_8h_ab8ebd67a2850b688da14070ed61c5b5d}\label{constants_8h_ab8ebd67a2850b688da14070ed61c5b5d} 
+constexpr float {\bfseries Ray\+Tracer\+::\+INV\+\_\+\+MAX\+\_\+\+COLOR} = 1.\+0f / 255.\+0f
+\item 
+\Hypertarget{constants_8h_ae26e799f8f00b24b0e1442c3a0f9f9df}\label{constants_8h_ae26e799f8f00b24b0e1442c3a0f9f9df} 
+constexpr int {\bfseries Ray\+Tracer\+::\+MAX\+\_\+\+RAY\+\_\+\+DEPTH} = 5
+\item 
+\Hypertarget{constants_8h_a4127b7c861da21ccd0ae6131a76064c9}\label{constants_8h_a4127b7c861da21ccd0ae6131a76064c9} 
+constexpr int {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+RAY\+\_\+\+DEPTH} = 2
+\item 
+\Hypertarget{constants_8h_a48d5aaa7461addf50433ec6eed94c329}\label{constants_8h_a48d5aaa7461addf50433ec6eed94c329} 
+constexpr float {\bfseries Ray\+Tracer\+::\+MIN\+\_\+\+RAY\+\_\+\+CONTRIBUTION} = 0.\+01f
+\item 
+\Hypertarget{constants_8h_a2306c398d6c788aad67277a52072e472}\label{constants_8h_a2306c398d6c788aad67277a52072e472} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+SHININESS} = 32.\+0f
+\item 
+\Hypertarget{constants_8h_a01c144fd464038d99df8dc64fb479af0}\label{constants_8h_a01c144fd464038d99df8dc64fb479af0} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+AMBIENT} = 0.\+3f
+\item 
+\Hypertarget{constants_8h_a6a1b3f1597a8e77417ef95c2f559bff7}\label{constants_8h_a6a1b3f1597a8e77417ef95c2f559bff7} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+DIFFUSE} = 1.\+0f
+\item 
+\Hypertarget{constants_8h_a37be5b4432c7a0f863ee781413b11ffa}\label{constants_8h_a37be5b4432c7a0f863ee781413b11ffa} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+SPECULAR} = 0.\+5f
+\item 
+\Hypertarget{constants_8h_a1e14d1c06105c7b712a8f52951d9582f}\label{constants_8h_a1e14d1c06105c7b712a8f52951d9582f} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+REFRACTIVE\+\_\+\+INDEX} = 1.\+0f
+\item 
+\Hypertarget{constants_8h_a19965ea78f89858e36ae1bae17dc23d8}\label{constants_8h_a19965ea78f89858e36ae1bae17dc23d8} 
+constexpr float {\bfseries Ray\+Tracer\+::\+AMBIENT\+\_\+\+INTENSITY} = 0.\+12f
+\item 
+\Hypertarget{constants_8h_a780b2d5743f1f191da7da554339659d2}\label{constants_8h_a780b2d5743f1f191da7da554339659d2} 
+constexpr float {\bfseries Ray\+Tracer\+::\+SHADOW\+\_\+\+BIAS} = 1e-\/3f
+\item 
+\Hypertarget{constants_8h_af0e0ba88d2e9ed2e0602c7a82afce599}\label{constants_8h_af0e0ba88d2e9ed2e0602c7a82afce599} 
+constexpr float {\bfseries Ray\+Tracer\+::\+LIGHT\+\_\+\+ATTENUATION\+\_\+\+CONSTANT} = 1.\+0f
+\item 
+\Hypertarget{constants_8h_a46aa864bddae1259ab7b0ab85b3d8b66}\label{constants_8h_a46aa864bddae1259ab7b0ab85b3d8b66} 
+constexpr float {\bfseries Ray\+Tracer\+::\+LIGHT\+\_\+\+ATTENUATION\+\_\+\+LINEAR} = 0.\+0f
+\item 
+\Hypertarget{constants_8h_a64314043fdd7282242b2f4e46090032f}\label{constants_8h_a64314043fdd7282242b2f4e46090032f} 
+constexpr float {\bfseries Ray\+Tracer\+::\+LIGHT\+\_\+\+ATTENUATION\+\_\+\+QUADRATIC} = 0.\+0f
+\item 
+\Hypertarget{constants_8h_a47afa1277ad6a44822d9f22b3553a09c}\label{constants_8h_a47afa1277ad6a44822d9f22b3553a09c} 
+constexpr float {\bfseries Ray\+Tracer\+::\+MIN\+\_\+\+INTERSECTION\+\_\+\+DISTANCE} = 1e-\/5f
+\item 
+\Hypertarget{constants_8h_ac7f301c7996146cc11fbeb0e21775708}\label{constants_8h_ac7f301c7996146cc11fbeb0e21775708} 
+constexpr float {\bfseries Ray\+Tracer\+::\+MAX\+\_\+\+INTERSECTION\+\_\+\+DISTANCE} = 1e6f
+\item 
+\Hypertarget{constants_8h_a85baf4185c4f1e8796f0e0ad84d9c415}\label{constants_8h_a85baf4185c4f1e8796f0e0ad84d9c415} 
+constexpr int {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+GRID\+\_\+\+SPACING} = 1
+\item 
+\Hypertarget{constants_8h_a2ab9a831980ce4a574bdb1ddd6db5f9c}\label{constants_8h_a2ab9a831980ce4a574bdb1ddd6db5f9c} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+AXIS\+\_\+\+LENGTH} = 2.\+0f
+\item 
+\Hypertarget{constants_8h_a8f984aef7ccfef79dfe9fd0e6a921709}\label{constants_8h_a8f984aef7ccfef79dfe9fd0e6a921709} 
+constexpr int {\bfseries Ray\+Tracer\+::\+RAY\+\_\+\+VISUALIZATION\+\_\+\+STRIDE} = 16
+\item 
+\Hypertarget{constants_8h_a19ca4e7d91d99a5feac8213eccec0bba}\label{constants_8h_a19ca4e7d91d99a5feac8213eccec0bba} 
+constexpr int {\bfseries Ray\+Tracer\+::\+MAX\+\_\+\+FLOW\+\_\+\+ARROWS} = 1000
+\item 
+\Hypertarget{constants_8h_aeba93a82c413ad0278983982a266ecff}\label{constants_8h_aeba93a82c413ad0278983982a266ecff} 
+constexpr size\+\_\+t {\bfseries Ray\+Tracer\+::\+OBJECT\+\_\+\+POOL\+\_\+\+SIZE} = 1000
+\item 
+\Hypertarget{constants_8h_a03346dbe33f24b91a9299c650e668ab5}\label{constants_8h_a03346dbe33f24b91a9299c650e668ab5} 
+constexpr int {\bfseries Ray\+Tracer\+::\+PIXEL\+\_\+\+BATCH\+\_\+\+SIZE} = 64
+\item 
+\Hypertarget{constants_8h_a0a22ca5b991958dfc4e42418d693173a}\label{constants_8h_a0a22ca5b991958dfc4e42418d693173a} 
+constexpr size\+\_\+t {\bfseries Ray\+Tracer\+::\+MAX\+\_\+\+JSON\+\_\+\+DEPTH} = 32
+\item 
+\Hypertarget{constants_8h_ab2e1677adfdaa7e230d15d23d1028782}\label{constants_8h_ab2e1677adfdaa7e230d15d23d1028782} 
+constexpr size\+\_\+t {\bfseries Ray\+Tracer\+::\+JSON\+\_\+\+BUFFER\+\_\+\+SIZE} = 8192
+\item 
+\Hypertarget{constants_8h_a1cac8e573684d267abf8afd652a62440}\label{constants_8h_a1cac8e573684d267abf8afd652a62440} 
+constexpr int {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+DPI} = 240
+\item 
+\Hypertarget{constants_8h_af42d346401c502c01976bd45f299305a}\label{constants_8h_af42d346401c502c01976bd45f299305a} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+SCREEN\+\_\+\+WIDTH} = 8.\+0f
+\item 
+\Hypertarget{constants_8h_aff020e4a3496874d6f8d7fe00b9273f3}\label{constants_8h_aff020e4a3496874d6f8d7fe00b9273f3} 
+constexpr float {\bfseries Ray\+Tracer\+::\+DEFAULT\+\_\+\+SCREEN\+\_\+\+HEIGHT} = 4.\+5f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Centralized constants and configuration values. 
+

@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['i1_20—_20foundation_0',['I1 — Foundation',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md78',1,'']]],
+  ['i2_20—_20camera_20image_1',['I2 — Camera &amp; Image',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md79',1,'']]],
+  ['i3_20—_20primitives_20intersection_2',['I3 — Primitives &amp; Intersection',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md80',1,'']]],
+  ['i4_20—_20phong_20without_20shadows_3',['I4 — Phong (without shadows)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md81',1,'']]],
+  ['i5_20—_20shadows_20hard_4',['I5 — Shadows (hard)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md82',1,'']]],
+  ['i6_20—_20reflection_5',['I6 — Reflection',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md83',1,'']]],
+  ['i7_20—_20transmission_6',['I7 — Transmission',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md84',1,'']]],
+  ['i8_20—_20transformations_7',['I8 — Transformations',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md85',1,'']]],
+  ['i9_20—_20quality_20optimization_20optional_8',['I9 — Quality/Optimization (optional)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md86',1,'']]],
+  ['image_9',['I2 — Camera &amp; Image',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md79',1,'']]],
+  ['in_20api_5fdocumentation_20md_10',['in api_documentation md',['../md_docstring__standards.html#autotoc_md61',1,'Template for Class Documentation (in api_documentation.md)'],['../md_docstring__standards.html#autotoc_md60',1,'Template for Detailed Function Documentation (in api_documentation.md)']]],
+  ['in_20centralized_20documentation_11',['In Centralized Documentation',['../md_docstring__standards.html#autotoc_md65',1,'']]],
+  ['in_20header_20files_12',['In Header Files',['../md_docstring__standards.html#autotoc_md64',1,'']]],
+  ['initialize_13',['initialize',['../classRayTracer_1_1RayGrid.html#a09106a2c40372c7eea44923453b4bc16',1,'RayTracer::RayGrid']]],
+  ['initializebatches_14',['initializeBatches',['../classRayTracer_1_1PixelBatchProcessor.html#a8f4ddb5c83abfa09d1452903a1690c05',1,'RayTracer::PixelBatchProcessor']]],
+  ['intersection_15',['I3 — Primitives &amp; Intersection',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md80',1,'']]],
+  ['intersection_20tests_20core_20only_16',['Intersection Tests (core only)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__algorithm.html#autotoc_md76',1,'']]],
+  ['intersectioncache_17',['IntersectionCache',['../classRayTracer_1_1IntersectionCache.html',1,'RayTracer']]],
+  ['isfinite_18',['isfinite',['../math__utils_8h.html#aada2c47acfbac516340abeb9c08effd2',1,'RayTracer::isFinite(const VectorType &amp;vector)'],['../math__utils_8h.html#a81c0792db969c4133c5f5d4eeedf940f',1,'RayTracer::isFinite(float value)']]],
+  ['iszero_19',['isZero',['../constants_8h.html#a6dd04dcd71b73607e1cff85a33c708da',1,'RayTracer']]],
+  ['iteration_20',['Deliverables per Iteration',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html#autotoc_md87',1,'']]],
+  ['iterative_20with_20tests_21',['Development Plan (Iterative with Tests)',['../md__2home_2michael_2Uni_2OOP_2jokers__gone__wild_2Project_2preliminary__conception__design_2preconcept__development.html',1,'']]]
+];

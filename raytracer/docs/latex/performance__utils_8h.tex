@@ -1,0 +1,45 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/performance\+\_\+utils.h File Reference}
+\hypertarget{performance__utils_8h}{}\label{performance__utils_8h}\index{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/performance\_utils.h@{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/performance\_utils.h}}
+
+
+Performance optimization utilities for ray tracing.  
+
+
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}constants.\+h"{}}\newline
+{\ttfamily \#include "{}scene.\+h"{}}\newline
+Include dependency graph for performance\+\_\+utils.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{performance__utils_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{performance__utils_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classRayTracer_1_1RayGrid}{Ray\+Tracer\+::\+Ray\+Grid}}
+\begin{DoxyCompactList}\small\item\em Pre-\/computed ray grid for performance optimization. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{Ray\+Tracer\+::\+Pixel\+Info\+Pool}}
+\begin{DoxyCompactList}\small\item\em Simple object pool for \doxylink{structPixelInfo}{Pixel\+Info} objects. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRayTracer_1_1MaterialCache}{Ray\+Tracer\+::\+Material\+Cache}}
+\begin{DoxyCompactList}\small\item\em \doxylink{structMaterial}{Material} cache for frequently accessed materials. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor}{Ray\+Tracer\+::\+Pixel\+Batch\+Processor}}
+\begin{DoxyCompactList}\small\item\em Batch processor for pixel rendering. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{Ray\+Tracer\+::\+Intersection\+Cache}}
+\begin{DoxyCompactList}\small\item\em Intersection cache for scene objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Performance optimization utilities for ray tracing. 
+

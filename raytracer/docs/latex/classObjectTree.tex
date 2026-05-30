@@ -1,0 +1,140 @@
+\doxysection{Object\+Tree Class Reference}
+\hypertarget{classObjectTree}{}\label{classObjectTree}\index{ObjectTree@{ObjectTree}}
+
+
+Inheritance diagram for Object\+Tree\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classObjectTree__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Object\+Tree\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classObjectTree__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classObjectTree_1_1ColorOverrideWrapper}{Color\+Override\+Wrapper}}
+\item 
+struct \mbox{\hyperlink{structObjectTree_1_1Node}{Node}}
+\item 
+class \mbox{\hyperlink{classObjectTree_1_1TransformedWrapper}{Transformed\+Wrapper}}
+\begin{DoxyCompactList}\small\item\em Local helper wrappers for object tree implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObjectTree_a801c7ff66494e0fbb1c0ea30c86364cc}\label{classObjectTree_a801c7ff66494e0fbb1c0ea30c86364cc} 
+{\bfseries Object\+Tree} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ root\+\_\+, const Eigen\+::\+Vector3f \&col)
+\item 
+\Hypertarget{classObjectTree_aad44e84df3b30bf55b367de823397999}\label{classObjectTree_aad44e84df3b30bf55b367de823397999} 
+{\bfseries Object\+Tree} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ root\+\_\+, const Eigen\+::\+Vector3f \&col, const \mbox{\hyperlink{structMaterial}{Material}} \&mat)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classObjectTree_a7b7b35297b79b95c6e6b22f39eb3696e}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+bool \mbox{\hyperlink{classObjectTree_a6e87df2eb82c0e9507de2a9dc1da7bba}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classObjectTree_a4fe79528f788508b77dd0d040e84a62f}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\item 
+\Hypertarget{classObjectTree_a69a3b3a9af32dbd6625708056981f9f8}\label{classObjectTree_a69a3b3a9af32dbd6625708056981f9f8} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries get\+Root} () const
+\item 
+const \mbox{\hyperlink{structMaterial}{Material}} \& \mbox{\hyperlink{classObjectTree_a015b83371ab9fa864b5944307a47d766}{get\+Material}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObjectTree_a7d45abf0b3176ca9f84531e909ba6910}\label{classObjectTree_a7d45abf0b3176ca9f84531e909ba6910} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Sphere\+Unit} ()
+\item 
+\Hypertarget{classObjectTree_ac60d1a371c5ab2463ef0881907219b03}\label{classObjectTree_ac60d1a371c5ab2463ef0881907219b03} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Cube\+Unit} ()
+\item 
+\Hypertarget{classObjectTree_aebe2d1ae49bbf7224e1c3d36b8357267}\label{classObjectTree_aebe2d1ae49bbf7224e1c3d36b8357267} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Half\+SpaceZ} ()
+\item 
+\Hypertarget{classObjectTree_abe73ff367c2a91867f2f57d94be8dbc3}\label{classObjectTree_abe73ff367c2a91867f2f57d94be8dbc3} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Existing\+Object\+Node} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ obj)
+\item 
+\Hypertarget{classObjectTree_a6b227d6d73b0b8816e3e0d3a263a8794}\label{classObjectTree_a6b227d6d73b0b8816e3e0d3a263a8794} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Transform\+Node} (const \mbox{\hyperlink{classTransform}{Transform}} \&T, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ child)
+\item 
+\Hypertarget{classObjectTree_a20563b78204258b958b752304c0fc7c4}\label{classObjectTree_a20563b78204258b958b752304c0fc7c4} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ {\bfseries Op\+Node} (CSGOp op, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ A, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}} $>$ B)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classObjectTree_a6e87df2eb82c0e9507de2a9dc1da7bba}\label{classObjectTree_a6e87df2eb82c0e9507de2a9dc1da7bba} 
+\index{ObjectTree@{ObjectTree}!contains@{contains}}
+\index{contains@{contains}!ObjectTree@{ObjectTree}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_a015b83371ab9fa864b5944307a47d766}\label{classObjectTree_a015b83371ab9fa864b5944307a47d766} 
+\index{ObjectTree@{ObjectTree}!getMaterial@{getMaterial}}
+\index{getMaterial@{getMaterial}!ObjectTree@{ObjectTree}}
+\doxysubsubsection{\texorpdfstring{getMaterial()}{getMaterial()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structMaterial}{Material}} \& Object\+Tree\+::get\+Material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_a7b7b35297b79b95c6e6b22f39eb3696e}\label{classObjectTree_a7b7b35297b79b95c6e6b22f39eb3696e} 
+\index{ObjectTree@{ObjectTree}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!ObjectTree@{ObjectTree}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Object\+Tree\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_a4fe79528f788508b77dd0d040e84a62f}\label{classObjectTree_a4fe79528f788508b77dd0d040e84a62f} 
+\index{ObjectTree@{ObjectTree}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!ObjectTree@{ObjectTree}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object\+\_\+tree.\+h\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object__tree_8cpp}{object\+\_\+tree.\+cpp}}\end{DoxyCompactItemize}

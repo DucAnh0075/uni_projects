@@ -1,0 +1,152 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/transform.h}
+\hypertarget{transform_8h_source}{}\label{transform_8h_source}\mbox{\hyperlink{transform_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{math__utils_8h}{math\_utils.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}object.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ }Vec3\ =\ Eigen::Vector3f;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{using\ }Vec4\ =\ Eigen::Vector4f;}
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ }Matrix4\ =\ Eigen::Matrix4f;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTransform}{Transform}}\ \{}
+\DoxyCodeLine{00020\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00021\ \ \ Matrix4\ matrix;}
+\DoxyCodeLine{00022\ \ \ Matrix4\ inverse;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{classTransform}{Transform}}()\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ matrix\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00027\ \ \ \ \ inverse\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00028\ \ \ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \mbox{\hyperlink{classTransform}{Transform}}(\textcolor{keyword}{const}\ Matrix4\&\ m)\ :\ matrix(m)\ \{\ inverse\ =\ m.inverse();\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{comment}{//\ Factory\ methods\ for\ basic\ transformations}}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ translation(\textcolor{keywordtype}{float}\ tx,\ \textcolor{keywordtype}{float}\ ty,\ \textcolor{keywordtype}{float}\ tz)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ Matrix4\ m\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00035\ \ \ \ \ m(0,\ 3)\ =\ tx;}
+\DoxyCodeLine{00036\ \ \ \ \ m(1,\ 3)\ =\ ty;}
+\DoxyCodeLine{00037\ \ \ \ \ m(2,\ 3)\ =\ tz;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(m);}
+\DoxyCodeLine{00039\ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationX(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ degrees\ =\ std::fmod(degrees,\ 360.0f);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (degrees\ <\ 0.0f)\ degrees\ +=\ 360.0f;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ radians\ =\ degrees\ *\ M\_PI\ /\ 180.0f;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ Matrix4\ m\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ std::cos(radians);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ std::sin(radians);}
+\DoxyCodeLine{00049\ \ \ \ \ m(1,\ 1)\ =\ c;}
+\DoxyCodeLine{00050\ \ \ \ \ m(1,\ 2)\ =\ -\/s;}
+\DoxyCodeLine{00051\ \ \ \ \ m(2,\ 1)\ =\ s;}
+\DoxyCodeLine{00052\ \ \ \ \ m(2,\ 2)\ =\ c;}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(m);}
+\DoxyCodeLine{00054\ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationXDegrees(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{return}\ rotationX(degrees);}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationY(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ degrees\ =\ std::fmod(degrees,\ 360.0f);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (degrees\ <\ 0.0f)\ degrees\ +=\ 360.0f;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{float}\ radians\ =\ degrees\ *\ M\_PI\ /\ 180.0f;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ Matrix4\ m\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ std::cos(radians);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ std::sin(radians);}
+\DoxyCodeLine{00068\ \ \ \ \ m(0,\ 0)\ =\ c;}
+\DoxyCodeLine{00069\ \ \ \ \ m(0,\ 2)\ =\ s;}
+\DoxyCodeLine{00070\ \ \ \ \ m(2,\ 0)\ =\ -\/s;}
+\DoxyCodeLine{00071\ \ \ \ \ m(2,\ 2)\ =\ c;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(m);}
+\DoxyCodeLine{00073\ \ \ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationYDegrees(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ rotationY(degrees);}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationZ(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ degrees\ =\ std::fmod(degrees,\ 360.0f);}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (degrees\ <\ 0.0f)\ degrees\ +=\ 360.0f;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{float}\ radians\ =\ degrees\ *\ M\_PI\ /\ 180.0f;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ Matrix4\ m\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ std::cos(radians);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ std::sin(radians);}
+\DoxyCodeLine{00087\ \ \ \ \ m(0,\ 0)\ =\ c;}
+\DoxyCodeLine{00088\ \ \ \ \ m(0,\ 1)\ =\ -\/s;}
+\DoxyCodeLine{00089\ \ \ \ \ m(1,\ 0)\ =\ s;}
+\DoxyCodeLine{00090\ \ \ \ \ m(1,\ 1)\ =\ c;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(m);}
+\DoxyCodeLine{00092\ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ rotationZDegrees(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{return}\ rotationZ(degrees);}
+\DoxyCodeLine{00096\ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classTransform}{Transform}}\ scaling(\textcolor{keywordtype}{float}\ sx,\ \textcolor{keywordtype}{float}\ sy,\ \textcolor{keywordtype}{float}\ sz)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ Matrix4\ m\ =\ Matrix4::Identity();}
+\DoxyCodeLine{00100\ \ \ \ \ m(0,\ 0)\ =\ sx;}
+\DoxyCodeLine{00101\ \ \ \ \ m(1,\ 1)\ =\ sy;}
+\DoxyCodeLine{00102\ \ \ \ \ m(2,\ 2)\ =\ sz;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(m);}
+\DoxyCodeLine{00104\ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \textcolor{comment}{//\ Combine\ transformations}}
+\DoxyCodeLine{00107\ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTransform}{Transform}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTransform}{Transform}}(matrix\ *\ other.matrix);}
+\DoxyCodeLine{00109\ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{comment}{//\ Transform\ point\ (with\ w=1)}}
+\DoxyCodeLine{00112\ \ \ Vec3\ transformPoint(\textcolor{keyword}{const}\ Vec3\&\ p)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00113\ \ \ \ \ Vec4\ p4(p.x(),\ p.y(),\ p.z(),\ 1.0f);}
+\DoxyCodeLine{00114\ \ \ \ \ Vec4\ result\ =\ matrix\ *\ p4;}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return}\ RayTracer::vec4ToVec3(result);}
+\DoxyCodeLine{00116\ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \textcolor{comment}{//\ Transform\ vector\ (with\ w=0,\ no\ translation)}}
+\DoxyCodeLine{00119\ \ \ Vec3\ transformVector(\textcolor{keyword}{const}\ Vec3\&\ v)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00120\ \ \ \ \ Vec4\ v4(v.x(),\ v.y(),\ v.z(),\ 0.0f);}
+\DoxyCodeLine{00121\ \ \ \ \ Vec4\ result\ =\ matrix\ *\ v4;}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{return}\ RayTracer::vec4ToVec3(result);}
+\DoxyCodeLine{00123\ \ \ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \textcolor{comment}{//\ Transform\ normal\ (with\ transposed\ inverse)}}
+\DoxyCodeLine{00126\ \ \ Vec3\ transformNormal(\textcolor{keyword}{const}\ Vec3\&\ n)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00127\ \ \ \ \ Eigen::Matrix3f\ normalMatrix\ =\ inverse.block<3,\ 3>(0,\ 0).transpose();}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ (normalMatrix\ *\ n).normalized();}
+\DoxyCodeLine{00129\ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \textcolor{comment}{//\ Inverse\ transformations\ for\ ray\ transformation}}
+\DoxyCodeLine{00132\ \ \ Vec3\ transformPointInverse(\textcolor{keyword}{const}\ Vec3\&\ p)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00133\ \ \ \ \ Vec4\ p4(p.x(),\ p.y(),\ p.z(),\ 1.0f);}
+\DoxyCodeLine{00134\ \ \ \ \ Vec4\ result\ =\ inverse\ *\ p4;}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ RayTracer::vec4ToVec3(result);}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ Vec3\ transformVectorInverse(\textcolor{keyword}{const}\ Vec3\&\ v)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00139\ \ \ \ \ Vec4\ v4(v.x(),\ v.y(),\ v.z(),\ 0.0f);}
+\DoxyCodeLine{00140\ \ \ \ \ Vec4\ result\ =\ inverse\ *\ v4;}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{return}\ RayTracer::vec4ToVec3(result);}
+\DoxyCodeLine{00142\ \ \ \}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \textcolor{comment}{//\ Transform\ line\ (Ray)}}
+\DoxyCodeLine{00145\ \ \ \mbox{\hyperlink{structLine}{Line}}\ transformLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00146\ \ \ \ \ Vec3\ newOrigin\ =\ transformPointInverse(line.origin);}
+\DoxyCodeLine{00147\ \ \ \ \ Vec3\ newDirection\ =\ transformVectorInverse(line.direction);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structLine}{Line}}\{newOrigin,\ newDirection.normalized()\};}
+\DoxyCodeLine{00149\ \ \ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \textcolor{keyword}{const}\ Matrix4\&\ getMatrix()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ matrix;\ \}}
+\DoxyCodeLine{00152\ \ \ \textcolor{keyword}{const}\ Matrix4\&\ getInverse()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ inverse;\ \}}
+\DoxyCodeLine{00153\ \};}
+
+\end{DoxyCode}

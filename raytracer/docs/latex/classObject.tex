@@ -1,0 +1,63 @@
+\doxysection{Object Class Reference}
+\hypertarget{classObject}{}\label{classObject}\index{Object@{Object}}
+
+
+Inheritance diagram for Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classObject__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classObject__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObject_a5ebfc8722c336189249c10c7c7a9c04f}\label{classObject_a5ebfc8722c336189249c10c7c7a9c04f} 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+\Hypertarget{classObject_a281e1d870e94f207e7bed9e74e99d41c}\label{classObject_a281e1d870e94f207e7bed9e74e99d41c} 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+\Hypertarget{classObject_af9b0193ecf2d8c92677705028724ec15}\label{classObject_af9b0193ecf2d8c92677705028724ec15} 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+\Hypertarget{classObject_a88b9ec16c503f631a270a9096ac00f82}\label{classObject_a88b9ec16c503f631a270a9096ac00f82} 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\item 
+\Hypertarget{classObject_a49136302f1600dcbc7f0d6f90dcddd3c}\label{classObject_a49136302f1600dcbc7f0d6f90dcddd3c} 
+virtual \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} {\bfseries intersect\+With\+Line} (const \mbox{\hyperlink{structLine}{Line}} \&)=0
+\item 
+\Hypertarget{classObject_a2943adb178fb29d16f5b889651e2e5ef}\label{classObject_a2943adb178fb29d16f5b889651e2e5ef} 
+virtual bool {\bfseries contains} (const Eigen\+::\+Vector3f \&P) const =0
+\item 
+\Hypertarget{classObject_a03639ac5750398c59137653b68341287}\label{classObject_a03639ac5750398c59137653b68341287} 
+virtual bool {\bfseries ray\+Interval} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObject_aeabe8b45455c709b105fe19ea0baa4e1}\label{classObject_aeabe8b45455c709b105fe19ea0baa4e1} 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\Hypertarget{classObject_a3ed85d6e0b0b62ff2501d421cb55c5e9}\label{classObject_a3ed85d6e0b0b62ff2501d421cb55c5e9} 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\Hypertarget{classObject_a2f63d05a9a9264e1b6c388fa4bba4e91}\label{classObject_a2f63d05a9a9264e1b6c388fa4bba4e91} 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.\+h\end{DoxyCompactItemize}

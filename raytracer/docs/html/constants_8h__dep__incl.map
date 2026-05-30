@@ -1,0 +1,35 @@
+<map id="/home/michael/Uni/OOP/jokers_gone_wild/Project/constants.h" name="/home/michael/Uni/OOP/jokers_gone_wild/Project/constants.h">
+<area shape="rect" id="Node000001" title="Centralized constants and configuration values." alt="" coords="557,5,744,60"/>
+<area shape="rect" id="Node000002" href="$math__utils_8h.html" title="Mathematical utilities and vector operations." alt="" coords="376,108,563,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="593,69,518,110,516,105,590,64"/>
+<area shape="rect" id="Node000003" href="$object_8cpp.html" title="Implementation of geometric objects and ray intersection algorithms." alt="" coords="5,211,192,265"/>
+<area shape="poly" id="edge20_Node000001_Node000003" title=" " alt="" coords="544,59,456,81,365,110,246,162,147,213,144,208,243,157,363,106,454,76,543,54"/>
+<area shape="rect" id="Node000004" href="$render_8h.html" title="Main rendering engine and ray tracing algorithms." alt="" coords="695,621,881,676"/>
+<area shape="poly" id="edge22_Node000001_Node000004" title=" " alt="" coords="758,47,841,69,883,85,922,105,956,130,983,160,1002,196,1008,236,1008,445,1004,476,993,505,975,531,954,555,903,595,852,624,849,619,900,590,950,551,971,528,988,503,999,475,1003,444,1003,237,996,197,979,163,953,134,919,110,881,90,839,74,757,52"/>
+<area shape="rect" id="Node000011" href="$performance__utils_8h.html" title="Performance optimization utilities for ray tracing." alt="" coords="629,519,816,573"/>
+<area shape="poly" id="edge21_Node000001_Node000011" title=" " alt="" coords="759,56,826,82,860,99,891,119,917,143,938,170,952,201,957,236,957,342,953,374,941,403,923,430,901,454,847,493,793,521,790,516,845,488,897,450,919,427,936,401,948,373,952,342,952,237,947,203,934,173,913,146,887,123,857,103,824,87,757,61"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="363,168,193,214,191,209,362,163"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="577,139,683,154,737,169,790,188,836,214,873,247,887,267,898,289,904,313,907,339,907,445,904,472,897,498,875,547,845,590,817,623,813,619,841,587,870,545,892,496,899,471,901,445,901,339,899,314,893,291,883,270,869,251,833,219,787,193,736,174,681,160,576,144"/>
+<area shape="rect" id="Node000006" href="$scene__loader_8h_source.html" title=" " alt="" coords="317,519,504,573"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="405,172,383,190,366,212,333,279,324,309,320,338,321,367,325,398,348,470,362,495,381,517,377,520,358,498,343,472,320,399,315,367,315,337,319,308,328,277,362,209,379,187,401,168"/>
+<area shape="rect" id="Node000007" href="$transform_8h.html" title="3D transformation matrices and operations" alt="" coords="376,211,563,265"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="472,176,472,211,467,211,467,176"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html" title="Main entry point for the ray tracer application." alt="" coords="415,724,601,779"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="703,683,582,726,580,721,701,678"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="431,584,498,722,493,725,427,587"/>
+<area shape="poly" id="edge18_Node000007_Node000004" title=" " alt="" coords="577,257,645,279,715,311,749,331,780,355,807,383,830,415,848,456,851,492,843,529,831,574,821,600,809,623,804,620,816,597,825,573,838,528,845,491,843,457,826,417,803,386,776,359,746,336,713,315,643,284,576,262"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="409,275,366,305,325,343,308,365,295,389,286,415,283,442,283,547,287,578,298,606,315,632,337,655,389,693,442,722,440,726,386,698,333,659,311,635,293,608,282,579,277,548,277,442,281,414,290,387,303,363,321,340,362,301,406,270"/>
+<area shape="poly" id="edge19_Node000007_Node000006" title=" " alt="" coords="439,277,394,340,374,377,359,417,353,443,359,470,371,495,387,517,383,520,366,498,353,472,348,443,353,415,369,375,390,337,435,274"/>
+<area shape="rect" id="Node000008" href="$object__tree_8h_source.html" title=" " alt="" coords="433,313,620,368"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="493,276,514,312,509,315,489,279"/>
+<area shape="poly" id="edge17_Node000008_Node000006" title=" " alt="" coords="557,378,568,400,576,424,577,449,569,472,541,502,506,523,503,518,538,498,564,469,572,448,570,425,563,402,552,381"/>
+<area shape="rect" id="Node000009" href="$object__tree_8cpp.html" title="Implementation of hierarchical object tree and CSG operations." alt="" coords="368,416,555,471"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="504,381,481,417,476,414,500,378"/>
+<area shape="rect" id="Node000010" href="$scene_8h_source.html" title=" " alt="" coords="629,416,816,471"/>
+<area shape="poly" id="edge11_Node000008_Node000010" title=" " alt="" coords="591,372,673,414,670,418,589,377"/>
+<area shape="poly" id="edge15_Node000010_Node000004" title=" " alt="" coords="656,481,635,498,620,520,611,547,613,558,620,572,635,590,653,605,696,626,693,631,650,609,631,594,615,575,608,560,605,546,615,517,631,495,652,476"/>
+<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="655,480,629,498,606,520,571,572,545,628,527,682,516,724,511,723,522,680,540,626,567,569,602,517,626,494,652,476"/>
+<area shape="poly" id="edge16_Node000010_Node000006" title=" " alt="" coords="629,477,493,521,491,516,627,472"/>
+<area shape="poly" id="edge13_Node000010_Node000011" title=" " alt="" coords="725,484,725,519,720,519,720,484"/>
+<area shape="poly" id="edge14_Node000011_Node000004" title=" " alt="" coords="749,583,773,620,769,623,745,586"/>
+</map>

@@ -1,0 +1,139 @@
+\doxysection{Sphere Class Reference}
+\hypertarget{classSphere}{}\label{classSphere}\index{Sphere@{Sphere}}
+
+
+A sphere object.  
+
+
+
+
+{\ttfamily \#include $<$object.\+h$>$}
+
+
+
+Inheritance diagram for Sphere\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{classSphere__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Sphere\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classSphere__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSphere_a9ad4594db6b2cd98f33048fee2a92cd9}{Sphere}} (const Eigen\+::\+Vector3f \&c, float r, const Eigen\+::\+Vector3f \&col)
+\begin{DoxyCompactList}\small\item\em Create a sphere. \end{DoxyCompactList}\item 
+\Hypertarget{classSphere_a348edc352166df3339e9545c89be3aea}\label{classSphere_a348edc352166df3339e9545c89be3aea} 
+{\bfseries Sphere} (const Eigen\+::\+Vector3f \&c, float r, const Eigen\+::\+Vector3f \&col, const \mbox{\hyperlink{structMaterial}{Material}} \&mat)
+\item 
+\Hypertarget{classSphere_a7f8f2f8345b1a7fdf1a04bdd500b8eed}\label{classSphere_a7f8f2f8345b1a7fdf1a04bdd500b8eed} 
+bool {\bfseries intersect} (const Eigen\+::\+Vector3f \&ray\+Orig, const Eigen\+::\+Vector3f \&ray\+Dir, float \&t) const
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classSphere_a3c8a13effab48ea80b8c0ad3c2fd40f6}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+bool \mbox{\hyperlink{classSphere_a91d06e5055cba5487cd134960822d2a2}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classSphere_a1a8d9da4e01c22ebc2721709ede0f6c0}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSphere_ae6f42f0da6679a2f0b4a22681ccccf38}\label{classSphere_ae6f42f0da6679a2f0b4a22681ccccf38} 
+float {\bfseries radius}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A sphere object. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSphere_a9ad4594db6b2cd98f33048fee2a92cd9}\label{classSphere_a9ad4594db6b2cd98f33048fee2a92cd9} 
+\index{Sphere@{Sphere}!Sphere@{Sphere}}
+\index{Sphere@{Sphere}!Sphere@{Sphere}}
+\doxysubsubsection{\texorpdfstring{Sphere()}{Sphere()}}
+{\footnotesize\ttfamily Sphere\+::\+Sphere (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{c,  }\item[{float}]{r,  }\item[{const Eigen\+::\+Vector3f \&}]{col }\end{DoxyParamCaption})}
+
+
+
+Create a sphere. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Center position \\
+\hline
+{\em r} & Radius \\
+\hline
+{\em col} & \doxylink{structColor}{Color} \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSphere_a91d06e5055cba5487cd134960822d2a2}\label{classSphere_a91d06e5055cba5487cd134960822d2a2} 
+\index{Sphere@{Sphere}!contains@{contains}}
+\index{contains@{contains}!Sphere@{Sphere}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Sphere\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classSphere_a3c8a13effab48ea80b8c0ad3c2fd40f6}\label{classSphere_a3c8a13effab48ea80b8c0ad3c2fd40f6} 
+\index{Sphere@{Sphere}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!Sphere@{Sphere}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Sphere\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classSphere_a1a8d9da4e01c22ebc2721709ede0f6c0}\label{classSphere_a1a8d9da4e01c22ebc2721709ede0f6c0} 
+\index{Sphere@{Sphere}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!Sphere@{Sphere}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Sphere\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.\+h\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object_8cpp}{object.\+cpp}}\end{DoxyCompactItemize}

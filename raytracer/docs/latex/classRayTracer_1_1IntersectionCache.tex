@@ -1,0 +1,36 @@
+\doxysection{Ray\+Tracer\+::Intersection\+Cache Class Reference}
+\hypertarget{classRayTracer_1_1IntersectionCache}{}\label{classRayTracer_1_1IntersectionCache}\index{RayTracer::IntersectionCache@{RayTracer::IntersectionCache}}
+
+
+Intersection cache for scene objects.  
+
+
+
+
+{\ttfamily \#include $<$performance\+\_\+utils.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRayTracer_1_1IntersectionCache_a6572296ae4d55c9f71b8abc99fb84154}\label{classRayTracer_1_1IntersectionCache_a6572296ae4d55c9f71b8abc99fb84154} 
+void {\bfseries start\+New\+Frame} ()
+\begin{DoxyCompactList}\small\item\em Start a new frame (invalidates old entries) \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1IntersectionCache_a99eb4a0ebf8d102bb07abbc18851c650}\label{classRayTracer_1_1IntersectionCache_a99eb4a0ebf8d102bb07abbc18851c650} 
+bool {\bfseries find\+Cached} (const Eigen\+::\+Vector3f \&ray\+Origin, const Eigen\+::\+Vector3f \&ray\+Direction, bool \&has\+Intersection, float \&distance, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&object, \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \&pixel\+Info)
+\begin{DoxyCompactList}\small\item\em Try to find a cached intersection result. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1IntersectionCache_a38001295070ac93e7590537922f3b017}\label{classRayTracer_1_1IntersectionCache_a38001295070ac93e7590537922f3b017} 
+void {\bfseries cache\+Result} (const Eigen\+::\+Vector3f \&ray\+Origin, const Eigen\+::\+Vector3f \&ray\+Direction, bool has\+Intersection, float distance, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&object, const \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \&pixel\+Info)
+\begin{DoxyCompactList}\small\item\em Cache an intersection result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Intersection cache for scene objects. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md for detailed documentation 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{performance__utils_8h}{performance\+\_\+utils.\+h}}\end{DoxyCompactItemize}

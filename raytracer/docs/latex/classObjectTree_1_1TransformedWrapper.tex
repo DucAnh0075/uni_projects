@@ -1,0 +1,101 @@
+\doxysection{Object\+Tree\+::Transformed\+Wrapper Class Reference}
+\hypertarget{classObjectTree_1_1TransformedWrapper}{}\label{classObjectTree_1_1TransformedWrapper}\index{ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}}
+
+
+Local helper wrappers for object tree implementation.  
+
+
+
+
+Inheritance diagram for Object\+Tree\+::Transformed\+Wrapper\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classObjectTree_1_1TransformedWrapper__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Object\+Tree\+::Transformed\+Wrapper\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classObjectTree_1_1TransformedWrapper__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObjectTree_1_1TransformedWrapper_a8f5d71b2f13c637f5bc389522c395aa0}\label{classObjectTree_1_1TransformedWrapper_a8f5d71b2f13c637f5bc389522c395aa0} 
+{\bfseries Transformed\+Wrapper} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ b, const \mbox{\hyperlink{classTransform}{Transform}} \&t)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classObjectTree_1_1TransformedWrapper_a164a914b4e6629cf778c2f0f3a7fac6c}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&world\+Line) override
+\item 
+bool \mbox{\hyperlink{classObjectTree_1_1TransformedWrapper_a936c0b36b945dff43f407e34fa2a24e4}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classObjectTree_1_1TransformedWrapper_a8300923a397a03eb0e7ed1651e5384be}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Local helper wrappers for object tree implementation. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classObjectTree_1_1TransformedWrapper_a936c0b36b945dff43f407e34fa2a24e4}\label{classObjectTree_1_1TransformedWrapper_a936c0b36b945dff43f407e34fa2a24e4} 
+\index{ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}!contains@{contains}}
+\index{contains@{contains}!ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::\+Transformed\+Wrapper\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_1_1TransformedWrapper_a164a914b4e6629cf778c2f0f3a7fac6c}\label{classObjectTree_1_1TransformedWrapper_a164a914b4e6629cf778c2f0f3a7fac6c} 
+\index{ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Object\+Tree\+::\+Transformed\+Wrapper\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{world\+Line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_1_1TransformedWrapper_a8300923a397a03eb0e7ed1651e5384be}\label{classObjectTree_1_1TransformedWrapper_a8300923a397a03eb0e7ed1651e5384be} 
+\index{ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!ObjectTree::TransformedWrapper@{ObjectTree::TransformedWrapper}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::\+Transformed\+Wrapper\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object__tree_8cpp}{object\+\_\+tree.\+cpp}}\end{DoxyCompactItemize}

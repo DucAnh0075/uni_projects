@@ -1,0 +1,42 @@
+\doxysection{Ray\+Tracer\+::Ray\+Grid Class Reference}
+\hypertarget{classRayTracer_1_1RayGrid}{}\label{classRayTracer_1_1RayGrid}\index{RayTracer::RayGrid@{RayTracer::RayGrid}}
+
+
+Pre-\/computed ray grid for performance optimization.  
+
+
+
+
+{\ttfamily \#include $<$performance\+\_\+utils.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRayTracer_1_1RayGrid_a09106a2c40372c7eea44923453b4bc16}\label{classRayTracer_1_1RayGrid_a09106a2c40372c7eea44923453b4bc16} 
+void {\bfseries initialize} (const \mbox{\hyperlink{classScreen}{Screen}} \&screen, const Eigen\+::\+Vector4f \&observer, int width, int height)
+\begin{DoxyCompactList}\small\item\em Initialize the ray grid. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1RayGrid_acacd7f4a30aa71fc84e394cf0dc3f251}\label{classRayTracer_1_1RayGrid_acacd7f4a30aa71fc84e394cf0dc3f251} 
+const Eigen\+::\+Vector3f \& {\bfseries get\+Ray\+Direction} (int x, int y) const
+\begin{DoxyCompactList}\small\item\em Get pre-\/computed ray direction for pixel (x, y) \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1RayGrid_a6455c92787f045ab9cc21664efac4995}\label{classRayTracer_1_1RayGrid_a6455c92787f045ab9cc21664efac4995} 
+const Eigen\+::\+Vector3f \& {\bfseries get\+Ray\+Origin} (int x, int y) const
+\begin{DoxyCompactList}\small\item\em Get ray origin for pixel (x, y) \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1RayGrid_a69b3538b9df3c77ee3ee859a315c7134}\label{classRayTracer_1_1RayGrid_a69b3538b9df3c77ee3ee859a315c7134} 
+int {\bfseries get\+Width} () const
+\begin{DoxyCompactList}\small\item\em Get width of the ray grid. \end{DoxyCompactList}\item 
+\Hypertarget{classRayTracer_1_1RayGrid_a6085bc0781ca2c5f707d7b08b142669b}\label{classRayTracer_1_1RayGrid_a6085bc0781ca2c5f707d7b08b142669b} 
+int {\bfseries get\+Height} () const
+\begin{DoxyCompactList}\small\item\em Get height of the ray grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Pre-\/computed ray grid for performance optimization. 
+
+\begin{DoxySeeAlso}{See also}
+docs/api\+\_\+documentation.\+md for detailed documentation 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{performance__utils_8h}{performance\+\_\+utils.\+h}}\end{DoxyCompactItemize}

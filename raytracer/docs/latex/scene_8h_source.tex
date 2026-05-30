@@ -1,0 +1,149 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/scene.h}
+\hypertarget{scene_8h_source}{}\label{scene_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classScreen}{Screen}}\ \{}
+\DoxyCodeLine{00005\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00006\ \ \ Eigen::Vector4f\ origin;}
+\DoxyCodeLine{00007\ \ \ \textcolor{keywordtype}{float}\ width,\ height;}
+\DoxyCodeLine{00008\ \ \ \textcolor{keywordtype}{int}\ dpi\_x,\ dpi\_y;}
+\DoxyCodeLine{00009\ \ \ \textcolor{keywordtype}{float}\ pixel\_size\_x,\ pixel\_size\_y;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \mbox{\hyperlink{classScreen}{Screen}}(\textcolor{keyword}{const}\ Eigen::Vector4f\&\ origin\_,\ \textcolor{keywordtype}{float}\ width\_,\ \textcolor{keywordtype}{float}\ height\_,}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ dpi\_x\_,\ \textcolor{keywordtype}{int}\ dpi\_y\_)}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ :\ origin(origin\_),}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ width(width\_),}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ height(height\_),}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ dpi\_x(dpi\_x\_),}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ dpi\_y(dpi\_y\_)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ pixel\_size\_x\ =\ width\ /\ (width\ *\ dpi\_x);}
+\DoxyCodeLine{00019\ \ \ \ \ pixel\_size\_y\ =\ height\ /\ (height\ *\ dpi\_y);}
+\DoxyCodeLine{00020\ \ \ \}}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}light.h"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}object.h"{}}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}object\_tree.h"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classScene}{Scene}}\ \{}
+\DoxyCodeLine{00031\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ std::vector<std::shared\_ptr<Object>>\ objects;}
+\DoxyCodeLine{00033\ \ \ std::vector<Light>\ lights;}
+\DoxyCodeLine{00034\ \ \ Eigen::Vector3f\ backgroundColor;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \mbox{\hyperlink{classScene}{Scene}}()\ :\ backgroundColor(0.5f,\ 0.7f,\ 1.0f)\ \{\}}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{classScene}{Scene}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ bgColor)\ :\ backgroundColor(bgColor)\ \{\}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ addObject(\textcolor{keyword}{const}\ std::shared\_ptr<Object>\&\ obj)\ \{\ objects.push\_back(obj);\ \}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ addLight(\textcolor{keyword}{const}\ \mbox{\hyperlink{classLight}{Light}}\&\ L)\ \{\ lights.push\_back(L);\ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{bool}\ trace(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrig,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDir,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ hitInfo,\ \textcolor{keywordtype}{float}\&\ tMin)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00044\ \ \ \ \ std::shared\_ptr<Object>\ hitObject;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ trace(rayOrig,\ rayDir,\ hitInfo,\ tMin,\ hitObject);}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{bool}\ trace(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrig,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDir,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ hitInfo,\ \textcolor{keywordtype}{float}\&\ tMin,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Object>\&\ hitObject)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ hit\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00052\ \ \ \ \ tMin\ =\ std::numeric\_limits<float>::max();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obj\ :\ objects)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ sphere\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classSphere}{Sphere}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sphere-\/>intersect(rayOrig,\ rayDir,\ t)\ \&\&\ t\ <\ tMin)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ tMin\ =\ t;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Seting\ intersection\ point\ for\ spheres}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ Eigen::Vector3f\ hitPoint\ =\ rayOrig\ +\ rayDir\ *\ t;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ hitInfo.color\ =\ sphere-\/>getColor();}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ hitInfo.pos\ =\ \mbox{\hyperlink{structPosition}{Position}}\{hitPoint.x(),\ hitPoint.y(),\ hitPoint.z()\};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ hitInfo.distance\ =\ t;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ hitObject\ =\ obj;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ hit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ other\ object\ types\ here}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ cube\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classCube}{Cube}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ray-\/cube\ intersection}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ line\{rayOrig,\ rayDir\};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ cube-\/>intersectWithLine(line);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ 0\ \&\&\ info.distance\ <\ tMin)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ tMin\ =\ info.distance;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ hitInfo\ =\ info;\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ hitObject\ =\ obj;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ hit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ plane\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classHalfSpace}{HalfSpace}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ray-\/plane\ (half-\/space)\ intersection}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ line\{rayOrig,\ rayDir\};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ plane-\/>intersectWithLine(line);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ 0\ \&\&\ info.distance\ <\ tMin)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ tMin\ =\ info.distance;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ hitInfo\ =\ info;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ hitObject\ =\ obj;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ hit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ csg\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classCSGObject}{CSGObject}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ line\{rayOrig,\ rayDir\};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ csg-\/>intersectWithLine(line);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ 0\ \&\&\ info.distance\ <\ tMin)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ tMin\ =\ info.distance;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ hitInfo\ =\ info;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ hitObject\ =\ obj;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ hit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ tree\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classObjectTree}{ObjectTree}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ line\{rayOrig,\ rayDir\};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ tree-\/>intersectWithLine(line);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ 0\ \&\&\ info.distance\ <\ tMin)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ tMin\ =\ info.distance;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ hitInfo\ =\ info;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ hitObject\ =\ obj;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ hit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{return}\ hit;}
+\DoxyCodeLine{00109\ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{bool}\ isOccluded(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ origin,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ dir,}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxDist,\ \textcolor{keywordtype}{float}\ eps\ =\ 1e-\/3f)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ obj\ :\ objects)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ 0.0f;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ sphere\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classSphere}{Sphere}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sphere-\/>intersect(origin,\ dir,\ t)\ \&\&\ t\ >\ eps\ \&\&}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ (std::isinf(maxDist)\ ||\ t\ <\ maxDist\ -\/\ eps))}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ cube\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classCube}{Cube}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ l\{origin,\ dir\};}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ cube-\/>intersectWithLine(l);}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ eps\ \&\&}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ (std::isinf(maxDist)\ ||\ info.distance\ <\ maxDist\ -\/\ eps))}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ plane\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classHalfSpace}{HalfSpace}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ (void)plane;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ csg\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classCSGObject}{CSGObject}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ l\{origin,\ dir\};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ csg-\/>intersectWithLine(l);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ eps\ \&\&}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ (std::isinf(maxDist)\ ||\ info.distance\ <\ maxDist\ -\/\ eps))}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ tree\ =\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classObjectTree}{ObjectTree}}*\textcolor{keyword}{>}(obj.get()))\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structLine}{Line}}\ l\{origin,\ dir\};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ info\ =\ tree-\/>intersectWithLine(l);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.distance\ >\ eps\ \&\&}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ (std::isinf(maxDist)\ ||\ info.distance\ <\ maxDist\ -\/\ eps))}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00143\ \ \ \}}
+\DoxyCodeLine{00144\ \};}
+
+\end{DoxyCode}

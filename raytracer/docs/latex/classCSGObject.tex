@@ -1,0 +1,107 @@
+\doxysection{CSGObject Class Reference}
+\hypertarget{classCSGObject}{}\label{classCSGObject}\index{CSGObject@{CSGObject}}
+
+
+Inheritance diagram for CSGObject\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classCSGObject__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CSGObject\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classCSGObject__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classCSGObject_a3d193d9762d18661729b73342d633380}\label{classCSGObject_a3d193d9762d18661729b73342d633380} 
+{\bfseries CSGObject} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&a, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&b, CSGOp operation, const Eigen\+::\+Vector3f \&col)
+\item 
+const \mbox{\hyperlink{structMaterial}{Material}} \& \mbox{\hyperlink{classCSGObject_ad2807b555cedb197f48395422abfa54a}{get\+Material}} () const override
+\item 
+\Hypertarget{classCSGObject_a3d99ea3479330af1cef262126dac1aa5}\label{classCSGObject_a3d99ea3479330af1cef262126dac1aa5} 
+void {\bfseries set\+Material} (const \mbox{\hyperlink{structMaterial}{Material}} \&mat)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classCSGObject_a745846a883513e481af1c6bf8fc9b3fc}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+bool \mbox{\hyperlink{classCSGObject_af694a12a59d668233304fcd61bda8f7c}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classCSGObject_a6fc99a9c821ed2f674ab0b98e9a2db0f}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCSGObject_af694a12a59d668233304fcd61bda8f7c}\label{classCSGObject_af694a12a59d668233304fcd61bda8f7c} 
+\index{CSGObject@{CSGObject}!contains@{contains}}
+\index{contains@{contains}!CSGObject@{CSGObject}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool CSGObject\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classCSGObject_ad2807b555cedb197f48395422abfa54a}\label{classCSGObject_ad2807b555cedb197f48395422abfa54a} 
+\index{CSGObject@{CSGObject}!getMaterial@{getMaterial}}
+\index{getMaterial@{getMaterial}!CSGObject@{CSGObject}}
+\doxysubsubsection{\texorpdfstring{getMaterial()}{getMaterial()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structMaterial}{Material}} \& CSGObject\+::get\+Material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classCSGObject_a745846a883513e481af1c6bf8fc9b3fc}\label{classCSGObject_a745846a883513e481af1c6bf8fc9b3fc} 
+\index{CSGObject@{CSGObject}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!CSGObject@{CSGObject}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} CSGObject\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classCSGObject_a6fc99a9c821ed2f674ab0b98e9a2db0f}\label{classCSGObject_a6fc99a9c821ed2f674ab0b98e9a2db0f} 
+\index{CSGObject@{CSGObject}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!CSGObject@{CSGObject}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool CSGObject\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.\+h\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object_8cpp}{object.\+cpp}}\end{DoxyCompactItemize}

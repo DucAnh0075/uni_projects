@@ -1,0 +1,51 @@
+\doxysection{Light Class Reference}
+\hypertarget{classLight}{}\label{classLight}\index{Light@{Light}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classLight_a216a24b14953a6661f949fb7449533e8}\label{classLight_a216a24b14953a6661f949fb7449533e8} 
+enum class {\bfseries Type} \{ {\bfseries Point}
+, {\bfseries Directional}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classLight_ac4fd5af037cdc3dd59740cda41e9afed}\label{classLight_ac4fd5af037cdc3dd59740cda41e9afed} 
+Type {\bfseries get\+Type} () const
+\item 
+\Hypertarget{classLight_a0daf6c99a330d406215d03a5d0b96cb0}\label{classLight_a0daf6c99a330d406215d03a5d0b96cb0} 
+const Eigen\+::\+Vector3f \& {\bfseries get\+Position} () const
+\item 
+\Hypertarget{classLight_a3f5cfe1312624dd6ffed625c761c98e1}\label{classLight_a3f5cfe1312624dd6ffed625c761c98e1} 
+const Eigen\+::\+Vector3f \& {\bfseries get\+Direction} () const
+\item 
+\Hypertarget{classLight_aa406c165fede8a16aab88e8f62971be4}\label{classLight_aa406c165fede8a16aab88e8f62971be4} 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+\Hypertarget{classLight_a68adeebbc8b6806213a0a7454251bb02}\label{classLight_a68adeebbc8b6806213a0a7454251bb02} 
+float {\bfseries get\+Intensity} () const
+\item 
+\Hypertarget{classLight_ab43627a1043daf0a4028dc0e7572bb15}\label{classLight_ab43627a1043daf0a4028dc0e7572bb15} 
+bool {\bfseries get\+Casts\+Shadows} () const
+\item 
+\Hypertarget{classLight_ab8103a025e150793c1abed140afb7e2e}\label{classLight_ab8103a025e150793c1abed140afb7e2e} 
+Eigen\+::\+Vector3f {\bfseries get\+Light\+Vector} (const Eigen\+::\+Vector3f \&point) const
+\item 
+\Hypertarget{classLight_a30c9144ee8abe735d284dcf64051112f}\label{classLight_a30c9144ee8abe735d284dcf64051112f} 
+float {\bfseries get\+Attenuated\+Intensity} (const Eigen\+::\+Vector3f \&point) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classLight_ae059a3f51fadd341b68f094cf0c994d9}\label{classLight_ae059a3f51fadd341b68f094cf0c994d9} 
+static \mbox{\hyperlink{classLight}{Light}} {\bfseries create\+Point\+Light} (const Eigen\+::\+Vector3f \&position, const \mbox{\hyperlink{structColor}{Color}} \&color=\{255, 255, 255\}, float intensity=1.\+0f, bool casts\+Shadows=true, float attenC=1.\+0f, float attenL=0.\+0f, float attenQ=0.\+0f)
+\item 
+\Hypertarget{classLight_afd9d0a1009c22fe9e64d90f46ab41a58}\label{classLight_afd9d0a1009c22fe9e64d90f46ab41a58} 
+static \mbox{\hyperlink{classLight}{Light}} {\bfseries create\+Directional\+Light} (const Eigen\+::\+Vector3f \&direction, const \mbox{\hyperlink{structColor}{Color}} \&color=\{255, 255, 255\}, float intensity=1.\+0f, bool casts\+Shadows=true)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/light.\+h\end{DoxyCompactItemize}

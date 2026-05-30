@@ -1,0 +1,101 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object\+\_\+tree.h}
+\hypertarget{object__tree_8h_source}{}\label{object__tree_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}object.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{transform_8h}{transform.h}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ObjectTree:\ Complex\ objects\ as\ trees\ of\ primitives,\ transforms,\ and\ CSG\ operations}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classObjectTree}{ObjectTree}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00010\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structObjectTree_1_1Node}{Node}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Kind\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ SphereUnit,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ CubeUnit,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ HalfSpaceZ,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}},}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ Op,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ ExistingObject}
+\DoxyCodeLine{00019\ \ \ \ \ \};}
+\DoxyCodeLine{00020\ \ \ \ \ Kind\ kind;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ For\ Transform}}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classTransform}{Transform}}\ transform;}
+\DoxyCodeLine{00023\ \ \ \ \ std::shared\_ptr<Node>\ child;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ For\ Op}}
+\DoxyCodeLine{00025\ \ \ \ \ CSGOp\ op\{CSGOp::Union\};}
+\DoxyCodeLine{00026\ \ \ \ \ std::shared\_ptr<Node>\ left;}
+\DoxyCodeLine{00027\ \ \ \ \ std::shared\_ptr<Node>\ right;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ For\ ExistingObject}}
+\DoxyCodeLine{00029\ \ \ \ \ std::shared\_ptr<Object>\ existingObject;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structObjectTree_1_1Node}{Node}}(Kind\ k)\ :\ kind(k)\ \{\}}
+\DoxyCodeLine{00032\ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{comment}{//\ Builders}}
+\DoxyCodeLine{00035\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ SphereUnit()\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<Node>(Node::Kind::SphereUnit);}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ CubeUnit()\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<Node>(Node::Kind::CubeUnit);}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ HalfSpaceZ()\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_shared<Node>(Node::Kind::HalfSpaceZ);}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ ExistingObjectNode(std::shared\_ptr<Object>\ obj)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ std::make\_shared<Node>(Node::Kind::ExistingObject);}
+\DoxyCodeLine{00046\ \ \ \ \ n-\/>existingObject\ =\ std::move(obj);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00048\ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ TransformNode(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTransform}{Transform}}\&\ T,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ child)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ std::make\_shared<Node>(Node::Kind::Transform);}
+\DoxyCodeLine{00052\ \ \ \ \ n-\/>transform\ =\ T;}
+\DoxyCodeLine{00053\ \ \ \ \ n-\/>child\ =\ std::move(child);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00055\ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Node>\ OpNode(CSGOp\ op,\ std::shared\_ptr<Node>\ A,}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ B)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ std::make\_shared<Node>(Node::Kind::Op);}
+\DoxyCodeLine{00059\ \ \ \ \ n-\/>op\ =\ op;}
+\DoxyCodeLine{00060\ \ \ \ \ n-\/>left\ =\ std::move(A);}
+\DoxyCodeLine{00061\ \ \ \ \ n-\/>right\ =\ std::move(B);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00063\ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{comment}{//\ Construct\ an\ ObjectTree\ with\ a\ root\ node\ and\ a\ final\ display\ color}}
+\DoxyCodeLine{00066\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classObjectTree}{ObjectTree}}(std::shared\_ptr<Node>\ root\_,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{comment}{//\ Construct\ an\ ObjectTree\ with\ a\ root\ node,\ color\ and\ material}}
+\DoxyCodeLine{00069\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classObjectTree}{ObjectTree}}(std::shared\_ptr<Node>\ root\_,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{comment}{//\ Object\ API}}
+\DoxyCodeLine{00073\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{comment}{//\ Access}}
+\DoxyCodeLine{00079\ \ \ std::shared\_ptr<Node>\ getRoot()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ root;\ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{comment}{//\ Override\ getMaterial\ to\ return\ the\ ObjectTree's\ material}}
+\DoxyCodeLine{00082\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ getMaterial()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ treeMaterial;\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00085\ \ \ std::shared\_ptr<Node>\ root;}
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{mutable}\ std::shared\_ptr<Object>\ compiled;}
+\DoxyCodeLine{00087\ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ treeMaterial;}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \textcolor{comment}{//\ Wrapper\ to\ apply\ a\ Transform\ to\ any\ Object\ using\ shared\_ptr}}
+\DoxyCodeLine{00090\ \ \ \textcolor{keyword}{class\ }TransformedWrapper;}
+\DoxyCodeLine{00091\ \ \ \textcolor{comment}{//\ Wrapper\ to\ override\ color\ while\ delegating\ geometry/logic}}
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{class\ }ColorOverrideWrapper;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ std::shared\_ptr<Object>\ compileNode(\textcolor{keyword}{const}\ std::shared\_ptr<Node>\&\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{void}\ ensureCompiled()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ \};}
+
+\end{DoxyCode}

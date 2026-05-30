@@ -1,0 +1,197 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/object.h}
+\hypertarget{object_8h_source}{}\label{object_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Basic\ data\ structures}}
+\DoxyCodeLine{00006\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structColor}{Color}}\ \{}
+\DoxyCodeLine{00007\ \ \ \textcolor{keywordtype}{int}\ r,\ g,\ b;}
+\DoxyCodeLine{00008\ \};}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structPosition}{Position}}\ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keywordtype}{float}\ x,\ y,\ z;}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structLine}{Line}}\ \{}
+\DoxyCodeLine{00015\ \ \ Eigen::Vector3f\ origin;}
+\DoxyCodeLine{00016\ \ \ Eigen::Vector3f\ direction;\ \ \textcolor{comment}{//\ should\ be\ normalized}}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ \{}
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{structColor}{Color}}\ color;}
+\DoxyCodeLine{00021\ \ \ \mbox{\hyperlink{structPosition}{Position}}\ pos;\ \ \ \ \ \textcolor{comment}{//\ intersection\ point\ in\ world\ space}}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{double}\ distance;\ \ \textcolor{comment}{//\ ray\ parameter\ t\ for\ the\ hit}}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMaterial}{Material}}\ \{}
+\DoxyCodeLine{00026\ \ \ Eigen::Vector3f\ Ka;\ \ \textcolor{comment}{//\ Ambient}}
+\DoxyCodeLine{00027\ \ \ Eigen::Vector3f\ Kd;\ \ \textcolor{comment}{//\ Diffuse}}
+\DoxyCodeLine{00028\ \ \ Eigen::Vector3f\ Ks;\ \ \textcolor{comment}{//\ Specular}}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{float}\ shininess;}
+\DoxyCodeLine{00030\ \ \ Eigen::Vector3f\ Kr;\ \ \ \ \ \ \textcolor{comment}{//\ Reflection}}
+\DoxyCodeLine{00031\ \ \ Eigen::Vector3f\ Kt;\ \ \ \ \ \ \textcolor{comment}{//\ Transmission}}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{float}\ refractive\_index;}
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{structMaterial}{Material}}()}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ :\ Ka(0.3f,\ 0.3f,\ 0.3f),}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ Kd(1.0f,\ 1.0f,\ 1.0f),}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ Ks(0.5f,\ 0.5f,\ 0.5f),}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ shininess(32.0f),}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ Kr(0.0f,\ 0.0f,\ 0.0f),}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ Kt(0.0f,\ 0.0f,\ 0.0f),}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ refractive\_index(1.0f)\ \{\}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{comment}{//\ Constructor\ for\ custom\ materials}}
+\DoxyCodeLine{00043\ \ \ \mbox{\hyperlink{structMaterial}{Material}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ ka,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ kd,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ ks,\ \textcolor{keywordtype}{float}\ shine,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ kr\ =\ Eigen::Vector3f::Zero(),}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ kt\ =\ Eigen::Vector3f::Zero(),\ \textcolor{keywordtype}{float}\ n\ =\ 1.0f)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ :\ Ka(ka),}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ Kd(kd),}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ Ks(ks),}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ shininess(shine),}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ Kr(kr),}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ Kt(kt),}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ refractive\_index(n)\ \{\}}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00057\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00058\ \ \ \mbox{\hyperlink{structPosition}{Position}}\ pos;}
+\DoxyCodeLine{00059\ \ \ \mbox{\hyperlink{structColor}{Color}}\ color;}
+\DoxyCodeLine{00060\ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classObject}{\string~Object}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structPosition}{Position}}\&\ getPos()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ pos;\ \}}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{void}\ setPosition(\textcolor{keyword}{const}\ \mbox{\hyperlink{structPosition}{Position}}\&\ newPos)\ \{\ pos\ =\ newPos;\ \}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ getColor()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ color;\ \}}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ getMaterial()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ material;\ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&)\ =\ 0;}
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00072\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00074\ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSphere}{Sphere}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00080\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{float}\ radius;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00089\ \ \ \mbox{\hyperlink{classSphere}{Sphere}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ c,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col);}
+\DoxyCodeLine{00090\ \ \ \mbox{\hyperlink{classSphere}{Sphere}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ c,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{bool}\ intersect(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrig,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDir,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ t)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00095\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ Axis-\/aligned\ cube}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCube}{Cube}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00103\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordtype}{double}\ size;}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00107\ \ \ \mbox{\hyperlink{classCube}{Cube}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ c,\ \textcolor{keywordtype}{double}\ s,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col)\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ pos\ =\ \mbox{\hyperlink{structPosition}{Position}}\{c.x(),\ c.y(),\ c.z()\};}
+\DoxyCodeLine{00109\ \ \ \ \ color\ =\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.y()),}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.z())\};}
+\DoxyCodeLine{00111\ \ \ \ \ size\ =\ s;}
+\DoxyCodeLine{00112\ \ \ \ \ material\ =\ \mbox{\hyperlink{structMaterial}{Material}}();}
+\DoxyCodeLine{00113\ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \mbox{\hyperlink{classCube}{Cube}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ c,\ \textcolor{keywordtype}{double}\ s,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ pos\ =\ \mbox{\hyperlink{structPosition}{Position}}\{c.x(),\ c.y(),\ c.z()\};}
+\DoxyCodeLine{00118\ \ \ \ \ color\ =\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.y()),}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.z())\};}
+\DoxyCodeLine{00120\ \ \ \ \ size\ =\ s;}
+\DoxyCodeLine{00121\ \ \ \ \ material\ =\ mat;}
+\DoxyCodeLine{00122\ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00124\ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00127\ \};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{comment}{//\ Half-\/space\ (infinite\ plane):\ n\ ·\ X\ =\ r}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classHalfSpace}{HalfSpace}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00131\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00132\ \ \ Eigen::Vector3f\ normal;}
+\DoxyCodeLine{00133\ \ \ \textcolor{keywordtype}{float}\ offset;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00136\ \ \ \mbox{\hyperlink{classHalfSpace}{HalfSpace}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ n,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ normal\ =\ n.normalized();}
+\DoxyCodeLine{00138\ \ \ \ \ offset\ =\ r;}
+\DoxyCodeLine{00139\ \ \ \ \ pos\ =}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPosition}{Position}}\{normal.x()\ *\ offset,\ normal.y()\ *\ offset,\ normal.z()\ *\ offset\};}
+\DoxyCodeLine{00141\ \ \ \ \ color\ =\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.y()),}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.z())\};}
+\DoxyCodeLine{00143\ \ \ \ \ material\ =\ \mbox{\hyperlink{structMaterial}{Material}}();}
+\DoxyCodeLine{00144\ \ \ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \mbox{\hyperlink{classHalfSpace}{HalfSpace}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ n,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col,}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ normal\ =\ n.normalized();}
+\DoxyCodeLine{00149\ \ \ \ \ offset\ =\ r;}
+\DoxyCodeLine{00150\ \ \ \ \ pos\ =}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPosition}{Position}}\{normal.x()\ *\ offset,\ normal.y()\ *\ offset,\ normal.z()\ *\ offset\};}
+\DoxyCodeLine{00152\ \ \ \ \ color\ =\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.y()),}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.z())\};}
+\DoxyCodeLine{00154\ \ \ \ \ material\ =\ mat;}
+\DoxyCodeLine{00155\ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00157\ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ getNormal()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ normal;\ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00160\ \ \ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00162\ \};}
+\DoxyCodeLine{00163\ \textcolor{comment}{//\ is\ Helper}}
+\DoxyCodeLine{00164\ \mbox{\hyperlink{structColor}{Color}}\ colorMul(\textcolor{keyword}{const}\ \mbox{\hyperlink{structColor}{Color}}\&\ c,\ \textcolor{keywordtype}{float}\ f);}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{comment}{//\ Constructive\ Solid\ Geometry\ (CSG)}}
+\DoxyCodeLine{00167\ \textcolor{keyword}{enum\ class}\ CSGOp\ \{\ Union,\ Intersection,\ Difference\ \};\ \ \textcolor{comment}{//\ Difference\ =\ A\ \(\backslash\)\ B}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCSGObject}{CSGObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classObject}{Object}}\ \{}
+\DoxyCodeLine{00170\ \ \ std::shared\_ptr<Object>\ A;}
+\DoxyCodeLine{00171\ \ \ std::shared\_ptr<Object>\ B;}
+\DoxyCodeLine{00172\ \ \ CSGOp\ op;}
+\DoxyCodeLine{00173\ \ \ \textcolor{keyword}{mutable}\ std::shared\_ptr<Object>}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ lastHitComponent;\ \ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00177\ \ \ \mbox{\hyperlink{classCSGObject}{CSGObject}}(\textcolor{keyword}{const}\ std::shared\_ptr<Object>\&\ a,\ \textcolor{keyword}{const}\ std::shared\_ptr<Object>\&\ b,}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ CSGOp\ operation,\ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ col)}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ :\ A(a),\ B(b),\ op(operation),\ lastHitComponent(\textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ color\ =\ \mbox{\hyperlink{structColor}{Color}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.x()),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.y()),}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(col.z())\};}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ Set\ CSG\ position\ to\ the\ first\ component's\ position\ for\ debug\ purpos}}
+\DoxyCodeLine{00183\ \ \ \ \ pos\ =\ a\ ?\ a-\/>getPos()\ :\ \mbox{\hyperlink{structPosition}{Position}}\{0,\ 0,\ 0\};}
+\DoxyCodeLine{00184\ \ \ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \textcolor{comment}{//\ Override\ getMaterial\ to\ return\ the\ material\ of\ the\ actually\ hit\ component\ (important)}}
+\DoxyCodeLine{00187\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ getMaterial()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{if}\ (lastHitComponent)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lastHitComponent-\/>getMaterial();}
+\DoxyCodeLine{00190\ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{return}\ material;\ }
+\DoxyCodeLine{00192\ \ \ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \textcolor{comment}{//\ Public\ method\ to\ set\ CSG\ object\ base}}
+\DoxyCodeLine{00195\ \ \ \textcolor{keywordtype}{void}\ setMaterial(\textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}\&\ mat)\ \{\ material\ =\ mat;\ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ intersectWithLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00198\ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ P)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00199\ \ \ \textcolor{keywordtype}{bool}\ rayInterval(\textcolor{keyword}{const}\ \mbox{\hyperlink{structLine}{Line}}\&\ line,\ \textcolor{keywordtype}{float}\&\ tEnter,}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tExit)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00201\ \};}
+
+\end{DoxyCode}

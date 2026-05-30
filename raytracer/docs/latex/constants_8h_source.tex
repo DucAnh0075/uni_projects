@@ -1,0 +1,85 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/constants.h}
+\hypertarget{constants_8h_source}{}\label{constants_8h_source}\mbox{\hyperlink{constants_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }RayTracer\ \{}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Mathematical\ Constants}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ EPSILON\ =\ 1e-\/6f;}
+\DoxyCodeLine{00012\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ LARGE\_EPSILON\ =\ 1e-\/3f;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ PI\ =\ 3.14159265359f;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ TWO\_PI\ =\ 6.28318530718f;}
+\DoxyCodeLine{00015\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ INV\_PI\ =\ 0.31830988618f;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Color\ Constants}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ MAX\_COLOR\_VALUE\ =\ 255.0f;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ INV\_MAX\_COLOR\ =\ 1.0f\ /\ 255.0f;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Rendering\ Constants}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ MAX\_RAY\_DEPTH\ =\ 5;}
+\DoxyCodeLine{00023\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ DEFAULT\_RAY\_DEPTH\ =\ 2;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ MIN\_RAY\_CONTRIBUTION\ =\ 0.01f;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ Material\ Constants}}
+\DoxyCodeLine{00027\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_SHININESS\ =\ 32.0f;}
+\DoxyCodeLine{00028\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_AMBIENT\ =\ 0.3f;}
+\DoxyCodeLine{00029\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_DIFFUSE\ =\ 1.0f;}
+\DoxyCodeLine{00030\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_SPECULAR\ =\ 0.5f;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_REFRACTIVE\_INDEX\ =\ 1.0f;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Lighting\ Constants}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ AMBIENT\_INTENSITY\ =\ 0.12f;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ SHADOW\_BIAS\ =\ 1e-\/3f;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ LIGHT\_ATTENUATION\_CONSTANT\ =\ 1.0f;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ LIGHT\_ATTENUATION\_LINEAR\ =\ 0.0f;}
+\DoxyCodeLine{00038\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ LIGHT\_ATTENUATION\_QUADRATIC\ =\ 0.0f;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ Geometric\ Constants}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ MIN\_INTERSECTION\_DISTANCE\ =\ 1e-\/5f;}
+\DoxyCodeLine{00042\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ MAX\_INTERSECTION\_DISTANCE\ =\ 1e6f;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Visualization\ Constants}}
+\DoxyCodeLine{00045\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ DEFAULT\_GRID\_SPACING\ =\ 1;}
+\DoxyCodeLine{00046\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_AXIS\_LENGTH\ =\ 2.0f;}
+\DoxyCodeLine{00047\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ RAY\_VISUALIZATION\_STRIDE\ =\ 16;}
+\DoxyCodeLine{00048\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ MAX\_FLOW\_ARROWS\ =\ 1000;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ Performance\ Constants}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ OBJECT\_POOL\_SIZE\ =\ 1000;}
+\DoxyCodeLine{00052\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ PIXEL\_BATCH\_SIZE\ =\ 64;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ JSON\ Parsing\ Constants}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ MAX\_JSON\_DEPTH\ =\ 32;}
+\DoxyCodeLine{00056\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ JSON\_BUFFER\_SIZE\ =\ 8192;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ Screen\ and\ Camera\ Constants}}
+\DoxyCodeLine{00059\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ DEFAULT\_DPI\ =\ 240;}
+\DoxyCodeLine{00060\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_SCREEN\_WIDTH\ =\ 8.0f;}
+\DoxyCodeLine{00061\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DEFAULT\_SCREEN\_HEIGHT\ =\ 4.5f;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Error\ Codes}}
+\DoxyCodeLine{00064\ \textcolor{keyword}{enum\ class}\ ErrorCode\ \{}
+\DoxyCodeLine{00065\ \ \ SUCCESS\ =\ 0,}
+\DoxyCodeLine{00066\ \ \ FILE\_NOT\_FOUND\ =\ 1,}
+\DoxyCodeLine{00067\ \ \ INVALID\_JSON\ =\ 2,}
+\DoxyCodeLine{00068\ \ \ INVALID\_GEOMETRY\ =\ 3,}
+\DoxyCodeLine{00069\ \ \ MEMORY\_ALLOCATION\_FAILED\ =\ 4,}
+\DoxyCodeLine{00070\ \ \ INVALID\_PARAMETERS\ =\ 5}
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ Utility\ Functions}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{constants_8h_a6dd04dcd71b73607e1cff85a33c708da}{isZero}}(\textcolor{keywordtype}{float}\ value)\ \{\ \textcolor{keywordflow}{return}\ std::abs(value)\ <\ EPSILON;\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00082\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)\ \{\ \textcolor{keywordflow}{return}\ std::abs(a\ -\/\ b)\ <\ EPSILON;\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{constants_8h_a4eb388c1df91bf0c54d90fa6920b032a}{clamp}}(\textcolor{keywordtype}{float}\ value,\ \textcolor{keywordtype}{float}\ min,\ \textcolor{keywordtype}{float}\ max)\ \{}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordflow}{return}\ (value\ <\ min)\ ?\ min\ :\ (value\ >\ max)\ ?\ max\ :\ value;}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{constants_8h_a1cab110f6e28661109a9951e58ba5ea4}{degToRad}}(\textcolor{keywordtype}{float}\ degrees)\ \{\ \textcolor{keywordflow}{return}\ degrees\ *\ PI\ /\ 180.0f;\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{constants_8h_a391186e2e6068490cb187dbfcc83b587}{radToDeg}}(\textcolor{keywordtype}{float}\ radians)\ \{\ \textcolor{keywordflow}{return}\ radians\ *\ 180.0f\ /\ PI;\ \}}
+\DoxyCodeLine{00100\ \}\ \ \textcolor{comment}{//\ namespace\ RayTracer}}
+
+\end{DoxyCode}

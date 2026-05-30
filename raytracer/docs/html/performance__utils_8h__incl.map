@@ -1,0 +1,46 @@
+<map id="/home/michael/Uni/OOP/jokers_gone_wild/Project/performance_utils.h" name="/home/michael/Uni/OOP/jokers_gone_wild/Project/performance_utils.h">
+<area shape="rect" id="Node000001" title="Performance optimization utilities for ray tracing." alt="" coords="281,5,468,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="613,401,715,427"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="468,44,584,65,705,96,758,115,801,138,830,163,838,178,841,192,841,269,838,293,829,315,814,334,797,352,755,379,713,399,711,394,753,375,793,347,810,331,824,312,833,291,836,268,836,193,833,179,826,167,798,142,756,120,703,101,583,70,468,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="238,181,301,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="359,62,287,171,282,168,355,59"/>
+<area shape="rect" id="Node000004" href="$constants_8h.html" title="Centralized constants and configuration values." alt="" coords="238,401,335,427"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="335,62,306,85,276,113,249,146,228,182,220,210,218,239,222,268,229,296,251,349,273,388,269,391,246,351,224,298,217,269,213,239,215,209,223,180,244,142,272,109,303,81,332,58"/>
+<area shape="rect" id="Node000006" href="$scene_8h_source.html" title=" " alt="" coords="399,108,471,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="395,59,421,95,416,98,391,62"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="162,475,225,500"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="273,429,221,468,218,464,270,425"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="471,119,543,125,586,132,630,144,673,161,711,184,743,215,765,254,770,275,768,296,761,316,750,335,722,369,693,395,689,391,718,365,746,332,756,313,763,294,764,275,760,256,739,218,708,188,670,166,628,149,585,137,542,130,471,124"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="409,136,310,178,308,173,407,131"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,401,64,427"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="421,136,313,209,248,242,194,263,143,286,116,305,87,330,64,359,47,390,42,387,59,356,83,326,113,300,141,282,192,258,246,237,311,204,418,131"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="421,401,499,427"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="426,135,317,256,314,267,317,279,339,315,368,346,399,372,428,392,425,396,396,376,364,350,335,318,312,281,309,267,312,253,422,132"/>
+<area shape="rect" id="Node000009" href="$light_8h_source.html" title=" " alt="" coords="687,255,750,280"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="471,120,515,124,566,134,620,152,670,179,696,208,712,240,708,243,691,211,666,183,618,156,565,139,514,130,471,126"/>
+<area shape="rect" id="Node000010" href="$object_8h_source.html" title=" " alt="" coords="587,328,661,353"/>
+<area shape="poly" id="edge15_Node000006_Node000010" title=" " alt="" coords="465,131,506,151,547,179,580,213,602,254,614,284,622,314,617,315,609,286,598,256,575,216,544,183,503,156,463,136"/>
+<area shape="rect" id="Node000011" href="$object__tree_8h_source.html" title=" " alt="" coords="427,181,533,207"/>
+<area shape="poly" id="edge16_Node000006_Node000011" title=" " alt="" coords="444,132,468,168,463,171,440,135"/>
+<area shape="poly" id="edge11_Node000009_Node000002" title=" " alt="" coords="717,281,676,389,671,388,712,280"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="705,282,652,322,649,317,702,278"/>
+<area shape="poly" id="edge13_Node000010_Node000002" title=" " alt="" coords="633,352,653,388,648,391,628,355"/>
+<area shape="poly" id="edge14_Node000010_Node000008" title=" " alt="" coords="599,356,500,398,498,393,597,351"/>
+<area shape="poly" id="edge17_Node000011_Node000008" title=" " alt="" coords="475,208,463,230,453,255,448,291,449,326,457,387,452,388,443,327,443,290,448,254,458,227,470,206"/>
+<area shape="poly" id="edge19_Node000011_Node000010" title=" " alt="" coords="506,205,540,225,575,253,599,283,616,314,611,317,594,286,571,257,537,229,503,209"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="327,255,387,280"/>
+<area shape="poly" id="edge18_Node000011_Node000012" title=" " alt="" coords="462,209,390,250,388,245,459,204"/>
+<area shape="rect" id="Node000013" href="$transform_8h.html" title="3D transformation matrices and operations" alt="" coords="463,255,561,280"/>
+<area shape="poly" id="edge20_Node000011_Node000013" title=" " alt="" coords="488,206,504,241,499,243,483,208"/>
+<area shape="poly" id="edge21_Node000013_Node000002" title=" " alt="" coords="521,279,544,313,577,351,604,374,633,392,630,397,601,378,573,355,539,316,516,282"/>
+<area shape="poly" id="edge22_Node000013_Node000008" title=" " alt="" coords="510,281,471,389,466,388,505,280"/>
+<area shape="poly" id="edge29_Node000013_Node000010" title=" " alt="" coords="531,278,595,318,592,323,529,282"/>
+<area shape="rect" id="Node000014" href="$math__utils_8h.html" title="Mathematical utilities and vector operations." alt="" coords="98,328,201,353"/>
+<area shape="poly" id="edge23_Node000013_Node000014" title=" " alt="" coords="463,281,214,329,213,324,462,276"/>
+<area shape="poly" id="edge24_Node000014_Node000002" title=" " alt="" coords="201,346,599,401,599,406,201,352"/>
+<area shape="poly" id="edge28_Node000014_Node000004" title=" " alt="" coords="173,351,253,393,251,397,170,356"/>
+<area shape="poly" id="edge25_Node000014_Node000005" title=" " alt="" coords="144,354,129,388,125,407,129,426,144,447,164,465,160,469,140,451,124,428,120,407,123,386,139,352"/>
+<area shape="poly" id="edge26_Node000014_Node000007" title=" " alt="" coords="132,356,66,396,64,392,130,351"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="139,401,213,427"/>
+<area shape="poly" id="edge27_Node000014_Node000015" title=" " alt="" coords="156,353,169,388,164,390,151,355"/>
+</map>

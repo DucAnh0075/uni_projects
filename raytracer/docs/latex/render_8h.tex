@@ -1,0 +1,67 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/render.h File Reference}
+\hypertarget{render_8h}{}\label{render_8h}\index{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/render.h@{/home/michael/Uni/OOP/jokers\_gone\_wild/Project/render.h}}
+
+
+Main rendering engine and ray tracing algorithms.  
+
+
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$opencv2/opencv.\+hpp$>$}\newline
+{\ttfamily \#include "{}constants.\+h"{}}\newline
+{\ttfamily \#include "{}light.\+h"{}}\newline
+{\ttfamily \#include "{}math\+\_\+utils.\+h"{}}\newline
+{\ttfamily \#include "{}performance\+\_\+utils.\+h"{}}\newline
+{\ttfamily \#include "{}scene.\+h"{}}\newline
+{\ttfamily \#include "{}transform.\+h"{}}\newline
+Include dependency graph for render.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{render_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{render_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classRenderer}{Renderer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{render_8h_a2120d19c30c459cd97f49ff80421f7a6}\label{render_8h_a2120d19c30c459cd97f49ff80421f7a6} 
+using {\bfseries Vec3} = Eigen\+::\+Vector3f
+\item 
+\Hypertarget{render_8h_aa5662890956a7195f739ab6c0c34d8c5}\label{render_8h_aa5662890956a7195f739ab6c0c34d8c5} 
+using {\bfseries Vec4} = Eigen\+::\+Vector4f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{render_8h_a5c1f623ecdbfb6e3ca95f5507971d644}\label{render_8h_a5c1f623ecdbfb6e3ca95f5507971d644} 
+Vec3 {\bfseries combine\+Lights} (const Vec3 \&E1, const Vec3 \&E2)
+\begin{DoxyCompactList}\small\item\em Logarithmic light combination operator\+: E1 ⊕ E2 = 1 -\/ (1-\/E1)(1-\/E2) \end{DoxyCompactList}\item 
+\Hypertarget{render_8h_abbaed805301647e6b7a28a09736cf242}\label{render_8h_abbaed805301647e6b7a28a09736cf242} 
+Vec3 {\bfseries compute\+Reflection} (const Vec3 \&incident, const Vec3 \&normal)
+\begin{DoxyCompactList}\small\item\em Reflection vector calculation\+: R = I -\/ 2(I·N)N. \end{DoxyCompactList}\item 
+\Hypertarget{render_8h_ad2b425abc407e300923bcc66f0a8f68e}\label{render_8h_ad2b425abc407e300923bcc66f0a8f68e} 
+Vec3 {\bfseries compute\+Refraction} (const Vec3 \&incident, const Vec3 \&normal, float n1, float n2)
+\begin{DoxyCompactList}\small\item\em Refraction vector calculation using Snell\textquotesingle{}s law. \end{DoxyCompactList}\item 
+\Hypertarget{render_8h_a9eda16903518ebe4fd13e025865883dc}\label{render_8h_a9eda16903518ebe4fd13e025865883dc} 
+Vec3 {\bfseries get\+Surface\+Normal} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ \&obj, const Vec3 \&hit\+Point)
+\begin{DoxyCompactList}\small\item\em Get surface normal for any object type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main rendering engine and ray tracing algorithms. 
+

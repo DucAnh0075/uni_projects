@@ -1,0 +1,214 @@
+@startuml RayTracerArchitecture
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment left
+hide empty members
+
+title Ray Tracer UML
+
+package "Core Objects" as Core {
+  class Object {
+    +getPos(): Position
+    +getColor(): Color
+    +getMaterial(): Material
+    +intersectWithLine(Line): PixelInfo
+    +contains(Vector3f): bool
+    +rayInterval(Line, tEnter, tExit): bool
+  }
+  class Sphere extends Object
+  class Cube extends Object
+  class HalfSpace extends Object
+  class CSGObject extends Object
+  class ObjectTree extends Object
+}
+
+package "Data" as Data {
+  class Color {
+    r : int
+    g : int
+    b : int
+  }
+  class Position {
+    x : float
+    y : float
+    z : float
+  }
+  class Line {
+    origin : Vector3f
+    direction : Vector3f
+  }
+  class PixelInfo {
+    color : Color
+    pos : Position
+    distance : double
+  }
+  class Material {
+    Ka : Vector3f
+    Kd : Vector3f
+    Ks : Vector3f
+    shininess : float
+    Kr : Vector3f
+    Kt : Vector3f
+    refractive_index : float
+  }
+}
+
+package "Math & Utils" as MathU {
+  class Constants {
+    {static} EPSILON : float
+    {static} MAX_RAY_DEPTH : int
+  }
+  class MathUtils <<static>> {
+    +safeDivide(n,d,fallback) : float
+    +safeNormalize(v) : bool
+    +solveQuadratic(a,b,c) : float
+    +rayAABBIntersection(params) : float
+    +colorToVec3(Color) : Vector3f
+  }
+  class Transform {
+    -matrix: Matrix4
+    -inverse: Matrix4
+    +translation(tx,ty,tz): Transform
+    +rotationX(deg): Transform
+    +rotationY(deg): Transform
+    +rotationZ(deg): Transform
+    +scaling(sx,sy,sz): Transform
+    +transformPoint(Vec3): Vec3
+    +transformVector(Vec3): Vec3
+    +transformLine(Line): Line
+  }
+}
+
+package "Lighting" as Lighting {
+  class Light {
+    +getType(): LightType
+    +getPosition(): Vector3f
+    +getDirection(): Vector3f
+    +getIntensity(): float
+    +getLightVector(P:Vector3f): Vector3f
+    +getAttenuatedIntensity(P:Vector3f): float
+    {static} createPointLight(...): Light
+    {static} createDirectionalLight(...): Light
+  }
+}
+
+package "Scene" as ScenePkg {
+  class Screen {
+    origin : Vector4f
+    width : float
+    height : float
+    dpi_x : int
+    dpi_y : int
+  }
+  class Scene {
+    +addObject(Object)
+    +addLight(Light)
+    +trace(rayOrig, rayDir, hitInfo, tMin): bool
+    +isOccluded(origin, dir, maxDist, eps): bool
+  }
+  class SceneLoader {
+    +loadScene(file, scene, config): bool
+    ..internals..
+  }
+  class SceneConfig {
+    dpi : int
+    screenDimensions : Vec3
+    screenPosition : Vec3
+    observerPosition : Vec3
+    recursionDepth : int
+  }
+  class JsonValue {
+    type : JsonType
+    str_val : string
+    num_val : double
+    +isObject() : bool
+    +isArray() : bool
+    +isString() : bool
+    +isNumber() : bool
+    +asVec3() : Vec3
+    +asFloat() : float
+    +asInt() : int
+  }
+}
+
+package "Performance" as Perf {
+  class RayGrid {
+    +initialize(Screen, observer, w,h)
+    +getRayDirection(x,y) : Vector3f
+    +getRayOrigin(x,y) : Vector3f
+  }
+  class PixelInfoPool {
+    +acquire() : PixelInfo
+    +release(PixelInfo)
+  }
+  class MaterialCache {
+    +getCachedMaterial(matPtr) : CachedMaterial
+  }
+  class PixelBatchProcessor {
+    +initializeBatches(w,h,batchSize)
+  }
+  class IntersectionCache {
+    +findCached(params) : bool
+    +cacheResult(params)
+  }
+}
+
+package "Rendering" as Rendering {
+  class Renderer {
+    {static} renderScene(image, Scene, Screen, observer, camera, ...)
+    ..internals..
+  }
+}
+
+package "CLI" as CLI {
+  class ToggleSettings {
+    headless : bool
+    showPositionMarkers : bool
+    showRays : bool
+    showLightRays : bool
+    showPlaneFlow : bool
+    planeFlowStride : int
+  }
+}
+
+
+
+Object <|-- Sphere
+Object <|-- Cube
+Object <|-- HalfSpace
+Object <|-- CSGObject
+Object <|-- ObjectTree
+
+MaterialCache --> Material
+PixelInfoPool --> PixelInfo
+Scene *-- Object
+Scene *-- Light
+SceneLoader ..> Scene
+SceneLoader ..> SceneConfig
+SceneLoader ..> JsonValue
+Renderer ..> Scene
+Renderer ..> Screen
+Renderer ..> RayGrid
+Renderer ..> PixelInfoPool
+Renderer ..> MaterialCache
+Renderer ..> IntersectionCache
+Renderer ..> PixelBatchProcessor
+Renderer ..> Light
+Renderer ..> Object
+CSGObject --> Object
+ObjectTree --> Transform
+ObjectTree --> CSGOp
+ObjectTree --> Object
+Light --> Color
+PixelInfo --> Color
+PixelInfo --> Position
+Line --> Position
+Transform ..> Line
+SceneConfig ..> Screen
+ToggleSettings ..> Renderer
+
+
+
+
+@enduml

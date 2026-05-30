@@ -1,0 +1,36 @@
+\chapter{Ray Tracer Project}
+\hypertarget{index}{}\label{index}\index{Ray Tracer Project@{Ray Tracer Project}}
+\hypertarget{index_overview}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{index_overview}
+Advanced ray tracing engine with performance optimizations and comprehensive geometric primitive support.\hypertarget{index_features}{}\doxysection{\texorpdfstring{Key Features}{Key Features}}\label{index_features}
+
+\begin{DoxyItemize}
+\item High-\/performance ray tracing with pre-\/computation optimizations
+\item Support for spheres, cubes, planes, and CSG operations
+\item Advanced lighting with reflection, refraction, and multiple light sources
+\item \doxylink{classObject}{Object} pooling and caching for memory efficiency
+\item Batch processing for improved cache locality
+\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{\texorpdfstring{Architecture}{Architecture}}\label{index_architecture}
+\hypertarget{index_core}{}\doxysubsection{\texorpdfstring{Core Components}{Core Components}}\label{index_core}
+
+\begin{DoxyItemize}
+\item {\bfseries{\doxylink{performance__utils_8h}{performance\+\_\+utils.\+h}}}\+: Optimization utilities (ray pre-\/computation, object pools, caching)
+\item {\bfseries{\doxylink{render_8h}{render.\+h}}}\+: Main rendering engine and ray tracing algorithms
+\item {\bfseries{\doxylink{object_8h_source}{object.\+h}}}\+: Geometric primitives and intersection algorithms
+\item {\bfseries{\doxylink{scene_8h_source}{scene.\+h}}}\+: \doxylink{classScene}{Scene} structure and camera configuration
+\item {\bfseries{\doxylink{math__utils_8h}{math\+\_\+utils.\+h}}}\+: Mathematical utilities and vector operations
+\end{DoxyItemize}\hypertarget{index_performance}{}\doxysubsection{\texorpdfstring{Performance Features}{Performance Features}}\label{index_performance}
+
+\begin{DoxyItemize}
+\item Pre-\/computed ray grids eliminate repeated calculations
+\item \doxylink{classObject}{Object} pools reduce memory allocation overhead
+\item \doxylink{structMaterial}{Material} caching avoids redundant computations
+\item Intersection caching for frequently tested rays
+\item Pixel batch processing for better cache locality
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+Jokers Gone Wild Team 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2025 
+\end{DoxyDate}

@@ -1,0 +1,93 @@
+\doxysection{Object\+Tree\+::Color\+Override\+Wrapper Class Reference}
+\hypertarget{classObjectTree_1_1ColorOverrideWrapper}{}\label{classObjectTree_1_1ColorOverrideWrapper}\index{ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}}
+
+
+Inheritance diagram for Object\+Tree\+::Color\+Override\+Wrapper\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{classObjectTree_1_1ColorOverrideWrapper__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Object\+Tree\+::Color\+Override\+Wrapper\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classObjectTree_1_1ColorOverrideWrapper__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classObjectTree_1_1ColorOverrideWrapper_ade6fc9aed43faa63c1acd945c090cb11}\label{classObjectTree_1_1ColorOverrideWrapper_ade6fc9aed43faa63c1acd945c090cb11} 
+{\bfseries Color\+Override\+Wrapper} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classObject}{Object}} $>$ b, const \mbox{\hyperlink{structColor}{Color}} \&c)
+\item 
+\mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} \mbox{\hyperlink{classObjectTree_1_1ColorOverrideWrapper_af23ae2ec8743f4f1a9ed6bee86abfc66}{intersect\+With\+Line}} (const \mbox{\hyperlink{structLine}{Line}} \&line) override
+\item 
+bool \mbox{\hyperlink{classObjectTree_1_1ColorOverrideWrapper_a1192db9f9886d30222e288deff358c26}{contains}} (const Eigen\+::\+Vector3f \&P) const override
+\item 
+bool \mbox{\hyperlink{classObjectTree_1_1ColorOverrideWrapper_ab39c94026fbd2efda1d12587fa1655bd}{ray\+Interval}} (const \mbox{\hyperlink{structLine}{Line}} \&line, float \&t\+Enter, float \&t\+Exit) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structPosition}{Position}} \& {\bfseries get\+Pos} () const
+\item 
+void {\bfseries set\+Position} (const \mbox{\hyperlink{structPosition}{Position}} \&new\+Pos)
+\item 
+const \mbox{\hyperlink{structColor}{Color}} \& {\bfseries get\+Color} () const
+\item 
+virtual const \mbox{\hyperlink{structMaterial}{Material}} \& {\bfseries get\+Material} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classObject}{Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPosition}{Position}} {\bfseries pos}
+\item 
+\mbox{\hyperlink{structColor}{Color}} {\bfseries color}
+\item 
+\mbox{\hyperlink{structMaterial}{Material}} {\bfseries material}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classObjectTree_1_1ColorOverrideWrapper_a1192db9f9886d30222e288deff358c26}\label{classObjectTree_1_1ColorOverrideWrapper_a1192db9f9886d30222e288deff358c26} 
+\index{ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}!contains@{contains}}
+\index{contains@{contains}!ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::\+Color\+Override\+Wrapper\+::contains (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3f \&}]{P }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_1_1ColorOverrideWrapper_af23ae2ec8743f4f1a9ed6bee86abfc66}\label{classObjectTree_1_1ColorOverrideWrapper_af23ae2ec8743f4f1a9ed6bee86abfc66} 
+\index{ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}!intersectWithLine@{intersectWithLine}}
+\index{intersectWithLine@{intersectWithLine}!ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}}
+\doxysubsubsection{\texorpdfstring{intersectWithLine()}{intersectWithLine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPixelInfo}{Pixel\+Info}} Object\+Tree\+::\+Color\+Override\+Wrapper\+::intersect\+With\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+\Hypertarget{classObjectTree_1_1ColorOverrideWrapper_ab39c94026fbd2efda1d12587fa1655bd}\label{classObjectTree_1_1ColorOverrideWrapper_ab39c94026fbd2efda1d12587fa1655bd} 
+\index{ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}!rayInterval@{rayInterval}}
+\index{rayInterval@{rayInterval}!ObjectTree::ColorOverrideWrapper@{ObjectTree::ColorOverrideWrapper}}
+\doxysubsubsection{\texorpdfstring{rayInterval()}{rayInterval()}}
+{\footnotesize\ttfamily bool Object\+Tree\+::\+Color\+Override\+Wrapper\+::ray\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structLine}{Line}} \&}]{line,  }\item[{float \&}]{t\+Enter,  }\item[{float \&}]{t\+Exit }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classObject}{Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/\mbox{\hyperlink{object__tree_8cpp}{object\+\_\+tree.\+cpp}}\end{DoxyCompactItemize}

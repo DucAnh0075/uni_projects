@@ -1,0 +1,222 @@
+\doxysection{/home/michael/\+Uni/\+OOP/jokers\+\_\+gone\+\_\+wild/\+Project/performance\+\_\+utils.h}
+\hypertarget{performance__utils_8h_source}{}\label{performance__utils_8h_source}\mbox{\hyperlink{performance__utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{constants_8h}{constants.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}scene.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }RayTracer\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRayTracer_1_1RayGrid}{RayGrid}}\ \{}
+\DoxyCodeLine{00018\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ std::vector<Eigen::Vector3f>\ rayDirections;}
+\DoxyCodeLine{00020\ \ \ std::vector<Eigen::Vector3f>\ rayOrigins;}
+\DoxyCodeLine{00021\ \ \ \textcolor{keywordtype}{int}\ width\_,\ height\_;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1RayGrid_a09106a2c40372c7eea44923453b4bc16}{initialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classScreen}{Screen}}\&\ screen,\ \textcolor{keyword}{const}\ Eigen::Vector4f\&\ observer,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ width\_\ =\ width;}
+\DoxyCodeLine{00028\ \ \ \ \ height\_\ =\ height;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ rayDirections.reserve(width\ *\ height);}
+\DoxyCodeLine{00031\ \ \ \ \ rayOrigins.reserve(width\ *\ height);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ Eigen::Vector3f\ observer3(observer.x(),\ observer.y(),\ observer.z());}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ height;\ ++y)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ width;\ ++x)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ pixel\ center\ in\ world\ coordinates}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ px\ =\ screen.origin.x()\ +\ (x\ +\ 0.5f)\ *\ screen.pixel\_size\_x;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ py\ =\ screen.origin.y()\ +\ (y\ +\ 0.5f)\ *\ screen.pixel\_size\_y;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pz\ =\ screen.origin.z();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ Eigen::Vector4f\ pixel\_center(px,\ py,\ pz,\ 1);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ ray\ direction}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ Eigen::Vector4f\ ray\_dir\ =\ pixel\_center\ -\/\ observer;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ ray\_dir.w()\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ Eigen::Vector3f\ ray\_dir3(ray\_dir.x(),\ ray\_dir.y(),\ ray\_dir.z());}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ ray\_dir3.normalize();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ rayDirections.push\_back(ray\_dir3);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ rayOrigins.push\_back(observer3);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ \mbox{\hyperlink{classRayTracer_1_1RayGrid_acacd7f4a30aa71fc84e394cf0dc3f251}{getRayDirection}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{return}\ rayDirections[y\ *\ width\_\ +\ x];}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ \mbox{\hyperlink{classRayTracer_1_1RayGrid_a6455c92787f045ab9cc21664efac4995}{getRayOrigin}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ rayOrigins[y\ *\ width\_\ +\ x];}
+\DoxyCodeLine{00063\ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classRayTracer_1_1RayGrid_a69b3538b9df3c77ee3ee859a315c7134}{getWidth}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ width\_;\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classRayTracer_1_1RayGrid_a6085bc0781ca2c5f707d7b08b142669b}{getHeight}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ height\_;\ \}}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRayTracer_1_1PixelInfoPool}{PixelInfoPool}}\ \{}
+\DoxyCodeLine{00075\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ std::vector<PixelInfo>\ pool;}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{size\_t}\ nextIndex\ =\ 0;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00081\ \ \ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_a913385bc88fb0f8455693224a8be5502}{PixelInfoPool}}(\textcolor{keywordtype}{size\_t}\ size\ =\ OBJECT\_POOL\_SIZE)\ :\ pool(size)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ Initialize\ with\ default\ values}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ pixel\ :\ pool)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ pixel\ =\ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\{\mbox{\hyperlink{structColor}{Color}}\{0,\ 0,\ 0\},\ \mbox{\hyperlink{structPosition}{Position}}\{0,\ 0,\ 0\},\ 0.0\};}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00089\ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_a90e3810cbdf0d0b6b7bc9e1e913f0a7c}{acquire}}()\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ pixel\ =\ pool[nextIndex];}
+\DoxyCodeLine{00091\ \ \ \ \ nextIndex\ =\ (nextIndex\ +\ 1)\ \%\ pool.size();}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{return}\ pixel;}
+\DoxyCodeLine{00093\ \ \ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1PixelInfoPool_ac1f5c43fe702a193f6bfc918fbee7d23}{release}}(\mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ pixel)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ pixel\ =\ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\{\mbox{\hyperlink{structColor}{Color}}\{0,\ 0,\ 0\},\ \mbox{\hyperlink{structPosition}{Position}}\{0,\ 0,\ 0\},\ 0.0\};}
+\DoxyCodeLine{00098\ \ \ \}}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRayTracer_1_1MaterialCache}{MaterialCache}}\ \{}
+\DoxyCodeLine{00104\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00105\ \ \ \textcolor{keyword}{struct\ }CachedMaterial\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{structMaterial}{Material}}\ material;}
+\DoxyCodeLine{00107\ \ \ \ \ Eigen::Vector3f\ normalizedAmbient;}
+\DoxyCodeLine{00108\ \ \ \ \ Eigen::Vector3f\ normalizedDiffuse;}
+\DoxyCodeLine{00109\ \ \ \ \ Eigen::Vector3f\ normalizedSpecular;}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00111\ \ \ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ std::map<const\ Material*,\ CachedMaterial>\ cache;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00117\ \ \ \textcolor{keyword}{const}\ CachedMaterial\&\ \mbox{\hyperlink{classRayTracer_1_1MaterialCache_a067ad9b6c17318ef61b608954af22192}{getCachedMaterial}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structMaterial}{Material}}*\ mat)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ cache.find(mat);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ cache.end()\ \&\&\ it-\/>second.isValid)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Compute\ and\ cache\ material\ properties}}
+\DoxyCodeLine{00124\ \ \ \ \ CachedMaterial\&\ cached\ =\ cache[mat];}
+\DoxyCodeLine{00125\ \ \ \ \ cached.material\ =\ *mat;}
+\DoxyCodeLine{00126\ \ \ \ \ cached.normalizedAmbient\ =\ mat-\/>Ka;}
+\DoxyCodeLine{00127\ \ \ \ \ cached.normalizedDiffuse\ =\ mat-\/>Kd;}
+\DoxyCodeLine{00128\ \ \ \ \ cached.normalizedSpecular\ =\ mat-\/>Ks;}
+\DoxyCodeLine{00129\ \ \ \ \ cached.isValid\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ cached;}
+\DoxyCodeLine{00132\ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1MaterialCache_a1b2810ac4e8ed071d4f362dd1561ab65}{clear}}()\ \{\ cache.clear();\ \}}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00140\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor}{PixelBatchProcessor}}\ \{}
+\DoxyCodeLine{00141\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00142\ \ \ \textcolor{keyword}{struct\ }PixelBatch\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{int}\ startX,\ startY;}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ height;}
+\DoxyCodeLine{00145\ \ \ \};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ std::vector<PixelBatch>\ batches;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00151\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor_a8f4ddb5c83abfa09d1452903a1690c05}{initializeBatches}}(\textcolor{keywordtype}{int}\ imageWidth,\ \textcolor{keywordtype}{int}\ imageHeight,}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ batchSize\ =\ PIXEL\_BATCH\_SIZE)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ batches.clear();}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ imageHeight;\ y\ +=\ batchSize)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ imageWidth;\ x\ +=\ batchSize)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ PixelBatch\ batch;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ batch.startX\ =\ x;}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ batch.startY\ =\ y;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ batch.width\ =\ std::min(batchSize,\ imageWidth\ -\/\ x);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ batch.height\ =\ std::min(batchSize,\ imageHeight\ -\/\ y);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ batches.push\_back(batch);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00168\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor_a5ac6a66366b2f89848e8b769e73399ed}{getBatchCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ batches.size();\ \}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00171\ \ \ \textcolor{keyword}{const}\ PixelBatch\&\ \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor_ab1c233946b9cf959e4ed66f54fbc0472}{getBatch}}(\textcolor{keywordtype}{size\_t}\ index)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ batches[index];\ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00174\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ ProcessFunc>}
+\DoxyCodeLine{00175\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1PixelBatchProcessor_ac57c26e3d33c7df49c5cb98a2c2f9336}{processAllBatches}}(ProcessFunc\ func)\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ batch\ :\ batches)\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ func(batch.startX,\ batch.startY,\ batch.width,\ batch.height);}
+\DoxyCodeLine{00178\ \ \ \ \ \}}
+\DoxyCodeLine{00179\ \ \ \}}
+\DoxyCodeLine{00180\ \};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00184\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{IntersectionCache}}\ \{}
+\DoxyCodeLine{00185\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00186\ \ \ \textcolor{keyword}{struct\ }CacheEntry\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ Eigen::Vector3f\ rayOrigin;}
+\DoxyCodeLine{00188\ \ \ \ \ Eigen::Vector3f\ rayDirection;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasIntersection;}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{float}\ distance;}
+\DoxyCodeLine{00191\ \ \ \ \ std::shared\_ptr<Object>\ object;}
+\DoxyCodeLine{00192\ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\ pixelInfo;}
+\DoxyCodeLine{00193\ \ \ \ \ uint64\_t\ frameNumber\ =\ 0;}
+\DoxyCodeLine{00194\ \ \ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ std::vector<CacheEntry>\ cache;}
+\DoxyCodeLine{00197\ \ \ \textcolor{keywordtype}{size\_t}\ nextIndex\ =\ 0;}
+\DoxyCodeLine{00198\ \ \ uint64\_t\ currentFrame\ =\ 0;}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ CACHE\_SIZE\ =\ 1024;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00203\ \ \ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache}{IntersectionCache}}()\ :\ cache(CACHE\_SIZE)\ \{\}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00206\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache_a6572296ae4d55c9f71b8abc99fb84154}{startNewFrame}}()\ \{\ currentFrame++;\ \}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00209\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache_a99eb4a0ebf8d102bb07abbc18851c650}{findCached}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrigin,}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDirection,\ \textcolor{keywordtype}{bool}\&\ hasIntersection,}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ distance,\ std::shared\_ptr<Object>\&\ \textcolor{keywordtype}{object},}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ pixelInfo)\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ entry\ :\ cache)\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry.frameNumber\ ==\ currentFrame\ \&\&}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayOrigin.x(),\ rayOrigin.x())\ \&\&}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayOrigin.y(),\ rayOrigin.y())\ \&\&}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayOrigin.z(),\ rayOrigin.z())\ \&\&}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayDirection.x(),\ rayDirection.x())\ \&\&}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayDirection.y(),\ rayDirection.y())\ \&\&}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{constants_8h_a6ea36aa8a5b17c89455584cd75c4501d}{areEqual}}(entry.rayDirection.z(),\ rayDirection.z()))\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ hasIntersection\ =\ entry.hasIntersection;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ distance\ =\ entry.distance;}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{object}\ =\ entry.object;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ pixelInfo\ =\ entry.pixelInfo;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00229\ \ \ \}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00232\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRayTracer_1_1IntersectionCache_a38001295070ac93e7590537922f3b017}{cacheResult}}(\textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayOrigin,}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Eigen::Vector3f\&\ rayDirection,\ \textcolor{keywordtype}{bool}\ hasIntersection,}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ std::shared\_ptr<Object>\&\ \textcolor{keywordtype}{object},}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structPixelInfo}{PixelInfo}}\&\ pixelInfo)\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ CacheEntry\&\ entry\ =\ cache[nextIndex];}
+\DoxyCodeLine{00237\ \ \ \ \ entry.rayOrigin\ =\ rayOrigin;}
+\DoxyCodeLine{00238\ \ \ \ \ entry.rayDirection\ =\ rayDirection;}
+\DoxyCodeLine{00239\ \ \ \ \ entry.hasIntersection\ =\ hasIntersection;}
+\DoxyCodeLine{00240\ \ \ \ \ entry.distance\ =\ distance;}
+\DoxyCodeLine{00241\ \ \ \ \ entry.object\ =\ object;}
+\DoxyCodeLine{00242\ \ \ \ \ entry.pixelInfo\ =\ pixelInfo;}
+\DoxyCodeLine{00243\ \ \ \ \ entry.frameNumber\ =\ currentFrame;}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ nextIndex\ =\ (nextIndex\ +\ 1)\ \%\ CACHE\_SIZE;}
+\DoxyCodeLine{00246\ \ \ \}}
+\DoxyCodeLine{00247\ \};}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \}\ \ \textcolor{comment}{//\ namespace\ RayTracer}}
+
+\end{DoxyCode}
